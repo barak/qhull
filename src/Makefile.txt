@@ -102,7 +102,8 @@ user.o:   $(HFILES)
 	$(CC) -c $(CCOPTS1) $<
 
 clean:
-	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull 
+	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull libqhull.a \
+	    *.exe
 
 cleanall: clean
 	rm -f *~ ../rbox ../qhull ../qhalf ../qconvex ../qdelaunay ../qhalf\
@@ -171,7 +172,7 @@ qhullx: qconvex.o qdelaun.o qhalf.o qvoronoi.o unix.o $(OBJS)
 	$(CC) -o qvoronoi $(CCOPTS2) qvoronoi.o $(OBJS) -lm 
 	$(CC) -o qhull $(CCOPTS2) unix.o $(OBJS) -lm 
 	cp qconvex qdelaunay qhalf qvoronoi qhull ..
-	-chmod +x ../eq/q_test ../eq/q_eg ../eq/q_egtest
+	-chmod +x ../eg/q_test ../eg/q_eg ../eg/q_egtest
 	-cd ..; ./rbox D4 | ./qhull
 
 rbox: rbox.o

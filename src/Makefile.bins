@@ -6,7 +6,7 @@ bins = $(psrc:.c=) qhull qdelaunay
 all: $(bins)
 
 CFLAGS += -Wall -O2 -g
-LOADLIBES += -lqhull
+LOADLIBES += -lqhull -lm
 LDFLAGS += -Llibso
 
 qhull: unix
@@ -22,6 +22,6 @@ install: $(bins)
 	$(INSTALL_PROGRAM) $(bins) $(DESTDIR)$(bindir)
 
 clean:
-	-rm -f $(bins) unix
+	-rm -f $(bins) unix qdelaun
 
 .PHONY: all install install-strip clean uninstall

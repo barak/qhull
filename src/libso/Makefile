@@ -1,7 +1,7 @@
 l=qhull
 
 major=3
-minor=1
+minor=1.1
 
 shlib=lib$(l).so.$(major).$(minor)
 

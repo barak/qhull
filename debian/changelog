@@ -1,3 +1,15 @@
+qhull (2002.1-2) unstable; urgency=low
+
+  * use shared char* qh_version in library
+
+ -- Barak Pearlmutter <bap@cs.unm.edu>  Sat,  7 Sep 2002 10:34:13 -0600
+
+qhull (2002.1-1) unstable; urgency=low
+
+  * new upstream source
+
+ -- Barak Pearlmutter <bap@cs.unm.edu>  Thu,  5 Sep 2002 20:51:10 -0600
+
 qhull (3.1-5) unstable; urgency=low
 
   * rephrase descriptions (closes: #141027)

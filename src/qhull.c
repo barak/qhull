@@ -10,7 +10,7 @@
 
    see qhull_a.h for internal functions
 
-   copyright (c) 1993-2001 The Geometry Center        
+   copyright (c) 1993-2002 The Geometry Center        
 */
 
 #include "qhull_a.h" 
@@ -55,7 +55,7 @@
     record end time
 */
 
-char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
+char *qh_version = "2002.1 2002/8/20";
 
 void qh_qhull (void) {
   int numoutside;

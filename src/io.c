@@ -13,7 +13,7 @@
    unix.c and user.c are the only callers of io.c functions
    This allows the user to avoid loading io.o from qhull.a
 
-   copyright (c) 1993-2001 The Geometry Center        
+   copyright (c) 1993-2002 The Geometry Center        
 */
 
 #include "qhull_a.h"
@@ -1144,12 +1144,15 @@ void qh_printafacet(FILE *fp, int format, facetT *facet, boolT printall) {
       fprintf (fp, "no normal for facet f%d\n", facet->id);
       break;
     }
-    if (qh CDDoutput) 
+    if (qh CDDoutput) {
       fprintf (fp, qh_REAL_1, -offset);
-    for (k=0; k < qh hull_dim; k++) 
-      fprintf (fp, qh_REAL_1, facet->normal[k]);
-    if (!qh CDDoutput) 
+      for (k=0; k < qh hull_dim; k++) 
+	fprintf (fp, qh_REAL_1, -facet->normal[k]);
+    }else {
+      for (k=0; k < qh hull_dim; k++) 
+	fprintf (fp, qh_REAL_1, facet->normal[k]);
       fprintf (fp, qh_REAL_1, offset);
+    }
     fprintf (fp, "\n");
     break;
   case qh_PRINTmathematica:  /* either 2 or 3-d by qh_printbegin */
@@ -3901,8 +3904,8 @@ coordT *qh_readpoints(int *numpoints, int *dimension, boolT *ismalloc) {
       if (++tokcount > maxcount)
         continue;
       if (qh HALFspace) {
-	if (qh CDDinput && !coordcount) 
-	  *(coordp++)= -value; /* offset */
+	if (qh CDDinput) 
+	  *(coordp++)= -value; /* both coefficients and offset */
 	else
 	  *(coordp++)= value;
       }else {

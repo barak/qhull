@@ -6,7 +6,7 @@
 
    see unix.c for full interface
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2002, The Geometry Center
 */
 
 #include <stdio.h>
@@ -56,7 +56,7 @@ char hidden_options[]=" d n v Qbb QbB Qf Qg Qm Qr QR Qv Qx Qz TR E V Fa FA FC FD
 
 char qh_prompta[]= "\n\
 qhalf- compute the intersection of halfspaces about a point\n\
-    http://www.geom.umn.edu/locate/qhull  %s\n\
+    http://www.geom.umn.edu/software/qhull  %s\n\
 \n\
 input (stdin):\n\
     optional interior point: dimension, 1, coordinates\n\

@@ -7,7 +7,7 @@
 
    see unix.c for full interface
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2002, The Geometry Center
 */
 
 #include <stdio.h>
@@ -57,7 +57,7 @@ char hidden_options[]=" d n m v H U Qb QB Qc Qf Qg Qi Qm Qr QR Qv Qx TR E V Fa F
 
 char qh_prompta[]= "\n\
 qvoronoi- compute the Voronoi diagram\n\
-    http://www.geom.umn.edu/locate/qhull  %s\n\
+    http://www.geom.umn.edu/software/qhull  %s\n\
 \n\
 input (stdin):\n\
     first lines: dimension and number of points (or vice-versa).\n\
@@ -273,7 +273,7 @@ int main(int argc, char *argv[]) {
     exit(qh_ERRnone);
   }
   if (argc > 1 && *argv[1] == '-' && !*(argv[1]+1)) {
-    fprintf(stdout, qh_prompta, qh_version,  
+    fprintf(stdout, qh_prompta, qh_version,
 		qh_promptb, qh_promptc, qh_promptd, qh_prompte);
     exit(qh_ERRnone);
   }

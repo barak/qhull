@@ -6,7 +6,7 @@
 
    see qh-stat.htm and stat.h
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2002, The Geometry Center
 */
 
 #include "qhull_a.h"

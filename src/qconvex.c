@@ -6,7 +6,7 @@
 
    see unix.c for full interface
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2002, The Geometry Center
 */
 
 #include <stdio.h>
@@ -41,8 +41,8 @@ int isatty (int);  /* returns 1 if stdin is a tty
 /*-<a                             href="qh-qhull.htm#TOC"
   >-------------------------------</a><a name="prompt">-</a>
 
-  qh_prompt and qh_version
-    version and long prompt for qconvex
+  qh_prompt
+    long prompt for qconvex
     
   notes:
     restricted version of qhull.c
@@ -56,7 +56,7 @@ char hidden_options[]=" d v H Qbb Qf Qg Qm Qr Qu Qv Qx Qz TR E V Fp Gt Q0 Q1 Q2 
 	       
 char qh_prompta[]= "\n\
 qconvex- compute the convex hull\n\
-    http://www.geom.umn.edu/locate/qhull  %s\n\
+    http://www.geom.umn.edu/software/qhull  %s\n\
 \n\
 input (stdin):\n\
     first lines: dimension and number of points (or vice-versa).\n\

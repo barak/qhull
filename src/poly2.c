@@ -8,7 +8,7 @@
 
    frequently used code is in poly.c
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2002, The Geometry Center
 */
 
 #include "qhull_a.h"
