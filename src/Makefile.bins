@@ -1,0 +1,27 @@
+# -*- makefile -*-
+
+psrc = qconvex.c qhalf.c qvoronoi.c rbox.c user_eg.c user_eg2.c
+bins = $(psrc:.c=) qhull qdelaunay
+
+all: $(bins)
+
+CFLAGS += -Wall -O2 -g
+LOADLIBES += -lqhull
+LDFLAGS += -Llibso
+
+qhull: unix
+	cp -a unix qhull
+
+qdelaunay: qdelaun
+	cp -a qdelaun qdelaunay
+
+include ../Makefile.prefix
+
+install: $(bins)
+	-install --directory $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) $(bins) $(DESTDIR)$(bindir)
+
+clean:
+	-rm -f $(bins) unix
+
+.PHONY: all install install-strip clean uninstall

@@ -54,6 +54,9 @@
     error if temporary sets exist
     record end time
 */
+
+char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
+
 void qh_qhull (void) {
   int numoutside;
 

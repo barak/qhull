@@ -1,0 +1,9 @@
+Document: libqhull
+Title: Debian QHULL Manual
+Author: Brad Barber <qhull@geom.umn.edu>
+Abstract: This manual describes the qhull convex hull library
+Section: devel
+
+Format: HTML
+Index: /usr/share/doc/libqhull-dev/html/index.htm
+Files: /usr/share/doc/libqhull-dev/html/*.htm

@@ -1,0 +1,11 @@
+qhull for Debian
+----------------
+
+The library's functionality  can be accessed from the command line
+using the executable "qhull".  Random distributions of points can be
+drawn for testing and experimentation using "rbox".
+
+These executables are so small that they didn't seem worth their own
+package, so I just put them in with the library.
+
+ -- Barak Pearlmutter <bap@cs.unm.edu>, Sun, 24 Mar 2002 21:53:13 -0700

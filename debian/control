@@ -1,0 +1,41 @@
+Source: qhull
+Priority: optional
+Maintainer: Barak Pearlmutter <bap@cs.unm.edu>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.5.2
+
+Package: libqhull-dev
+Section: devel
+Architecture: any
+Depends: libqhull3 (= ${Source-Version}), libc6-dev
+Description: Library for calculating convex hulls and related structures
+ This library (development files) implements a practical convex hull
+ algorithm that combines the two-dimensional Quickhull Algorithm with
+ the general dimension Beneath-Beyond Algorithm.  This algorithm is
+ robust against floating point errors, often a problem for less
+ sophisticated computational geometry algorithms.  The library also
+ performs related computations, such as Delaunay triangulation.
+
+Package: libqhull3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Library for calculating convex hulls and related structures
+ This library (runtime files) implements a practical convex hull
+ algorithm that combines the two-dimensional Quickhull Algorithm with
+ the general dimension Beneath-Beyond Algorithm.  This algorithm is
+ robust against floating point errors, often a problem for less
+ sophisticated computational geometry algorithms.  The library also
+ performs related computations, such as Delaunay triangulation.
+
+Package: qhull-bin
+Section: math
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Calculate convex hulls and related structures
+ These executables use a practical convex hull algorithm that combines
+ the two-dimensional Quickhull Algorithm with the general dimension
+ Beneath-Beyond Algorithm.  This algorithm is robust against floating
+ point errors, often a problem for less sophisticated computational
+ geometry algorithms.  There are also programs that perform related
+ computations, such as Delaunay triangulation.

@@ -51,8 +51,6 @@ int isatty (int);  /* returns 1 if stdin is a tty
     recompile user_eg.c, rbox.c, qhull.c, qconvex.c, qdelaun.c qvoronoi.c, qhalf.c
 */
 
-char qh_version[]= "version 3.1 2001/10/04"; 
-
 /*-<a                             href="qh-qhull.htm#TOC"
   >-------------------------------</a><a name="prompt">-</a>
 

@@ -1,0 +1,7 @@
+*.debhelper
+files
+*.substvars
+tmp
+libqhull-dev
+libqhull3
+qhull-bin

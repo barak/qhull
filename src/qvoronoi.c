@@ -52,8 +52,6 @@ int isatty (int);  /* returns 1 if stdin is a tty
     concise prompt below
 */  
 
-char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
-
 /* duplicated in qvoron_f.htm and qvoronoi.htm */
 char hidden_options[]=" d n m v H U Qb QB Qc Qf Qg Qi Qm Qr QR Qv Qx TR E V Fa FA FC Fp FS Ft FV Pv Gt Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 ";
 
