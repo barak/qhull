@@ -1,9 +1,13 @@
-Document: libqhull
-Title: Debian QHULL Manual
-Author: Brad Barber <qhull@geom.umn.edu>
-Abstract: This manual describes the qhull convex hull library
-Section: devel
+Document: qhull
+Title: QHull Manual
+Author: C. Bradford Barber
+Abstract: This manual describes Qhull, a general dimension convex hull
+ program that reads a set of points from stdin, and outputs the smallest
+ convex set that contains the points to stdout.  It also generates Delaunay
+ triangulations, Voronoi diagrams, furthest-site Voronoi diagrams, and
+ halfspace intersections about a point.
+Section: math
 
 Format: HTML
-Index: /usr/share/doc/libqhull-dev/html/index.htm
-Files: /usr/share/doc/libqhull-dev/html/*.htm
+Index: /usr/share/doc/libqhull5/html/qh-man.htm
+Files: /usr/share/doc/libqhull5/html/*.htm

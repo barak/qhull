@@ -23,7 +23,7 @@
    the last point added to the hull, e.g., 102.  You can then trace
    the execution of qhull with "T4P102".  
 
-   Please report any errors that you fix to qhull@geom.umn.edu
+   Please report any errors that you fix to qhull@qhull.org
 
    call_qhull is a template for calling qhull from within your application
 
@@ -46,7 +46,6 @@
   qh_call_qhull( void )
     template for calling qhull from inside your program
     remove #if 0, #endif to compile
-    define: char qh_version[]= "...";
 
   returns: 
     exit code (see qh_ERR... in qhull.h)
@@ -60,8 +59,6 @@
     
 */
 #if 0
-char qh_version[] = "user_eg 98/7/25";  /* used for error messages */
-
 {
   int dim;	            /* dimension of points */
   int numpoints;            /* number of points */

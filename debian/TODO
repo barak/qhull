@@ -1,3 +1,5 @@
+[This file was originally written by Barak Pearlmutter <bap@cs.unm.edu>]
+
 The random number generator in src/geom2.c makes me suspicious.
 Maybe it would be better to switch to random(3).
 

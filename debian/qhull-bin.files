@@ -1,6 +1,2 @@
-usr/bin/qhull
-usr/bin/rbox
-usr/bin/qconvex
-usr/bin/qhalf
-usr/bin/qvoronoi
-usr/bin/qdelaunay
+usr/bin
+usr/share/man

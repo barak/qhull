@@ -10,7 +10,7 @@
 
    see qhull_a.h for internal functions
 
-   copyright (c) 1993-2001 The Geometry Center        
+   copyright (c) 1993-2003 The Geometry Center        
 */
 
 #include "qhull_a.h" 
@@ -54,8 +54,6 @@
     error if temporary sets exist
     record end time
 */
-
-char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
 
 void qh_qhull (void) {
   int numoutside;
