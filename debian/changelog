@@ -1,3 +1,20 @@
+qhull (2003.1-2) unstable; urgency=low
+
+  * debian/control:
+    - Bumped Standards-Version to 3.7.2 (no chnages needed)
+    - Fixed typo in the libqhull5 long description
+    - Build-Depends on docbook2x instead of docbook-utils
+  * debian/watch: Added file
+  * debian/rules: Use docbook2x-man instead of docbook2man to produce the
+    man pages
+  * debian/manpage.in:
+    - Converted to XML
+    - Added "See Also" section (added the name of the HTML file contianing
+      the full documentation)
+    - Improved "Authors" section (added the names of the upstream authors)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Tue, 27 Jun 2006 10:28:17 +0200
+
 qhull (2003.1-1) unstable; urgency=low
 
   * New upstream release.  There are backward incompatibilities in the code

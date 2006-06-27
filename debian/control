@@ -2,8 +2,8 @@ Source: qhull
 Section: math
 Priority: optional
 Maintainer: Rafael Laboissiere <rafael@debian.org>
-Standards-Version: 3.6.1
-Build-Depends: debhelper (>= 4), docbook-utils, eperl, dpatch
+Standards-Version: 3.7.2
+Build-Depends: debhelper (>= 4), docbook2x, eperl, dpatch
 
 Package: libqhull5
 Section: libs
@@ -15,7 +15,7 @@ Description: Calculate convex hulls and related structures (shared library)
  Delaunay triangulations, and furthest-site Voronoi diagrams. It
  runs in 2-d, 3-d, 4-d, and higher dimensions.
  .
- This package contain the shared C library.
+ This package contains the shared C library.
  .
  Homepage: http://www.qhull.org
 

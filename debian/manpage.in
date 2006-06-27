@@ -1,22 +1,6 @@
-<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
-
-<!-- Process this file with docbook-to-man to generate an nroff manual
-     page: `docbook-to-man manpage.sgml > manpage.1'.  You may view
-     the manual page with: `docbook-to-man manpage.sgml | nroff -man |
-     less'.  A typical entry in a Makefile or Makefile.am is:
-
-manpage.1: manpage.sgml
-	docbook-to-man $< > $@
-
-
-	The docbook-to-man binary is found in the docbook-to-man package.
-	Please remember that if you create the nroff version in one of the
-	debian/rules file targets (such as build), you will need to include
-	docbook-to-man in your Build-Depends control field.
-
-  -->
-
-  <!-- Fill in your name for FIRSTNAME and SURNAME. -->
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
   <!ENTITY dhfirstname "<firstname>Rafael</firstname>">
   <!ENTITY dhsurname   "<surname>Laboissiere</surname>">
   <!-- Please adjust the date whenever revising the manpage. -->
@@ -24,15 +8,19 @@ manpage.1: manpage.sgml
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
   <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
-  <!ENTITY dhemail     "<email>rafael@debian.org</email>">
+  <!ENTITY dhemail     "<email>&lt;rafael@debian.org&gt;</email>">
   <!ENTITY dhusername  "Rafael Laboissiere">
   <!ENTITY dhucpackage "<refentrytitle><:=$command:></refentrytitle>">
   <!ENTITY dhpackage   "<:=$command:>">
 
   <!ENTITY debian      "<productname>Debian</productname>">
-  <!ENTITY gnu         "<acronym>GNU</acronym>">
-  <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
+  <!ENTITY docfile     "/usr/share/doc/<:=$soname:>/html/<:=$command:>.htm">
 ]>
+
+<!-- Template manual page for the Qhull commands, DocBook source file
+     (C) 2006  Rafael Laboissiere <rafael@debian.org>
+
+     $Id$ -->
 
 <refentry>
   <refentryinfo>
@@ -75,16 +63,33 @@ manpage.1: manpage.sgml
 
     <para>
       This program is documented fully in <ulink
-      url="file:///usr/share/doc/<:=$soname:>/html/<:=$command:>.htm">HTML
+      url="file://&docfile;">HTML
       format</ulink>, available in the <:=$soname:>-dev package.
+    </para>
+
   </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+
+    <para>
+      &docfile;
+    </para>
+  </refsect1>
+
   <refsect1>
     <title>AUTHOR</title>
+
+    <para>
+      The Qhull library is authored by C. Bradford Barber and Hannu
+      Huhdanpaa.
+    </para>
 
     <para>
       This manual page was written by &dhusername; &dhemail; for the
       &debian; system (but may be used by others withouth any
       restrictions).
+    </para>
 
   </refsect1>
 </refentry>
@@ -105,5 +110,3 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 -->
-
-

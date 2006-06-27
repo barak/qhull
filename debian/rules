@@ -36,8 +36,8 @@ build-stamp: patch config
 	    comm=`echo  $$info | cut -d: -f1` ; \
 	    purp=`echo  $$info | cut -d: -f2` ; \
 	    eperl -d command=$$comm -d purpose="$$purp" -d soname=$(soname) \
-	      manpage.in > $$comm.sgml ; \
-	    docbook2man $$comm.sgml ; \
+	      manpage.in > $$comm.xml ; \
+	    docbook2x-man $$comm.xml ; \
 	  done )
 
 	touch build-stamp
@@ -47,7 +47,7 @@ clean: unpatch
 	dh_testroot
 
 	-$(MAKE) distclean
-	( cd debian ; rm -rf *.sgml *.1 manpage.links manpage.refs )
+	( cd debian ; rm -rf *.xml *.1 )
 
 	rm -f install-stamp build-stamp config-stamp patch-stamp
 
