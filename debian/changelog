@@ -1,4 +1,4 @@
-qhull (2003.1-3) UNRELEASED; urgency=low
+qhull (2003.1-3) unstable; urgency=low
 
   * debian/control:
     + Changed maintainer to Debian Scientific Computing Team
@@ -9,8 +9,11 @@ qhull (2003.1-3) UNRELEASED; urgency=low
   * debian/compat: New file
   * debian/manpage.in: Fixed directory for URL links
   * debian/source.lintian-overrides:  Add a lintian override for
-    outdated-autotools-helper-file, since we're patching this via CDBS'
+    outdated-autotools-helper-file, since we patch this via CDBS'
     autotools.mk
+  * debian/libqhull-dev.postrm: Remove /usr/share/doc/libqhull5/html
+    directory on upgrade (no idea why this is left behind when upgrading
+    from 2003.1-2 to 2003.1-3)
   * debian/rules:
     + Switched to CDBS
     + Install source.lintian-overrides

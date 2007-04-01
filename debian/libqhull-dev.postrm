@@ -1,0 +1,23 @@
+#!/bin/sh
+# postrm script for libqhull-dev
+
+set -e
+
+case "$1" in
+    purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        if test -d /usr/share/doc/libqhull5/html ; then
+                rm -rf /usr/share/doc/libqhull5/html
+        fi
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0
+
+
