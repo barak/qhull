@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.debian.org>
 Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.7.2
-Build-Depends: debhelper (>= 5), docbook2x, eperl, dpatch
+Build-Depends: debhelper (>= 5), docbook2x, eperl, cdbs
 XS-Vcs-Svn: ssh://svn.debian.org/svn/pkg-scicomp/qhull/
 XS-Vcs-Browser: http://svn.debian.org/wsvn/pkg-scicomp/qhull/
 
