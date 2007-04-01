@@ -1,9 +1,12 @@
 Source: qhull
 Section: math
 Priority: optional
-Maintainer: Rafael Laboissiere <rafael@debian.org>
+Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.debian.org>
+Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.7.2
 Build-Depends: debhelper (>= 4), docbook2x, eperl, dpatch
+XS-Vcs-Svn: ssh://svn.debian.org/svn/pkg-scicomp/qhull/
+XS-Vcs-Browser: http://svn.debian.org/wsvn/pkg-scicomp/qhull/
 
 Package: libqhull5
 Section: libs
