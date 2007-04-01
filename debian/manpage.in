@@ -14,13 +14,13 @@
   <!ENTITY dhpackage   "<:=$command:>">
 
   <!ENTITY debian      "<productname>Debian</productname>">
-  <!ENTITY docfile     "/usr/share/doc/<:=$soname:>/html/<:=$command:>.htm">
+  <!ENTITY docfile     "/usr/share/doc/libqhull-dev/html/<:=$command:>.htm">
 ]>
 
 <!-- Template manual page for the Qhull commands, DocBook source file
      (C) 2006  Rafael Laboissiere <rafael@debian.org>
 
-     $Id$ -->
+     $Id: manpage.in 191 2006-06-27 08:42:27Z rafael $ -->
 
 <refentry>
   <refentryinfo>
@@ -64,7 +64,7 @@
     <para>
       This program is documented fully in <ulink
       url="file://&docfile;">HTML
-      format</ulink>, available in the <:=$soname:>-dev package.
+      format</ulink>, available in the libqhull-dev package.
     </para>
 
   </refsect1>

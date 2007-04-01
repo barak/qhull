@@ -1,9 +1,12 @@
 Source: qhull
 Section: math
 Priority: optional
-Maintainer: Rafael Laboissiere <rafael@debian.org>
+Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.debian.org>
+Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.7.2
-Build-Depends: debhelper (>= 4), docbook2x, eperl, dpatch
+Build-Depends: debhelper (>= 5), docbook2x, eperl, cdbs
+XS-Vcs-Svn: ssh://svn.debian.org/svn/pkg-scicomp/qhull/
+XS-Vcs-Browser: http://svn.debian.org/wsvn/pkg-scicomp/qhull/
 
 Package: libqhull5
 Section: libs
@@ -17,7 +20,7 @@ Description: Calculate convex hulls and related structures (shared library)
  .
  This package contains the shared C library.
  .
- Homepage: http://www.qhull.org
+  Homepage: http://www.qhull.org
 
 Package: libqhull-dev
 Section: libdevel
@@ -32,7 +35,7 @@ Description: Calculate convex hulls and related structures (development files)
  This package contains the files necessary for development (headers and
  libraries), as well as the library documentation in HTML format.
  .
- Homepage: http://www.qhull.org
+  Homepage: http://www.qhull.org
 
 Package: qhull-bin
 Section: math
@@ -53,4 +56,4 @@ Description: Calculate convex hulls and related structures (utilities)
  Qhull produces graphical output for Geomview.  This helps with
  understanding the output (http://www.geomview.org).
  .
- Homepage: http://www.qhull.org
+  Homepage: http://www.qhull.org
