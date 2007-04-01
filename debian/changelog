@@ -14,6 +14,7 @@ qhull (2003.1-3) unstable; urgency=low
   * debian/libqhull-dev.postrm: Remove /usr/share/doc/libqhull5/html
     directory on upgrade (no idea why this is left behind when upgrading
     from 2003.1-2 to 2003.1-3)
+  * debian/libqhull-dev.examples: Install examples
   * debian/rules:
     + Switched to CDBS
     + Install source.lintian-overrides
