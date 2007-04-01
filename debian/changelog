@@ -6,9 +6,14 @@ qhull (2003.1-3) UNRELEASED; urgency=low
     + Added XS-Vcs-Svn and XS-Vcs-Browser fields
     + Upgraded build-dependency on debhelper to >= 5
     + Added build-dependency to cdbs and dropped dpatch
-  * debian/rules: Switched to CDBS
   * debian/compat: New file
   * debian/manpage.in: Fixed directory for URL links
+  * debian/source.lintian-overrides:  Add a lintian override for
+    outdated-autotools-helper-file, since we're patching this via CDBS'
+    autotools.mk
+  * debian/rules:
+    + Switched to CDBS
+    + Install source.lintian-overrides
 
  --
 
