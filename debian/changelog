@@ -11,15 +11,14 @@ qhull (2003.1-3) unstable; urgency=low
   * debian/source.lintian-overrides:  Add a lintian override for
     outdated-autotools-helper-file, since we patch this via CDBS'
     autotools.mk
-  * debian/libqhull-dev.postrm: Remove /usr/share/doc/libqhull5/html
-    directory on upgrade (no idea why this is left behind when upgrading
-    from 2003.1-2 to 2003.1-3)
+  * debian/libqhull-dev.preinst: Remove symlink /usr/share/doc/libqhull-dev
+    which may cause problem in upgrading the package
   * debian/libqhull-dev.examples: Install examples
   * debian/rules:
     + Switched to CDBS
     + Install source.lintian-overrides
 
- --
+ -- Rafael Laboissiere <rafael@debian.org>  Mon,  2 Apr 2007 00:45:20 +0200
 
 qhull (2003.1-2) unstable; urgency=low
 

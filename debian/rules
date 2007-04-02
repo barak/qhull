@@ -9,7 +9,7 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 htmldir	:= debian/tmp/usr/share/doc/qhull/html
 
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
-DEB_COMPRESS_EXCLUDE = .c .h
+DEB_COMPRESS_EXCLUDE = .c .h .txt
 
 build/qhull-bin::
 	( cd debian ;							\
@@ -28,6 +28,7 @@ clean::
 	rm -f debian/*.xml debian/*.1
 
 install/libqhull-dev::
-	mkdir -p $(htmldir)/src
-	cp src/*.{c,h,htm} $(htmldir)/src
-	perl -pi -e 's:../src/:src/:g' $(htmldir)/*.htm
+	cp *.txt html/*.txt $(htmldir)
+	mkdir $(htmldir)/src
+	cp src/*.{c,h,htm,txt} $(htmldir)/src
+	sed -i 's:href="../:href=":g' $(htmldir)/*.htm
