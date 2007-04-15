@@ -6,7 +6,9 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
 
-htmldir	:= debian/tmp/usr/share/doc/qhull/html
+debdir	:= $(CURDIR)/debian
+deblin	:= $(debdir)/libqhull-dev/usr/share/lintian/overrides
+htmldir	:= $(debdir)/tmp/usr/share/doc/qhull/html
 
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DEB_COMPRESS_EXCLUDE = .c .h .txt
@@ -28,7 +30,12 @@ clean::
 	rm -f debian/*.xml debian/*.1
 
 install/libqhull-dev::
+	# Install all the needed documentation files
 	cp *.txt html/*.txt $(htmldir)
 	mkdir $(htmldir)/src
 	cp src/*.{c,h,htm,txt} $(htmldir)/src
 	sed -i 's:href="../:href=":g' $(htmldir)/*.htm
+	# Isntall Lintian override file
+	mkdir -p $(deblin)
+	install --mode=644 $(debdir)/libqhull-dev.lintian \
+		$(deblin)/libqhull-dev
