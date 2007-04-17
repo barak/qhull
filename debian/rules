@@ -14,16 +14,18 @@ DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DEB_COMPRESS_EXCLUDE = .c .h .txt
 
 build/qhull-bin::
-	( cd debian ;							\
+	@( cd debian ;							\
 	  for info in "qconvex:compute the convex hull"			\
 	              "qdelaunay:compute the Delaunay triangulation"	\
 	              "qhalf:halfspace intersection about a point"	\
 	              "qvoronoi:compute the Voronoi diagram" ; do	\
 	      comm=`echo  $$info | cut -d: -f1` ;			\
 	      purp=`echo  $$info | cut -d: -f2` ;			\
+	      echo -n Building man page for $$comm... ;			\
 	      eperl -d command=$$comm -d purpose="$$purp"		\
 	          manpage.in > $$comm.xml ;				\
 	      docbook2x-man $$comm.xml ;				\
+	      echo " done" ;						\
 	  done )
 
 clean::
