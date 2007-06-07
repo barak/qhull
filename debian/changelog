@@ -1,3 +1,11 @@
+qhull (2003.1-7) unstable; urgency=low
+
+  * debian/control: Tighten build-dependency on docbook2x >= 0.8.8-3,
+    since the previous version (0.8.8-2) was not installable and some
+    autobuilders failed to build the package
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu,  7 Jun 2007 14:21:06 +0200
+
 qhull (2003.1-6) unstable; urgency=low
 
   * debian/control: Build-Depends on xsltproc (really closes: #419568)
