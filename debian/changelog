@@ -1,3 +1,9 @@
+qhull (2003.1-8) UNRELEASED; urgency=low
+
+  * debian/control: Added Homepage field
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 21 Sep 2007 17:02:42 +0200
+
 qhull (2003.1-7) unstable; urgency=low
 
   * debian/control: Tighten build-dependency on docbook2x >= 0.8.8-3,
