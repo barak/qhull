@@ -3,6 +3,8 @@ qhull (2003.1-8) UNRELEASED; urgency=low
   * debian/control:
     + Added Homepage field
     + Use the now official Vcs-* fields instead of the obsolete XS-Vcs-*
+    + Dropped the Homepage pseudo-header for the extended descriptions
+    + Bumped Standards-Version to 3.7.3
 
  -- Rafael Laboissiere <rafael@debian.org>  Mon, 29 Oct 2007 22:49:08 +0100
 
