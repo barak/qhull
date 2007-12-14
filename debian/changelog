@@ -1,3 +1,11 @@
+qhull (2003.1-9) UNRELEASED; urgency=low
+
+  * debian/manpage.in:
+    + Fixed spacing in <ulink> tag
+    + Removed brackets from e-mail address
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 14 Dec 2007 12:09:22 +0100
+
 qhull (2003.1-8) unstable; urgency=low
 
   * debian/control:
