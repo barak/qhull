@@ -24,7 +24,7 @@ Description: calculate convex hulls and related structures (shared library)
 Package: libqhull-dev
 Section: libdevel
 Architecture: any
-Depends: libqhull5 (= ${Source-Version}), libc6-dev
+Depends: libqhull5 (= ${binary:Version}), libc6-dev
 Description: calculate convex hulls and related structures (development files)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
  intersections about a point, Voronoi diagrams, furthest-site
@@ -37,7 +37,7 @@ Description: calculate convex hulls and related structures (development files)
 Package: qhull-bin
 Section: math
 Architecture: any
-Depends: libqhull5 (= ${Source-Version})
+Depends: libqhull5 (= ${binary:Version})
 Suggests: geomview
 Description: calculate convex hulls and related structures (utilities)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
