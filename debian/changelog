@@ -7,6 +7,12 @@ qhull (2003.1-8) UNRELEASED; urgency=low
     + Use the now official Vcs-* fields instead of the obsolete XS-Vcs-*
     + Dropped the Homepage pseudo-header for the extended descriptions
     + Bumped Standards-Version to 3.7.3
+  * debian/rules:
+    + Include the -fno-strict-aliasing option into CFLAGS, otherwise the
+      qhull library does not work correctly.  This has to do with some
+      change in the toolchain (gcc 4.1.* series).
+    + Call the test suite after building the qhull-bin package
+    + Removed bashism in the install/libqhull-dev rule
 
  -- Rafael Laboissiere <rafael@debian.org>  Fri, 14 Dec 2007 10:48:45 +0100
 
