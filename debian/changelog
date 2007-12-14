@@ -1,4 +1,4 @@
-qhull (2003.1-8) UNRELEASED; urgency=low
+qhull (2003.1-8) unstable; urgency=low
 
   * debian/control:
     + Use the substitution variable ${binary:Version} instead of the
