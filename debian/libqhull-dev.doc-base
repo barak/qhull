@@ -6,7 +6,7 @@ Abstract: This manual describes Qhull, a general dimension convex hull
  convex set that contains the points to stdout.  It also generates Delaunay
  triangulations, Voronoi diagrams, furthest-site Voronoi diagrams, and
  halfspace intersections about a point.
-Section: Apps/Math
+Section: Science/Mathematics
 
 Format: HTML
 Index: /usr/share/doc/libqhull-dev/html/index.htm
