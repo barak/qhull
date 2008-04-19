@@ -21,10 +21,10 @@ Documentation
 -------------
 
 Documentation in HTML format is available starting in the file
-/usr/share/doc/qhull/qh-man.htm.  There are also some exemples in the
-directory /usr/share/doc/qhull/examples.
+/usr/share/doc/libqhull-dev/qh-man.htm.  There are also some exemples
+in the directory /usr/share/doc/libqhull-dev/examples.  Note that
+these files are available in the libqhull-dev package.
 
 
-
- -- Rafael Laboissiere <rafael@debian.org>, Mon Dec  3 20:20:07 CET 2001
+ -- Rafael Laboissiere <rafael@debian.org>, Sat, 19 Apr 2008 19:41:49 +0200
 

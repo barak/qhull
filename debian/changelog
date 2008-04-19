@@ -3,8 +3,11 @@ qhull (2003.1-9) UNRELEASED; urgency=low
   * debian/manpage.in:
     + Fixed spacing in <ulink> tag
     + Removed brackets from e-mail address
+  * debian/README.Debian: Fixed path of documentation and examples files.
+    Also, mention that these files are available in the libqhull-dev
+    package.  Thanks to Jaap Weel for pointing this bug out.
 
- -- Rafael Laboissiere <rafael@debian.org>  Fri, 14 Dec 2007 12:09:22 +0100
+ -- Rafael Laboissiere <rafael@debian.org>  Sat, 19 Apr 2008 19:43:42 +0200
 
 qhull (2003.1-8) unstable; urgency=low
 
