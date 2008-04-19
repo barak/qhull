@@ -7,15 +7,17 @@ qhull (2003.1-9) UNRELEASED; urgency=low
     Also, mention that these files are available in the libqhull-dev
     package.  Thanks to Jaap Weel for pointing this bug out.
   * debian/rules:
-    + Switch from CDBS' simple-patchsys to quil
+    + Switch from CDBS' simple-patchsys to quilt
     + Remove COPYING.txt from HTML documentation directory
   * debian/control:
     + Build-depend on quilt
     + Fix URL of Vcs-Svn field
   * debian/libqhull-dev.doc-base: Changed section of documentation to
     Science/Mathematics
+  * debian/patches/manpage-macros.patch: Add patch for fixing several
+    syntax, macros, and hypen problems in man pages qhull.man and rbox.man
 
- -- Rafael Laboissiere <rafael@debian.org>  Sat, 19 Apr 2008 19:53:26 +0200
+ -- Rafael Laboissiere <rafael@debian.org>  Sat, 19 Apr 2008 20:37:42 +0200
 
 qhull (2003.1-8) unstable; urgency=low
 
