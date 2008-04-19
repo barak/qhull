@@ -2,7 +2,7 @@ qhull (2003.1-9) UNRELEASED; urgency=low
 
   * debian/manpage.in:
     + Fix spacing in <ulink> tag
-    + Remove brackets from e-mail address
+    + Remove brackets from email address
   * debian/README.Debian: Fixed path of documentation and examples files.
     Also, mention that these files are available in the libqhull-dev
     package.  Thanks to Jaap Weel for pointing this bug out.
@@ -14,7 +14,7 @@ qhull (2003.1-9) UNRELEASED; urgency=low
   * debian/libqhull-dev.doc-base: Changed section of documentation to
     Science/Mathematics
   * debian/patches/manpage-macros.patch: Add patch for fixing several
-    syntax, macros, and hypen problems in man pages qhull.man and rbox.man
+    syntax, macros, and hyphen problems in man pages qhull.man and rbox.man
 
  -- Rafael Laboissiere <rafael@debian.org>  Sat, 19 Apr 2008 20:37:42 +0200
 
