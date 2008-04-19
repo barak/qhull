@@ -1,7 +1,7 @@
 Index: qhull-2003.1/html/qhull.man
 ===================================================================
---- qhull-2003.1.orig/html/qhull.man	2004-01-31 11:00:15.000000000 +0000
-+++ qhull-2003.1/html/qhull.man	2008-04-19 18:40:08.000000000 +0000
+--- qhull-2003.1.orig/html/qhull.man	2008-04-19 18:48:31.000000000 +0000
++++ qhull-2003.1/html/qhull.man	2008-04-19 18:53:09.000000000 +0000
 @@ -1,17 +1,17 @@
 -./"  This is the Unix manual page for qhull, written in nroff, the standard
 -./"  manual formatter for Unix systems.  To format it, type
@@ -304,6 +304,17 @@ Index: qhull-2003.1/html/qhull.man
  .TP
  Fc
  Print coplanar points for each facet.  The output starts with the
+@@ -435,8 +435,8 @@
+ with the number of indices and floats.  The first pair lists 
+ adjacent input
+ sites, the next d floats are the normalized coefficients for the hyperplane,
+-and the last float is the offset.  The hyperplane is oriented toward 
+-'QVn' (if defined), or the first input site of the pair.  Use 'Tv' to
++and the last float is the offset.  The hyperplane is oriented toward 'QVn'
++(if defined), or the first input site of the pair.  Use 'Tv' to
+ verify that the hyperplanes are perpendicular bisectors.  Use 'Fo' for 
+ unbounded regions, and 'Fv' for the corresponding Voronoi vertices.
+ .TP
 @@ -449,8 +449,8 @@
  .TP
  FM
@@ -315,6 +326,17 @@ Index: qhull-2003.1/html/qhull.man
  file for displaying with display3d().
  .TP
  Fn
+@@ -486,8 +486,8 @@
+ with the number of indices and floats.  The first pair lists 
+ adjacent input
+ sites, the next d floats are the normalized coefficients for the hyperplane,
+-and the last float is the offset.  The hyperplane is oriented toward 
+-'QVn' (if defined), or the first input site of the pair.  Use 'Tv' to
++and the last float is the offset.  The hyperplane is oriented toward 'QVn'
++(if defined), or the first input site of the pair.  Use 'Tv' to
+ verify that the hyperplanes are perpendicular bisectors.  Use 'Fi' for 
+ bounded regions, and 'Fv' for the corresponding Voronoi vertices.
+ .TP
 @@ -498,7 +498,7 @@
  Fp
  Print points for halfspace intersections (option 'Hn,n,...').  Each
@@ -324,7 +346,7 @@ Index: qhull-2003.1/html/qhull.man
  indicates an unbounded intersection.
  .TP
  FP
-@@ -530,15 +530,15 @@
+@@ -530,15 +530,14 @@
  The total volume measures the volume
  of the intersection of the halfspaces defined by each facet.   
  Both area and volume are
@@ -336,14 +358,15 @@ Index: qhull-2003.1/html/qhull.man
 +Print a triangulation with added points for non\[hy]simplicial
  facets.  The first line is the dimension and the second line is the
  number of points and the number of facets.  The points follow, one
- per line, then the facets follow as a list of point indices.  With option
- 'Qz', the
+-per line, then the facets follow as a list of point indices.  With option
+-'Qz', the
 -points include the point-at-infinity.
++per line, then the facets follow as a list of point indices.  With option 'Qz', the
 +points include the point\[hy]at\[hy]infinity.
  .TP
  Fv
  Print vertices for each facet.  The first line is the number
-@@ -551,7 +551,7 @@
+@@ -551,7 +550,7 @@
  of ridges.  Then each ridge is printed, one per line.  A line starts
  with the number of indices.  The first pair lists adjacent input
  sites, the remaining indices list Voronoi vertices.  Vertex '0' indicates
@@ -352,7 +375,7 @@ Index: qhull-2003.1/html/qhull.man
  are listed in order.  See 'Fi' and 'Fo' for separating hyperplanes.
  .TP
  FV
-@@ -561,8 +561,8 @@
+@@ -561,8 +560,8 @@
  Fx
  List extreme points (vertices) of the convex hull.  The first line
  is the number of points.  The other lines give the indices of the
@@ -363,7 +386,7 @@ Index: qhull-2003.1/html/qhull.man
  For Delaunay triangulations, 'Fx' lists the extreme points of the
  input sites.  The points are unordered.
  .PP
-@@ -571,12 +571,12 @@
+@@ -571,12 +570,12 @@
  .TP
  G
  Produce a file for viewing with Geomview.  Without other options,
@@ -380,7 +403,7 @@ Index: qhull-2003.1/html/qhull.man
  one of its facets' hyperplanes.
  Use 'Gh' to
  project ridges to the intersection of both hyperplanes.
-@@ -585,24 +585,24 @@
+@@ -585,24 +584,24 @@
  Display all input points as dots.
  .TP
  Gc
@@ -412,7 +435,7 @@ Index: qhull-2003.1/html/qhull.man
  plane.  Its edges are determined by the vertices.
  .TP
  Gn
-@@ -613,7 +613,7 @@
+@@ -613,7 +612,7 @@
  the difference between inner and outer is too small.
  .TP
  Go
@@ -421,7 +444,7 @@ Index: qhull-2003.1/html/qhull.man
  is above all input points.  It is parallel to the facet's hyperplane.
  Its color is determined by the facet's normal, and its 
  edges are determined by the vertices.
-@@ -622,15 +622,15 @@
+@@ -622,15 +621,15 @@
  Display coplanar points and vertices as radii.  A radius defines a ball
  which corresponds to the imprecision of the point.  The imprecision is 
  the maximum of the roundoff error, the centrum radius, and maxcoord *
@@ -442,7 +465,7 @@ Index: qhull-2003.1/html/qhull.man
  facets.  Option 'Gt' removes the outside ridges to reveal the outermost
  facets.  It automatically sets options 'Gr' and 'GDn'.
  .TP
-@@ -689,12 +689,12 @@
+@@ -689,12 +688,12 @@
  .TP
  Qbk:0Bk:0
  Drop dimension k from the input points.  This allows the user to 
@@ -457,7 +480,7 @@ Index: qhull-2003.1/html/qhull.man
  For Delaunay and
  Voronoi diagrams, scaling happens after projection to the paraboloid.
  Under precise
-@@ -710,7 +710,7 @@
+@@ -710,7 +709,7 @@
  .TP
  Qbk:n
  Scale the k'th coordinate of the input points.  After scaling, the lower
@@ -466,7 +489,7 @@ Index: qhull-2003.1/html/qhull.man
  .TP
  QBk:n
  Scale the k'th coordinate of the input points.  After scaling, the upper
-@@ -741,7 +741,7 @@
+@@ -741,7 +740,7 @@
  Output formats 'p', 'f', 'Gp', 'FN', 'FP', and 'Fc' will print the points.
  .TP
  QJn
@@ -475,7 +498,7 @@ Index: qhull-2003.1/html/qhull.man
  precision error occurs, then qhull increases n and tries again.  It does
  not increase n beyond a certain value, and it stops after a certain number
  of attempts [see user.h].  Option 'QJ'
-@@ -760,7 +760,7 @@
+@@ -760,7 +759,7 @@
  .TP
  QRn
  Randomly rotate the input points.  If n=0, use time as the random number seed.
@@ -484,7 +507,7 @@ Index: qhull-2003.1/html/qhull.man
  time as the random number seed.  For Delaunay triangulations ('d' and 'v'),
  rotate about the last axis.
  .TP
-@@ -768,12 +768,12 @@
+@@ -768,12 +767,12 @@
  Search all points for the initial simplex.
  .TP
  Qt
@@ -500,7 +523,7 @@ Index: qhull-2003.1/html/qhull.man
  .TP
  QVn
  A good facet (see 'Qg' and 'Pg') includes point n.  If n<0, then a good facet does not
-@@ -783,13 +783,13 @@
+@@ -783,13 +782,13 @@
  Qx
  Perform exact merges while building the hull.  The "exact" merges
  are merging a point into a coplanar facet (defined by 'Vn', 'Un',
@@ -518,7 +541,7 @@ Index: qhull-2003.1/html/qhull.man
  (defined by 'Cn' and 'An').
  .TP
  Qz
-@@ -801,8 +801,8 @@
+@@ -801,8 +800,8 @@
  Qhull experiments and speedups
  .TP
  Q0
@@ -529,7 +552,7 @@ Index: qhull-2003.1/html/qhull.man
  ignores precision issues while constructing the convex hull.  This
  may lead to precision errors.  If so, a descriptive warning is
  generated.  
-@@ -826,14 +826,14 @@
+@@ -826,14 +825,14 @@
  maximum outer plane is used instead.
  .TP
  Q6
@@ -548,7 +571,7 @@ Index: qhull-2003.1/html/qhull.man
  outer planes.  'Qc' will probably retain
  all points that adjust outer planes.
  .TP
-@@ -850,7 +850,7 @@
+@@ -850,7 +849,7 @@
  Trace options
  .TP
  Tn
@@ -557,7 +580,7 @@ Index: qhull-2003.1/html/qhull.man
  traces events.  'T1' traces
  the overall execution of the program.  'T2' and 'T3' trace overall
  execution and geometric and topological events.  'T4' traces the
-@@ -868,7 +868,7 @@
+@@ -868,7 +867,7 @@
  .TP
  TFn
  Report progress whenever more than n facets are created
@@ -566,7 +589,7 @@ Index: qhull-2003.1/html/qhull.man
  reports progress after more than n/2 merges.
  .TP
  TI file
-@@ -900,8 +900,8 @@
+@@ -900,8 +899,8 @@
  or if 'Q5' is set.
  
  For point inclusion testing, Qhull verifies that all points are below
@@ -577,7 +600,7 @@ Index: qhull-2003.1/html/qhull.man
  otherwise Qhull verifies each point with a directed
  search (qh_findbest).  
  
-@@ -945,9 +945,9 @@
+@@ -945,9 +944,9 @@
  
  When you do report an error, please attach a data set to the
  end of your message.  This allows us to see the error for ourselves.
@@ -589,7 +612,7 @@ Index: qhull-2003.1/html/qhull.man
  Please send correspondence to qhull@qhull.org and report bugs to
  qhull_bug@qhull.org.  Let us know how you use Qhull.  If you
  mention it in a paper, please send the reference and an abstract.
-@@ -957,23 +957,23 @@
+@@ -957,23 +956,23 @@
  our mailing list.  If you would like to communicate with other
  Qhull users, we will add you to the qhull_users alias.  
  For Internet news about geometric algorithms and convex hulls, look at
@@ -618,7 +641,7 @@ Index: qhull-2003.1/html/qhull.man
  
  .PP
  .SH AUTHORS
-@@ -995,12 +995,12 @@
+@@ -995,12 +994,12 @@
  Harvard University, and Endocardial Solutions, Inc. for supporting this work.
  
  Qhull 1.0 and 2.0 were developed under National Science Foundation 
@@ -636,8 +659,8 @@ Index: qhull-2003.1/html/qhull.man
  Qhull is available from http://www.qhull.org
 Index: qhull-2003.1/html/rbox.man
 ===================================================================
---- qhull-2003.1.orig/html/rbox.man	2004-01-31 11:00:15.000000000 +0000
-+++ qhull-2003.1/html/rbox.man	2008-04-19 18:36:59.000000000 +0000
+--- qhull-2003.1.orig/html/rbox.man	2008-04-19 18:48:31.000000000 +0000
++++ qhull-2003.1/html/rbox.man	2008-04-19 18:50:33.000000000 +0000
 @@ -1,15 +1,15 @@
 -./"  This is the Unix manual page for rbox, written in nroff, the standard
 -./"  manual formatter for Unix systems.  To format it, type
@@ -716,8 +739,10 @@ Index: qhull-2003.1/html/rbox.man
 +a cube with coordinates +2/\-2 and a diamond with coordinates +3/\-3.
  .TP
  rbox 64 M3,4 z
- a rotated, {0,1,2,3} x {0,1,2,3} x {0,1,2,3} lattice (Mesh) of integer points.  
- 'rbox 64 M1,0' is orthogonal.
+-a rotated, {0,1,2,3} x {0,1,2,3} x {0,1,2,3} lattice (Mesh) of integer points.  
+-'rbox 64 M1,0' is orthogonal.
++a rotated, {0,1,2,3} x {0,1,2,3} x {0,1,2,3} lattice (Mesh) of integer
++points. 'rbox 64 M1,0' is orthogonal.
  .TP
  rbox P0 P0 P0 P0 P0
 -5 copies of the origin in 3-d.  Try 'rbox P0 P0 P0 P0 P0 | qhull QJ'.
@@ -735,7 +760,7 @@ Index: qhull-2003.1/html/rbox.man
  a narrow cone of points with many precision errors.
  .SH OPTIONS
  .TP
-@@ -85,19 +85,19 @@
+@@ -85,22 +85,22 @@
  number of points
  .TP
  Dn
@@ -756,8 +781,13 @@ Index: qhull-2003.1/html/rbox.man
 -lattice (Mesh) rotated by {[n,-m,0], [m,n,0], [0,0,r], ...}.  
 +lattice (Mesh) rotated by {[n,\-m,0], [m,n,0], [0,0,r], ...}.  
  Use 'Mm,n' for a rigid rotation with r = sqrt(n^2+m^2).  'M1,0' is an 
- orthogonal lattice.  For example, '27 M1,0' is {0,1,2} x {0,1,2} x {0,1,2}. 
- '27 M3,4 z' is a rotated integer lattice.
+-orthogonal lattice.  For example, '27 M1,0' is {0,1,2} x {0,1,2} x {0,1,2}. 
+-'27 M3,4 z' is a rotated integer lattice.
++orthogonal lattice.  For example, '27 M1,0' is {0,1,2} x {0,1,2} x 
++{0,1,2}. '27 M3,4 z' is a rotated integer lattice.
+ .TP
+ s
+ cospherical points randomly generated in a cube and projected to the unit sphere
 @@ -118,13 +118,13 @@
  add a unit cube to the output
  .TP
