@@ -8,7 +8,7 @@
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
   <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
-  <!ENTITY dhemail     "<email>&lt;rafael@debian.org&gt;</email>">
+  <!ENTITY dhemail     "<email>rafael@debian.org</email>">
   <!ENTITY dhusername  "Rafael Laboissiere">
   <!ENTITY dhucpackage "<refentrytitle><:=$command:></refentrytitle>">
   <!ENTITY dhpackage   "<:=$command:>">
@@ -64,7 +64,7 @@
     <para>
       This program is documented fully in <ulink
       url="file://&docfile;">HTML
-      format</ulink>, available in the libqhull-dev package.
+      format,</ulink> available in the libqhull-dev package.
     </para>
 
   </refsect1>

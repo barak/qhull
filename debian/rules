@@ -4,7 +4,7 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/rules/simple-patchsys.mk
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 debdir	:= $(CURDIR)/debian
 deblin	:= $(debdir)/libqhull-dev/usr/share/lintian/overrides
