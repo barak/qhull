@@ -1,4 +1,4 @@
-qhull (2003.1-9) UNRELEASED; urgency=low
+qhull (2003.1-9) unstable; urgency=low
 
   * debian/manpage.in:
     + Fix spacing in <ulink> tag
