@@ -10,6 +10,7 @@ qhull (2003.1-9) UNRELEASED; urgency=low
   * debian/control:
     + Build-depend on quilt
     + Fix URL of Vcs-Svn field
+    + Add ${shlibs:Depends} to qhull-bin Depends
   * debian/libqhull-dev.doc-base: Changed section of documentation to
     Science/Mathematics
   * debian/patches/manpage-macros.patch: Add patch for fixing several

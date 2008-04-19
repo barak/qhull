@@ -38,7 +38,7 @@ Description: calculate convex hulls and related structures (development files)
 Package: qhull-bin
 Section: math
 Architecture: any
-Depends: libqhull5 (= ${binary:Version})
+Depends: libqhull5 (= ${binary:Version}), ${shlibs:Depends}
 Suggests: geomview
 Description: calculate convex hulls and related structures (utilities)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
