@@ -1,12 +1,14 @@
 qhull (2003.1-9) UNRELEASED; urgency=low
 
   * debian/manpage.in:
-    + Fixed spacing in <ulink> tag
-    + Removed brackets from e-mail address
+    + Fix spacing in <ulink> tag
+    + Remove brackets from e-mail address
   * debian/README.Debian: Fixed path of documentation and examples files.
     Also, mention that these files are available in the libqhull-dev
     package.  Thanks to Jaap Weel for pointing this bug out.
-  * debian/rules: Switch from CDBS' simple-patchsys to quil
+  * debian/rules:
+    + Switch from CDBS' simple-patchsys to quil
+    + Remove COPYING.txt from HTML documentation directory
   * debian/control:
     + Build-depend on quilt
     + Fix URL of Vcs-Svn field
