@@ -1,13 +1,12 @@
 #!/usr/bin/make -f
 # debian/rules for Debian qhull package
-# GNU copyright 2007 by Rafael Laboissiere
+# GNU copyright (C) 2007, 2008  Rafael Laboissiere
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 debdir	:= $(CURDIR)/debian
-deblin	:= $(debdir)/libqhull-dev/usr/share/lintian/overrides
 htmldir	:= $(debdir)/tmp/usr/share/doc/qhull/html
 
 DEB_DH_INSTALL_SOURCEDIR = debian/tmp
@@ -35,13 +34,9 @@ build/qhull-bin::
 clean::
 	rm -f debian/*.xml debian/*.1
 
-install/libqhull-dev::
+install/libqhull-doc::
 	# Install all the needed documentation files
 	cp *.txt html/*.txt $(htmldir)
 	mkdir $(htmldir)/src
 	cp src/*.c src/*.h src/*.htm src/*.txt $(htmldir)/src
 	sed -i 's:href="../:href=":g' $(htmldir)/*.htm
-	# Install Lintian override file
-	mkdir -p $(deblin)
-	install --mode=644 $(debdir)/libqhull-dev.lintian \
-		$(deblin)/libqhull-dev
