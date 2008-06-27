@@ -9,5 +9,5 @@ Abstract: This manual describes Qhull, a general dimension convex hull
 Section: Science/Mathematics
 
 Format: HTML
-Index: /usr/share/doc/libqhull-dev/html/index.htm
-Files: /usr/share/doc/libqhull-dev/html/*.htm
+Index: /usr/share/doc/libqhull-doc/html/index.htm
+Files: /usr/share/doc/libqhull-doc/html/*.htm

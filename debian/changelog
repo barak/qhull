@@ -1,3 +1,11 @@
+qhull (2003.1-10) UNRELEASED; urgency=low
+
+  * Create new package libqhull-doc containing the HTML documentation for
+    Qhull.  This avoids a Lintian message saying that the arch-dependent
+    package libqhull-dev has a big /usr/share directory.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 27 Jun 2008 19:15:49 +0200
+
 qhull (2003.1-9) unstable; urgency=low
 
   * debian/manpage.in:
