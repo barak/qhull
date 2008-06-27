@@ -5,7 +5,7 @@ Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.deb
 Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.8.0
 Build-Depends: debhelper (>= 5), docbook2x (>= 0.8.8-3), xsltproc,
- docbook-xml, cdbs, quilt
+ eperl, cdbs, quilt
 Homepage: http://www.qhull.org
 Vcs-Svn: svn://svn.debian.org/svn/pkg-scicomp/qhull/
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-scicomp/qhull/
@@ -34,6 +34,17 @@ Description: calculate convex hulls and related structures (development files)
  .
  This package contains the files necessary for development (headers and
  libraries), as well as the library documentation in HTML format.
+
+Package: libqhull-doc
+Section: doc
+Architecture: all
+Description: calculate convex hulls and related structures (documentation files)
+ Qhull computes convex hulls, Delaunay triangulations, halfspace
+ intersections about a point, Voronoi diagrams, furthest-site
+ Delaunay triangulations, and furthest-site Voronoi diagrams. It
+ runs in 2-d, 3-d, 4-d, and higher dimensions.
+ .
+ This package contains the documentation for Qhull.
 
 Package: qhull-bin
 Section: math
