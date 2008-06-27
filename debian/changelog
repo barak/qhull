@@ -5,8 +5,9 @@ qhull (2003.1-10) UNRELEASED; urgency=low
     package libqhull-dev has a big /usr/share directory.
   * debian/copyright: Clarify licensing conditions for the Debian
     packaging files
+  * Bump Standards-Version to 3.8.0 (no changes needed)
 
- -- Rafael Laboissiere <rafael@debian.org>  Fri, 27 Jun 2008 19:24:12 +0200
+ -- Rafael Laboissiere <rafael@debian.org>  Fri, 27 Jun 2008 19:30:35 +0200
 
 qhull (2003.1-9) unstable; urgency=low
 
