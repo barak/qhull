@@ -1,4 +1,4 @@
-qhull (2003.1-10) UNRELEASED; urgency=low
+qhull (2003.1-10) unstable; urgency=low
 
   * Create new package libqhull-doc containing the HTML documentation for
     Qhull.  This avoids a Lintian message saying that the arch-dependent
