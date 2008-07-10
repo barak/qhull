@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.debian.org>
 Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.8.0
-Build-Depends: debhelper (>= 5), docbook2x (>= 0.8.8-3), xsltproc,
+Build-Depends: debhelper (>= 7.0.0), docbook2x (>= 0.8.8-3), xsltproc,
  eperl, cdbs, quilt
 Homepage: http://www.qhull.org
 Vcs-Svn: svn://svn.debian.org/svn/pkg-scicomp/qhull/

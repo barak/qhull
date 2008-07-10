@@ -31,9 +31,6 @@ build/qhull-bin::
 	# Run tests
 	PATH=./src/:$$PATH /bin/sh eg/q_test
 
-clean::
-	rm -f debian/*.xml debian/*.1
-
 install/libqhull-doc::
 	# Install all the needed documentation files
 	cp *.txt html/*.txt $(htmldir)
