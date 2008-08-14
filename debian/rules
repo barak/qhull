@@ -24,7 +24,7 @@ build/qhull-bin::
 	      comm=`echo  $$info | cut -d: -f1` ;			\
 	      purp=`echo  $$info | cut -d: -f2` ;			\
 	      echo -n Building man page for $$comm... ;			\
-	      eperl -d command=$$comm -d purpose="$$purp"		\
+	      sed "s/#command#/$$comm/;s/#purpose#/$$purp/"		\
 	          manpage.in > $$comm.xml ;				\
 	      docbook2x-man $$comm.xml ;				\
 	      echo " done" ;						\

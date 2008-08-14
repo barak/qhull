@@ -10,11 +10,11 @@
   <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
   <!ENTITY dhemail     "<email>rafael@debian.org</email>">
   <!ENTITY dhusername  "Rafael Laboissiere">
-  <!ENTITY dhucpackage "<refentrytitle><:=$command:></refentrytitle>">
-  <!ENTITY dhpackage   "<:=$command:>">
+  <!ENTITY dhucpackage "<refentrytitle>#command#</refentrytitle>">
+  <!ENTITY dhpackage   "#command#">
 
   <!ENTITY debian      "<productname>Debian</productname>">
-  <!ENTITY docfile     "/usr/share/doc/libqhull-dev/html/<:=$command:>.htm">
+  <!ENTITY docfile     "/usr/share/doc/libqhull-dev/html/#command#.htm">
 ]>
 
 <!-- Template manual page for the Qhull commands, DocBook source file
@@ -45,7 +45,7 @@
   <refnamediv>
     <refname>&dhpackage;</refname>
 
-    <refpurpose><:=$purpose:></refpurpose>
+    <refpurpose>#purpose#</refpurpose>
   </refnamediv>
   <refsynopsisdiv>
     <cmdsynopsis>
