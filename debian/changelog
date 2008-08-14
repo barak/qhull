@@ -7,6 +7,21 @@ qhull (2003.1-11) UNRELEASED; urgency=low
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 10 Jul 2008 23:25:47 +0200
 
+qhull (2003.1-9lenny1) testing-proposed-updates; urgency=low
+
+  * debian/rules: Use sed instead of eperl to generate the man pages.
+    Eperl is buggy on hppa (see Bug#494191) and the package FTBFS there.
+    (Closes: #494461)
+  * debian/manpage.in: Adapt for using sed
+  * debian.control:
+    + Drop build-dependency on eperl
+    + Build-depends on docbook-xml.  This avoid timeouts due to the failed
+    attempt to load the external entity docbookx.dtd (needed for the
+    Debian-provided man pages) when network connection is not available.
+    + Bump Standards-Version to 3.8.0 (no changes needed)
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 14 Aug 2008 10:43:24 +0200
+
 qhull (2003.1-10lenny1) unstable; urgency=low
 
   * debian/control: Build-depends on docbook-xml.  This avoid FTBFS due to
