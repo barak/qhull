@@ -1,3 +1,28 @@
+qhull (2003.1-12) unstable; urgency=low
+
+  * debian/patches/modern-autotools.patch: Jumbo patch for updating the
+    autotools-generated files with modern ones
+  * debian/source.lintian-overrides:
+    + Drop obsolete Lintian overrides outdated-autotools-helper-file
+    + Add override for ancient-libtool, since file config/ltmain.sh is
+      replaced by a modern one in the patch above
+  * debian/control:
+    + The Debian packaging files are now maintained through a Git
+      repository at alioth.debian.org.  Switch the Vcs-* URLs to Git,
+      accordingly.
+    + Bump Standards-Version to 3.8.1 (add file README.source explaining
+      the quilt patchsys, as mandated by the Policy)
+    + Add ${misc:Depends} to all packages
+    + Drop Section field of the qhull-bin package, which is redundant with
+      the Section of the Source package
+    + Build-Depend on autotools-dev, this is necessary for proper
+      treatment of files config.{guess,sub} by CDBS
+  * Add descriptions to all patches
+  * debian/libqhull5.symbols: Add shared library symbols file
+  * debian/libqhull-doc.lintian-overrides: Add comment
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
+
 qhull (2003.1-11) unstable; urgency=low
 
   * debian/rules: Use debian/clean instead of manually cleaning files
