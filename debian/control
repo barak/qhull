@@ -7,8 +7,8 @@ Standards-Version: 3.8.0
 Build-Depends: debhelper (>= 7.0.0), docbook2x (>= 0.8.8-3), xsltproc,
  cdbs, quilt, docbook-xml
 Homepage: http://www.qhull.org
-Vcs-Svn: svn://svn.debian.org/svn/pkg-scicomp/qhull/
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-scicomp/qhull/
+Vcs-Git: git://git.debian.org/git/pkg-scicomp/qhull.git
+Vcs-Browser: http://git.debian.org/?p=pkg-scicomp/qhull.git
 
 Package: libqhull5
 Section: libs

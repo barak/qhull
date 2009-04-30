@@ -1,3 +1,11 @@
+qhull (2003.1-12) UNRELEASED; urgency=low
+
+  * debian/control: The Debian packaging files are now maintained through
+    a Git repository at alioth.debian.org.  Switch the Vcs-* URLs to Git,
+    accordingly.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
+
 qhull (2003.1-11) unstable; urgency=low
 
   * debian/rules: Use debian/clean instead of manually cleaning files
