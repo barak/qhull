@@ -10,6 +10,7 @@ qhull (2003.1-12) UNRELEASED; urgency=low
     + Drop Section field of the qhull-bin package, which is redundant with
       the Section of the Source package
   * Add descriptions to all patches
+  * debian/libqhull5.symbols: Add shared library symbols file
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
 
