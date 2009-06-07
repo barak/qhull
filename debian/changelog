@@ -1,8 +1,11 @@
 qhull (2003.1-12) UNRELEASED; urgency=low
 
-  * debian/control: The Debian packaging files are now maintained through
-    a Git repository at alioth.debian.org.  Switch the Vcs-* URLs to Git,
-    accordingly.
+  * debian/control:
+    + The Debian packaging files are now maintained through a Git
+      repository at alioth.debian.org.  Switch the Vcs-* URLs to Git,
+      accordingly.
+    + Bump Standards-Version to 3.8.1 (add file README.source explaining
+      the quilt patchsys, as mandated by the Policy)
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
 
