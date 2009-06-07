@@ -6,6 +6,7 @@ qhull (2003.1-12) UNRELEASED; urgency=low
       accordingly.
     + Bump Standards-Version to 3.8.1 (add file README.source explaining
       the quilt patchsys, as mandated by the Policy)
+    + Add ${misc:Depends} to all packages
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
 
