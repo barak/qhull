@@ -1,3 +1,7 @@
+Redirect users to the Debian BTS in the error message of rbox.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 25 Sep 2002 10:39:30 +0200
+
 --- qhull-orig/src/io.c	2004-01-31 12:00:15.000000000 +0100
 +++ qhull/src/io.c	2004-02-06 09:54:18.000000000 +0100
 @@ -4017,11 +4017,8 @@

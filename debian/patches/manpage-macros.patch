@@ -1,3 +1,8 @@
+Fix several syntax, macros, and hyphen problems in man pages qhull.man
+and rbox.man.
+
+ -- Rafael Laboissiere <rafael@debian.org>  Wed, 25 Sep 2002 10:39:30 +0200
+
 Index: qhull-2003.1/html/qhull.man
 ===================================================================
 --- qhull-2003.1.orig/html/qhull.man	2008-04-19 18:48:31.000000000 +0000
