@@ -2,6 +2,10 @@ qhull (2003.1-12) UNRELEASED; urgency=low
 
   * debian/patches/modern-autotools.patch: Jumbo patch for updating the
     autotools-generated files with modern ones
+  * debian/source.lintian-overrides:
+    + Drop obsolete Lintian overrides outdated-autotools-helper-file
+    + Add override for ancient-libtool, since file config/ltmain.sh is
+      replaced by a modern one in the patch above
   * debian/control:
     + The Debian packaging files are now maintained through a Git
       repository at alioth.debian.org.  Switch the Vcs-* URLs to Git,
