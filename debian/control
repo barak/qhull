@@ -48,7 +48,6 @@ Description: calculate convex hulls and related structures (documentation files)
  This package contains the documentation for Qhull.
 
 Package: qhull-bin
-Section: math
 Architecture: any
 Depends: libqhull5 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Suggests: geomview
