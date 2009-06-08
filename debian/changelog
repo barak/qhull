@@ -19,6 +19,7 @@ qhull (2003.1-12) UNRELEASED; urgency=low
       treatment of files config.{guess,sub} by CDBS
   * Add descriptions to all patches
   * debian/libqhull5.symbols: Add shared library symbols file
+  * debian/libqhull-doc.lintian-overrides: Add comment
 
  -- Rafael Laboissiere <rafael@debian.org>  Thu, 30 Apr 2009 13:08:22 +0200
 
