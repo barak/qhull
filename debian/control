@@ -5,7 +5,7 @@ Maintainer: Debian Scientific Computing Team <pkg-scicomp-devel@lists.alioth.deb
 Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.8.1
 Build-Depends: debhelper (>= 7.0.0), docbook2x (>= 0.8.8-3), xsltproc,
- cdbs, quilt, docbook-xml
+ cdbs, quilt, docbook-xml, autotools-dev
 Homepage: http://www.qhull.org
 Vcs-Git: git://git.debian.org/git/pkg-scicomp/qhull.git
 Vcs-Browser: http://git.debian.org/?p=pkg-scicomp/qhull.git

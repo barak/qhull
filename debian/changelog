@@ -11,6 +11,8 @@ qhull (2003.1-12) UNRELEASED; urgency=low
     + Add ${misc:Depends} to all packages
     + Drop Section field of the qhull-bin package, which is redundant with
       the Section of the Source package
+    + Build-Depend on autotools-dev, this is necessary for proper
+      treatment of files config.{guess,sub} by CDBS
   * Add descriptions to all patches
   * debian/libqhull5.symbols: Add shared library symbols file
 
