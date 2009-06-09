@@ -1,4 +1,4 @@
-qhull (2003.1-12) UNRELEASED; urgency=low
+qhull (2003.1-12) unstable; urgency=low
 
   * debian/patches/modern-autotools.patch: Jumbo patch for updating the
     autotools-generated files with modern ones
