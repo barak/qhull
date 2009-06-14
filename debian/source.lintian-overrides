@@ -1,5 +1,0 @@
-# Patch modern-autotools.patch replaces config/ltmain.sh by a modern
-# one (version  2.2.6)
-
-qhull source: ancient-libtool config/ltmain.sh 1.5.0
-

@@ -1,6 +1,11 @@
 qhull (2009.1-1) UNRELEASED; urgency=low
 
   * New upstream release
+  * debian/patches/modern-autotools.patch: Drop patch (this new upstream
+    release was generated with modern versions of the Autotools)
+  * debian/patches/manpage-macros.patch: Drop patch (applied upstream)
+  * debian/source.lintian-overrides: Drop obsolete override for Lintian
+    warning ancient-libtool
 
  -- Rafael Laboissiere <rafael@debian.org>  Sun, 14 Jun 2009 16:46:41 +0200
 
