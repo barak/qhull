@@ -13,7 +13,8 @@ DEB_DH_INSTALL_SOURCEDIR = debian/tmp
 DEB_COMPRESS_EXCLUDE = .c .h .txt
 CFLAGS := $(CFLAGS) -fno-strict-aliasing
 
-build/qhull-bin::
+build/qhull-bin:: build-stamp
+build-stamp:
 	# Build man pages
 	@( cd debian ;							\
 	  for info in "qconvex:compute the convex hull"			\
@@ -30,6 +31,7 @@ build/qhull-bin::
 	  done )
 	# Run tests
 	PATH=./src/:$$PATH /bin/sh eg/q_test
+	touch build-stamp
 
 install/libqhull-doc::
 	# Install all the needed documentation files
