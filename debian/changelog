@@ -1,3 +1,21 @@
+qhull (2009.1-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/patches/modern-autotools.patch: Drop patch (this new upstream
+    release was generated with modern versions of the Autotools)
+  * debian/patches/manpage-macros.patch: Drop patch (applied upstream)
+  * debian/source.lintian-overrides: Drop obsolete override for Lintian
+    warning ancient-libtool
+  * debian/rules:
+    + Use DEB_MAKE_CHECK_TARGET to run the unit tests through the check
+      rule in debian/rules
+    + Avoid running twice the build/qhull-bin rule (via a build-stamp
+      file)
+  * debian/clean: Remove build-stamp
+  * debian/watch: Fix URL and regex for upstream tarball
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 14 Jun 2009 16:46:41 +0200
+
 qhull (2003.1-12) unstable; urgency=low
 
   * debian/patches/modern-autotools.patch: Jumbo patch for updating the
