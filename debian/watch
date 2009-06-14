@@ -1,2 +1,2 @@
 version=3
-http://www.qhull.org/download/ (?:.*/)?qhull-([\d+\.]+|\d+)\.tar.*
+https://savannah.nongnu.org/files/?group=qhull qhull-([\d+\.]+)\.tar\.gz
