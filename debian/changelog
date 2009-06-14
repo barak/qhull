@@ -6,8 +6,11 @@ qhull (2009.1-1) UNRELEASED; urgency=low
   * debian/patches/manpage-macros.patch: Drop patch (applied upstream)
   * debian/source.lintian-overrides: Drop obsolete override for Lintian
     warning ancient-libtool
-  * debian/rules: Avoid running twice the build/qhull-bin rule (via a
-    build-stamp file)
+  * debian/rules:
+    + Use DEB_MAKE_CHECK_TARGET to run the unit tests through the check
+      rule in debian/rules
+    + Avoid running twice the build/qhull-bin rule (via a build-stamp
+      file)
   * debian/clean: Remove build-stamp
   * debian/watch: Fix URL and regex for upstream tarball
 
