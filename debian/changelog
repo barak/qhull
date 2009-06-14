@@ -1,3 +1,9 @@
+qhull (2009.1-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Rafael Laboissiere <rafael@debian.org>  Sun, 14 Jun 2009 16:46:41 +0200
+
 qhull (2003.1-12) unstable; urgency=low
 
   * debian/patches/modern-autotools.patch: Jumbo patch for updating the
