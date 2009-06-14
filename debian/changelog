@@ -1,4 +1,4 @@
-qhull (2009.1-1) UNRELEASED; urgency=low
+qhull (2009.1-1) unstable; urgency=low
 
   * New upstream release
   * debian/patches/modern-autotools.patch: Drop patch (this new upstream
