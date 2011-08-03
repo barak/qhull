@@ -1,3 +1,15 @@
+qhull (2009.1-2) unstable; urgency=low
+
+  * Team upload
+  * Standards-Version updated to 3.9.2
+  * Switch to dpkg-source 3.0 (quilt) format
+  * Package moved into the debian science team
+  * Fix the FTBFS with binutils-gold. Thanks to Iain Lane for providing the
+    patch (Closes: #556302)
+  * .la file is no longer installed
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 03 Aug 2011 09:50:39 +0200
+
 qhull (2009.1-1) unstable; urgency=low
 
   * New upstream release
