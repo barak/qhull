@@ -5,7 +5,7 @@ Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.
 Uploaders: Rafael Laboissiere <rafael@debian.org>
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 7.0.0), docbook2x (>= 0.8.8-3), xsltproc,
- cdbs, quilt, docbook-xml, autotools-dev
+ cdbs, docbook-xml, autotools-dev
 Homepage: http://www.qhull.org
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/qhull.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/qhull.git
