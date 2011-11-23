@@ -1,8 +1,0 @@
-README.source for qhull
-=======================
-
-This package uses quilt to manage all modifications to the upstream sources.
-See `/usr/share/doc/quilt/README.source' to get more information on how to
-use it.
-
- -- Rafael Laboissiere <rafael@debian.org>, Sun,  7 Jun 2009 02:17:10 +0200
