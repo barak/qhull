@@ -1,3 +1,3 @@
-make-new-msg.patch
-QHpointer.patch
-fix-FTBFS-643461-format-security.patch
+0001-debianize-test-failure-msg.patch
+0002-format-string-security.patch
+0003-QHpointer.patch

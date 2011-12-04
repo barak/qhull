@@ -1,0 +1,23 @@
+From: Rafael Laboissiere <rafael@debian.org>
+Date: Wed, 25 Sep 2002 10:39:30 +0200
+Subject: QHpointer
+
+Access globals via a pointer to allocated memory.
+---
+ src/libqhull/user.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/libqhull/user.h b/src/libqhull/user.h
+index 84e7b5f..7c50205 100644
+--- a/src/libqhull/user.h
++++ b/src/libqhull/user.h
+@@ -595,7 +595,7 @@ stop after qh_JOGGLEmaxretry attempts
+     user_eg.c for an example
+ */
+ #ifndef qh_QHpointer
+-#define qh_QHpointer 0
++#define qh_QHpointer 1
+ #if qh_QHpointer_dllimport
+ #error QH6234 Qhull error: qh_QHpointer must be defined when using qh_QHpointer_dllimport.
+ #endif
+-- 

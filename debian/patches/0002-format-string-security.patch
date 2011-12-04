@@ -1,0 +1,27 @@
+From: Peter Green <plugwash@p10link.net>
+Date: Wed, 23 Nov 2011 00:00:00 +0000
+Subject: format string security
+
+Fix FTBFS when building with hardening flags as used by dpkg 1.16.0.
+Note that this was a *false positive* by the compiler: there was
+in fact no security issue.  However we will work around it anyway.
+
+Bug-Debian: http://bugs.debian.org/643461
+---
+ src/libqhull/io.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/libqhull/io.c b/src/libqhull/io.c
+index 9dcde52..45ef7bc 100644
+--- a/src/libqhull/io.c
++++ b/src/libqhull/io.c
+@@ -2238,7 +2238,7 @@ void qh_printfacet3math(FILE *fp, facetT *facet, qh_PRINT format, int notfirst)
+     qh_memfree(point, qh normal_size);
+   qh_settempfree(&points);
+   qh_settempfree(&vertices);
+-  qh_fprintf(fp, 9110, endfmt);
++  qh_fprintf(fp, 9110, "%s", endfmt);
+ } /* printfacet3math */
+ 
+ 
+-- 

@@ -1,0 +1,26 @@
+From: Rafael Laboissiere <rafael@debian.org>
+Date: Wed, 25 Sep 2002 10:39:30 +0200
+Subject: debianize test failure msg
+
+Redirect users to the Debian BTS in the error message of rbox.
+---
+ src/libqhull/io.c |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
+
+diff --git a/src/libqhull/io.c b/src/libqhull/io.c
+index 520835b..9dcde52 100644
+--- a/src/libqhull/io.c
++++ b/src/libqhull/io.c
+@@ -3932,10 +3932,7 @@ qhull warning: instead of %d %d-dimensional points, input contains\n\
+     if (!strcmp(qh rbox_command, "./rbox D4"))
+       qh_fprintf(qh ferr, 8055, "\n\
+ This is the qhull test case.  If any errors or core dumps occur,\n\
+-recompile qhull with 'make new'.  If errors still occur, there is\n\
+-an incompatibility.  You should try a different compiler.  You can also\n\
+-change the choices in user.h.  If you discover the source of the problem,\n\
+-please send mail to qhull_bug@qhull.org.\n\
++file a bug report against the libqhull<soversion> Debian package.\n\
+ \n\
+ Type 'qhull' for a short list of options.\n");
+   }
+-- 
