@@ -1,6 +1,9 @@
 libqhull.so.5 libqhull5 #MINVER#
  dfacet@Base 2003.1
  dvertex@Base 2003.1
+ out1@Base 2011.2
+ out2n@Base 2011.2
+ out3n@Base 2011.2
  qh_addhash@Base 2003.1
  qh_addpoint@Base 2003.1
  qh_all_merges@Base 2003.1
@@ -19,6 +22,8 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_appendmergeset@Base 2003.1
  qh_appendprint@Base 2003.1
  qh_appendvertex@Base 2003.1
+ qh_argv_to_command@Base 2011.2
+ qh_argv_to_command_size@Base 2011.2
  qh_attachnewfacets@Base 2003.1
  qh_backnormal@Base 2003.1
  qh_basevertices@Base 2003.1
@@ -39,6 +44,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_checkpolygon@Base 2003.1
  qh_checkvertex@Base 2003.1
  qh_checkzero@Base 2003.1
+ qh_clear_outputflags@Base 2011.2
  qh_clearcenters@Base 2003.1
  qh_clock@Base 2003.1
  qh_collectstatistics@Base 2003.1
@@ -49,6 +55,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_compareangle@Base 2003.1
  qh_comparemerge@Base 2003.1
  qh_comparevisit@Base 2003.1
+ qh_copyfilename@Base 2011.2
  qh_copynonconvex@Base 2003.1
  qh_copypoints@Base 2003.1
  qh_countfacets@Base 2003.1
@@ -75,7 +82,9 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_eachvoronoi_all@Base 2003.1
  qh_errexit2@Base 2003.1
  qh_errexit@Base 2003.1
+ qh_errexit_rbox@Base 2011.2
  qh_errprint@Base 2003.1
+ qh_exit@Base 2011.2
  qh_facet2point@Base 2003.1
  qh_facet3vertex@Base 2003.1
  qh_facetarea@Base 2003.1
@@ -98,8 +107,12 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_findhorizon@Base 2003.1
  qh_flippedmerges@Base 2003.1
  qh_forcedmerges@Base 2003.1
+ qh_fprintf@Base 2011.2
+ qh_fprintf_rbox@Base 2011.2
+ qh_free@Base 2011.2
  qh_freebuffers@Base 2003.1
  qh_freebuild@Base 2003.1
+ qh_freeqhull2@Base 2011.2
  qh_freeqhull@Base 2003.1
  qh_freestatistics@Base 2003.1
  qh_furthestnext@Base 2003.1
@@ -128,6 +141,8 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_initqhull_buffers@Base 2003.1
  qh_initqhull_globals@Base 2003.1
  qh_initqhull_mem@Base 2003.1
+ qh_initqhull_outputflags@Base 2011.2
+ qh_initqhull_start2@Base 2011.2
  qh_initqhull_start@Base 2003.1
  qh_initstatistics@Base 2003.1
  qh_initthresholds@Base 2003.1
@@ -140,6 +155,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_makenewfacets@Base 2003.1
  qh_makenewplanes@Base 2003.1
  qh_makeridges@Base 2003.1
+ qh_malloc@Base 2011.2
  qh_mark_dupridges@Base 2003.1
  qh_markkeep@Base 2003.1
  qh_markvoronoi@Base 2003.1
@@ -160,6 +176,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_memsetup@Base 2003.1
  qh_memsize@Base 2003.1
  qh_memstatistics@Base 2003.1
+ qh_memtotal@Base 2011.2
  qh_merge_degenredundant@Base 2003.1
  qh_merge_nonconvex@Base 2003.1
  qh_mergecycle@Base 2003.1
@@ -211,6 +228,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_postmerge@Base 2003.1
  qh_precision@Base 2003.1
  qh_premerge@Base 2003.1
+ qh_prepare_output@Base 2011.2
  qh_prependfacet@Base 2003.1
  qh_printafacet@Base 2003.1
  qh_printallstatistics@Base 2003.1
@@ -241,6 +259,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_printfacets@Base 2003.1
  qh_printhashtable@Base 2003.1
  qh_printhelp_degenerate@Base 2003.1
+ qh_printhelp_narrowhull@Base 2011.2
  qh_printhelp_singular@Base 2003.1
  qh_printhyperplaneintersection@Base 2003.1
  qh_printline3geom@Base 2003.1
@@ -269,6 +288,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_printvnorm@Base 2003.1
  qh_printvoronoi@Base 2003.1
  qh_printvridge@Base 2003.1
+ qh_produce_output2@Base 2011.2
  qh_produce_output@Base 2003.1
  qh_projectdim3@Base 2003.1
  qh_projectinput@Base 2003.1
@@ -281,6 +301,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_rand_seed@Base 2003.1
  qh_randomfactor@Base 2003.1
  qh_randommatrix@Base 2003.1
+ qh_rboxpoints@Base 2011.2
  qh_readfeasible@Base 2003.1
  qh_readpoints@Base 2003.1
  qh_reducevertices@Base 2003.1
@@ -346,6 +367,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_setzero@Base 2003.1
  qh_sharpnewfacets@Base 2003.1
  qh_skipfacet@Base 2003.1
+ qh_skipfilename@Base 2011.2
  qh_srand@Base 2003.1
  qh_stddev@Base 2003.1
  qh_strtod@Base 2003.1
@@ -372,3 +394,7 @@ libqhull.so.5 libqhull5 #MINVER#
  qh_voronoi_center@Base 2003.1
  qh_willdelete@Base 2003.1
  qhmem@Base 2003.1
+ qhull_inuse@Base 2011.2
+ rbox@Base 2011.2
+ rbox_inuse@Base 2011.2
+ roundi@Base 2011.2

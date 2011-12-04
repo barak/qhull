@@ -13,18 +13,8 @@ Registering
 -----------
 
 The upstream authors would like to find out how you are using their
-software.  Look at /usr/share/doc/qhull/REGISTER.txt to know how to send
-them feedback.
+software.  Look at /usr/share/doc/qhull/REGISTER.txt to see how to
+send them feedback.
 
 
-Documentation
--------------
-
-Documentation in HTML format is available starting in the file
-/usr/share/doc/libqhull-dev/qh-man.htm.  There are also some examples
-in the directory /usr/share/doc/libqhull-dev/examples.  Note that
-these files are available in the libqhull-dev package.
-
-
- -- Rafael Laboissiere <rafael@debian.org>, Sat, 19 Apr 2008 19:46:22 +0200
-
+ -- Barak A. Pearlmutter <bap@debian.org>, Sun,  4 Dec 2011 20:01:06 +0000

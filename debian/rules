@@ -1,43 +1,38 @@
 #!/usr/bin/make -f
-# debian/rules for Debian qhull package
-# GNU copyright (C) 2007, 2008  Rafael Laboissiere
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-debdir	:= $(CURDIR)/debian
-htmldir	:= $(debdir)/tmp/usr/share/doc/qhull/html
+# consider: GCC -fno-strict-aliasing
 
-DEB_DH_INSTALL_SOURCEDIR = debian/tmp
-DEB_COMPRESS_EXCLUDE = .c .h .txt
-CFLAGS := $(CFLAGS) -fno-strict-aliasing
-DEB_MAKE_CHECK_TARGET = -C debian -f rules check
+$(dh_targets) %:
+	dh $@ --with autoreconf --parallel
 
-build/qhull-bin:: build-stamp
-build-stamp:
-	# Build man pages
-	@( cd debian ;							\
+override_dh_autoreconf:
+	$(SHELL) config/bootstrap.sh	# robust to non-executable script
+
+override_dh_auto_build:
+	dh_auto_build
+	@echo Building man pages
+	cd debian &&							\
 	  for info in "qconvex:compute the convex hull"			\
 	              "qdelaunay:compute the Delaunay triangulation"	\
 	              "qhalf:halfspace intersection about a point"	\
 	              "qvoronoi:compute the Voronoi diagram" ; do	\
-	      comm=`echo  $$info | cut -d: -f1` ;			\
-	      purp=`echo  $$info | cut -d: -f2` ;			\
-	      echo -n Building man page for $$comm... ;			\
+	      comm=$$(echo  $$info | cut -d: -f1) &&			\
+	      purp=$$(echo  $$info | cut -d: -f2) &&			\
+	      echo -n Building man page for $$comm... &&		\
 	      sed "s/#command#/$$comm/;s/#purpose#/$$purp/"		\
-	          manpage.in > $$comm.xml ;				\
-	      docbook2x-man $$comm.xml ;				\
+	          manpage.in > $$comm.xml &&				\
+	      docbook2x-man $$comm.xml &&				\
 	      echo " done" ;						\
-	  done )
-	touch build-stamp
+	  done
 
-check:
-	# Run tests
-	cd .. ; PATH=./src/:$$PATH /bin/sh eg/q_test
+override_dh_auto_test:
+	env PATH=$(CURDIR)/src:$${PATH} eg/q_test
 
-install/libqhull-doc::
-	# Install all the needed documentation files
-	cp *.txt html/*.txt $(htmldir)
-	mkdir $(htmldir)/src
-	cp src/*.c src/*.h src/*.htm src/*.txt $(htmldir)/src
-	sed -i 's:href="../:href=":g' $(htmldir)/*.htm
+override_dh_installchangelogs:
+	dh_installchangelogs src/Changes.txt
+
+override_dh_compress:
+	dh_compress -X.c -X.h -X.txt

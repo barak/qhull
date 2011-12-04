@@ -2,10 +2,10 @@ Source: qhull
 Section: math
 Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
-Uploaders: Rafael Laboissiere <rafael@debian.org>
+Uploaders: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 7.0.0), docbook2x (>= 0.8.8-3), xsltproc,
- cdbs, docbook-xml, autotools-dev
+Build-Depends: debhelper (>= 8), dh-autoreconf,
+	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
 Homepage: http://www.qhull.org
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/qhull.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/qhull.git

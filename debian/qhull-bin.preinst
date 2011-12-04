@@ -4,8 +4,8 @@ set -e
 
 case "$1" in
     install|upgrade)
-	if test -L /usr/share/doc/libqhull-dev; then
-	    rm -f /usr/share/doc/libqhull-dev
+	if test -L /usr/share/doc/qhull-bin; then
+	    rm -f /usr/share/doc/qhull-bin
         fi
 	;;
 
