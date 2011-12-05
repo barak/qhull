@@ -5,7 +5,7 @@
 
 # consider: GCC -fno-strict-aliasing
 
-$(dh_targets) %:
+%:
 	dh $@ --with autoreconf --parallel
 
 override_dh_autoreconf:
