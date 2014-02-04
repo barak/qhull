@@ -4,11 +4,11 @@ Subject: debianize test failure msg
 
 Redirect users to the Debian BTS in the error message of rbox.
 ---
- src/libqhull/io.c |    5 +----
- 1 files changed, 1 insertions(+), 4 deletions(-)
+ src/libqhull/io.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/src/libqhull/io.c b/src/libqhull/io.c
-index 520835b..9dcde52 100644
+index 09a0079..6601ffd 100644
 --- a/src/libqhull/io.c
 +++ b/src/libqhull/io.c
 @@ -3932,10 +3932,7 @@ qhull warning: instead of %d %d-dimensional points, input contains\n\
@@ -23,4 +23,3 @@ index 520835b..9dcde52 100644
  \n\
  Type 'qhull' for a short list of options.\n");
    }
--- 

@@ -8,11 +8,11 @@ in fact no security issue.  However we will work around it anyway.
 
 Bug-Debian: http://bugs.debian.org/643461
 ---
- src/libqhull/io.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ src/libqhull/io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/libqhull/io.c b/src/libqhull/io.c
-index 9dcde52..45ef7bc 100644
+index 6601ffd..fb1a7fd 100644
 --- a/src/libqhull/io.c
 +++ b/src/libqhull/io.c
 @@ -2238,7 +2238,7 @@ void qh_printfacet3math(FILE *fp, facetT *facet, qh_PRINT format, int notfirst)
@@ -24,4 +24,3 @@ index 9dcde52..45ef7bc 100644
  } /* printfacet3math */
  
  
--- 

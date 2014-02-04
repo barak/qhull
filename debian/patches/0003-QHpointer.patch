@@ -4,20 +4,19 @@ Subject: QHpointer
 
 Access globals via a pointer to allocated memory.
 ---
- src/libqhull/user.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ src/libqhull/user.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/libqhull/user.h b/src/libqhull/user.h
-index 84e7b5f..7c50205 100644
+index a3322aa..e5063c7 100644
 --- a/src/libqhull/user.h
 +++ b/src/libqhull/user.h
-@@ -595,7 +595,7 @@ stop after qh_JOGGLEmaxretry attempts
-     user_eg.c for an example
- */
- #ifndef qh_QHpointer
+@@ -599,7 +599,7 @@ stop after qh_JOGGLEmaxretry attempts
+ #error QH6207 Qhull error: Use qh_QHpointer_dllimport instead of qh_dllimport with qh_QHpointer
+ #endif
+ #else
 -#define qh_QHpointer 0
 +#define qh_QHpointer 1
  #if qh_QHpointer_dllimport
- #error QH6234 Qhull error: qh_QHpointer must be defined when using qh_QHpointer_dllimport.
+ #error QH6234 Qhull error: Use qh_dllimport instead of qh_QHpointer_dllimport when qh_QHpointer is not defined
  #endif
--- 
