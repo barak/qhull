@@ -7,7 +7,7 @@
 
    see unix.c for full interface
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2003, The Geometry Center
 */
 
 #include <stdio.h>
@@ -52,14 +52,12 @@ int isatty (int);  /* returns 1 if stdin is a tty
     concise prompt below
 */  
 
-char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
-
 /* duplicated in qdelau_f.htm and qdelaun.htm */
 char hidden_options[]=" d n v H U Qb QB Qc Qf Qg Qi Qm Qr QR Qv Qx TR E V FC Fi Fo Ft Fp FV Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 ";
 
 char qh_prompta[]= "\n\
 qdelaunay- compute the Delaunay triangulation\n\
-    http://www.geom.umn.edu/locate/qhull  %s\n\
+    http://www.qhull.org  %s\n\
 \n\
 input (stdin):\n\
     first lines: dimension and number of points (or vice-versa).\n\
@@ -124,6 +122,7 @@ More formats:\n\
     FF   - facet dump without ridges\n\
     FI   - ID of each Delaunay region\n\
     Fm   - merge count for each Delaunay region (511 max)\n\
+    FM   - Maple output (2-d only, lifted to a paraboloid)\n\
     Fn   - count plus neighboring region for each Delaunay region\n\
     FN   - count plus neighboring region for each point\n\
     FO   - options and precision constants\n\
@@ -176,7 +175,7 @@ Print options:\n\
     synopsis for qhull 
 */  
 char qh_prompt2[]= "\n\
-qdelaunay- compute the Delaunay triangulation. Qhull %s\n\
+qdelaunay- compute the Delaunay triangulation.  Qhull %s\n\
     input (stdin): dimension, number of points, point coordinates\n\
     comments start with a non-numeric character\n\
 \n\
@@ -223,7 +222,7 @@ Except for 'F.' and 'PG', upper-case options take an argument.\n\
  Farea          FArea_total    Fcoincident    Fd_cdd_in      FD_cdd_out\n\
  FF_dump_xridge FIDs           Fmerges        Fneighbors     FNeigh_vertex\n\
  FOptions       FPoint_near    FQdelaun       Fsummary       FSize\n\
- Fvertices      Fxtremes\n\
+ Fvertices      Fxtremes       FMaple\n\
 \n\
  Gvertices      Gpoints        Gall_points    Gno_planes     Ginner\n\
  Gcentrums      Ghyperplanes   Gridges        Gouter         GDrop_dim\n\
@@ -280,7 +279,7 @@ int main(int argc, char *argv[]) {
     exit(qh_ERRnone);
   }
   if (argc > 1 && *argv[1] == '-' && !*(argv[1]+1)) {
-    fprintf(stdout, qh_prompta, qh_version,  
+    fprintf(stdout, qh_prompta, qh_version,
 		qh_promptb, qh_promptc, qh_promptd, qh_prompte);
     exit(qh_ERRnone);
   }

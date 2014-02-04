@@ -24,14 +24,14 @@ We need to know:
 We encourage you to cite the use of any Geometry Center software you
 have used in your publications.  
 
-To cite Qhull, use
+To cite Qhull, please use
 
-    Barber, C.B., Dobkin, D.P., and Huhdanpaa, H.T., "The Quickhull 
+        Barber, C.B., Dobkin, D.P., and Huhdanpaa, H.T., "The Quickhull 
 	algorithm for convex hulls," ACM Trans. on Mathematical Software,
-	Dec 1996.  http://www.geom.umn.edu/locate/qhull
+	22(4):469-483, Dec 1996, http://www.qhull.org.
 
 Please send e-mail to
 
-    qhull@geom.umn.edu
+    qhull@qhull.org
 
 Thank you!

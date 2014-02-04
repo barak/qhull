@@ -6,7 +6,7 @@
 
    see unix.c for full interface
 
-   copyright (c) 1993-2001, The Geometry Center
+   copyright (c) 1993-2003, The Geometry Center
 */
 
 #include <stdio.h>
@@ -41,8 +41,8 @@ int isatty (int);  /* returns 1 if stdin is a tty
 /*-<a                             href="qh-qhull.htm#TOC"
   >-------------------------------</a><a name="prompt">-</a>
 
-  qh_prompt and qh_version
-    version and long prompt for qconvex
+  qh_prompt
+    long prompt for qconvex
     
   notes:
     restricted version of qhull.c
@@ -51,14 +51,12 @@ int isatty (int);  /* returns 1 if stdin is a tty
     concise prompt below
 */  
 
-char qh_version[]= "version 3.1 2001/10/04";   /* used for error messages */
-
 /* duplicated in qconvex.htm */
 char hidden_options[]=" d v H Qbb Qf Qg Qm Qr Qu Qv Qx Qz TR E V Fp Gt Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 ";
 	       
 char qh_prompta[]= "\n\
 qconvex- compute the convex hull\n\
-    http://www.geom.umn.edu/locate/qhull  %s\n\
+    http://www.qhull.org  %s\n\
 \n\
 input (stdin):\n\
     first lines: dimension and number of points (or vice-versa).\n\
@@ -238,7 +236,7 @@ Except for 'F.' and 'PG', upper-case options take an argument.\n\
  FD_cdd_out     FFacet_xridge  Finner         FIDs           Fmerges\n\
  Fneighbors     FNeigh_vertex  Fouter         FOptions       FPoint_near\n\
  FQhull         Fsummary       FSize          Fvertices      FVertex_ave\n\
- Fxtremes\n\
+ Fxtremes       FMaple\n\
 \n\
  Gvertices      Gpoints        Gall_points    Gno_planes     Ginner\n\
  Gcentrums      Ghyperplanes   Gridges        Gouter         GDrop_dim\n\
