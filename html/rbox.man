@@ -168,9 +168,6 @@ qhull(1)
 .SH AUTHOR
 .nf
 C. Bradford Barber
-c/o The Geometry Center
-400 Lind Hall
-207 Church Street S.E.
-Minneapolis, MN 55455
+bradb@shore.net
 .fi
 
