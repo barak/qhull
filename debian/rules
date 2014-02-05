@@ -3,8 +3,6 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# consider: GCC -fno-strict-aliasing
-
 %:
 	dh $@ --with autoreconf --parallel
 
