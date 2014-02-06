@@ -3,7 +3,7 @@
 /*.substvars
 /libqhull-dev/
 /libqhull-doc/
-/libqhull5/
+/libqhull6/
 /qhull-bin/
 /*.1
 /*.xml
