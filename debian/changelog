@@ -1,20 +1,33 @@
-qhull (2011.2-1) unstable; urgency=low
+qhull (2012.1-1) unstable; urgency=low
 
   * New upstream release (closes: #621909)
     - Port quilt patches to new upstream.
+    - Upstream now supports cmake: use it instead of autotools.
+      - This should address the binutils-gold issue (closes: #556302)
+      - Ditto for undefined reference to pow@@GLIBC_2.2.5 (closes: #713546)
+    - Upstream incremented to libqhull.so.6 so switch to libqhull6
+      - Remove symbols file
+    - Update many paths to account for upstream changes.
+      - upstream installs .htm files intermingled with .h file in /usr/include,
+        move the .htm to /usr/share/doc with symlinks for the .h files as they
+        are referred to from the .htm files.  (These will be missing if the -doc
+        package is installed without the -dev package, but it hardly seems worth
+        adding a dependency.)
   * Add myself as uploader in debian/control (closes: #571875)
   * Fix wx include __POWERPC__ issue (closes: #640432)
   * Update/modify debian packaging
-    - Switch to dh8 in debian/rules; flush cdbs.
-    - Various simplifications allowed by dh8.
+    - Switch to dh9 in debian/rules; flush cdbs.
+    - Bump standards version
+    - Various simplifications allowed by modern dh.
     - Move all dev docs to -doc; remove contrary stanza in README.Debian.
-    - Update many paths to account for upstream changes.
-    - Update symbols file.
     - Activate single-debian-patch source option; see git for patch breakdown.
     - Gentler preinst /usr/share/doc/libqhull-dev symlink excision, and add
       preinst to similarly excise any /usr/share/doc/qhull-bin symlink.
+    - Mash installed debian/tmp into shape ourselves.
+  * Add quilt patches for minor issues: spelling, man page bug
+  * Put Debian TODO file in -doc package
 
- -- Barak A. Pearlmutter <bap@debian.org>  Sun, 04 Dec 2011 23:05:04 +0000
+ -- Barak A. Pearlmutter <bap@debian.org>  Thu, 06 Feb 2014 13:43:21 +0000
 
 qhull (2009.1-3) unstable; urgency=low
 
