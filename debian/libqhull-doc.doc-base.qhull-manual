@@ -1,4 +1,4 @@
-Document: qhull
+Document: qhull-manual
 Title: QHull Manual
 Author: C. Bradford Barber
 Abstract: This manual describes Qhull, a general dimension convex hull
@@ -9,5 +9,5 @@ Abstract: This manual describes Qhull, a general dimension convex hull
 Section: Science/Mathematics
 
 Format: HTML
-Index: /usr/share/doc/libqhull-doc/html/index.htm
-Files: /usr/share/doc/libqhull-doc/html/*.htm
+Index: /usr/share/doc/libqhull-doc/qhull/index.htm
+Files: /usr/share/doc/libqhull-doc/qhull/*.htm

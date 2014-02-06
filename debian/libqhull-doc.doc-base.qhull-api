@@ -1,0 +1,9 @@
+Document: qhull-api
+Title: QHull Functions, Macros, and Data Structures
+Author: C. Bradford Barber
+Abstract: Detailed Description of Qhull Internals and APIs.
+Section: Science/Mathematics
+
+Format: HTML
+Index: /usr/share/doc/libqhull-doc/include/index.htm
+Files: /usr/share/doc/libqhull-doc/include/*
