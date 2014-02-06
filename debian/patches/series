@@ -1,3 +1,5 @@
 0001-debianize-test-failure-msg.patch
 0002-format-string-security.patch
 0003-QHpointer.patch
+0004-spelling.patch
+0005-QJN-not-a-macro.patch
