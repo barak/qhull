@@ -26,6 +26,19 @@ override_dh_auto_build:
 override_dh_auto_test:
 	env PATH=$(CURDIR)/src:$${PATH} eg/q_test
 
+override_dh_auto_install:
+	dh_auto_install
+	@echo No need for extra copy of license.
+	rm --verbose debian/tmp/usr/share/doc/qhull/COPYING.txt || true
+	@echo No need for doc/ copies of man pages in ../../man/man1/ or for other formats.
+	@for f in qhull rbox; do \
+	  for ext in man txt htm; do \
+	    rm --verbose debian/tmp/usr/share/doc/qhull/$$f.$$ext || true; \
+	  done \
+	done
+	@-mv --verbose debian/tmp/usr/lib/libqhullstatic.a debian/tmp/usr/lib/libqhull.a
+	@-mv --verbose debian/tmp/usr/lib/libqhullstatic_p.a debian/tmp/usr/lib/libqhull_p.a
+
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
 
