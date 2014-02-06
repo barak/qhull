@@ -42,5 +42,12 @@ override_dh_auto_install:
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
 
+override_dh_link:
+	mkdir -p debian/libqhull-doc/usr/share/doc/libqhull-doc/include
+	@for f in $$(cd debian/tmp && echo usr/include/libqhull/*.h); do \
+	  ln --verbose -s /$$f debian/libqhull-doc/usr/share/doc/libqhull-doc/include/; \
+	done
+	dh_link
+
 override_dh_compress:
 	dh_compress -X.c -X.h -X.txt
