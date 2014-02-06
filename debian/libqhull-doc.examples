@@ -1,1 +1,6 @@
-usr/share/doc/qhull/examples/*
+## The contents used to be:
+## $ ls /usr/share/doc/libqhull-dev/examples/
+## Makefile.txt  Mborland.gz  q_eg  q_egtest  Qhull-go.bat  qhull_interface.cpp  q_test.bat.gz  q_test.gz  user_eg2.c  user_eg.c
+## These are present in the upstream sources, but are not installed by the cmake scripts.
+
+# usr/share/doc/qhull/examples/*
