@@ -1,11 +1,11 @@
-/files
-/*.debhelper*
+/*.1
+/*.debhelper
+/*.debhelper.log
 /*.substvars
+/*.xml
+/files
 /libqhull-dev/
 /libqhull-doc/
 /libqhull6/
 /qhull-bin/
-/*.1
-/*.xml
-/stamp-*
 /tmp/
