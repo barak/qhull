@@ -1,11 +1,29 @@
 #!/bin/sh
 #
 #  NOTE:  all tests duplicated in q_test.bat
+if ! qconvex >/dev/null 2>&1; then
+    if [ ! -d bin ]; then
+	echo Run eg/q_test from the Qhull directory
+	exit
+    fi
+    if [ ! -e bin/qconvex -a ! -e bin/qconvex.exe ]; then
+	echo 'Build qhull first.  qconvex is missing from bin/ directory and $PATH'
+	exit
+    fi
+    if ! qconvex >/dev/null 2>&1; then
+	PATH=$PWD/bin:$PATH
+    fi
+fi
+if ! user_eg >/dev/null; then
+    echo user_eg failed to run.  It uses the shared qhull library 
+    echo 'On Linux, export LD_LIBRARY_PATH=$PWD/lib:$LD_LIBRARY_PATH'
+fi
 set -v
 echo === errors if 'user_eg' and 'user_eg2' not found ===
 echo === check user_eg ${d:-`date`} =====================
 user_eg "QR1 p n Qt" "v p" Fp
 user_eg2 "QR1 p" "v p" Fp
+user_eg3 rbox "10 D2" "2 D2" qhull "p"
 echo === check front ends ${d:-`date`} ==================
 qconvex -
 qconvex .
@@ -60,7 +78,6 @@ rbox 1000 W0 | qhull QR2 QJ s Fs Tv
 rbox 1000 W0 | qhull QR2 s Fs Tv
 rbox 1000 s | qhull C0.02 Qc Tv
 rbox 500 s D4 | qhull C0.01 Qc Tv
-rbox 1000 s | qhull C-0.02 Qc Tv
 rbox 1000 s | qhull C-0.02 Qc Tv
 rbox 1000 s D4 | qhull C-0.01 Qc Tv
 rbox 200 s D5 | qhull C-0.01 Qx Qc Tv 
@@ -266,7 +283,7 @@ rbox 10 s D3 | qhull QR-1
 rbox 10 s D3 | qhull QR-40
 rbox 1000 D3 | qhull Tcvs
 rbox 100 D3 | qhull T8 Tz TO q_test.log.1
-tail -10 q_test.log.1
+tail -n -10 q_test.log.1
 rm q_test.log.1
 rbox 100 s D3 | qhull TcvV-2
 rbox 100 s D3 | qhull TcvC2
@@ -332,6 +349,7 @@ echo === this should generate an error ${d:-`date`}
 rbox 1000 s D3 | qhull C-0.01 Q6 FO Po Tcv Qc
 rbox 1000 s D3 | qhull C-0.01 Q7 FO Tcv Qc
 rbox 1000 s D3 | qhull C-0.01 Qx Tcv Qc
+echo === this may generate an error e.g., t1263080158 ${d:-`date`}
 rbox 100 s D3 t | qhull R1e-3 Tcv Qc
 rbox 100 s D3 t | qhull R1e-2 Tcv Qc
 rbox 500 s D3 t | qhull R0.05 A-1 Tcv Qc

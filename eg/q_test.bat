@@ -1,10 +1,12 @@
-echo q_test for Windows DOS box 2002/6/1 >q_test.x
+echo Run q_test for Windows from the bin/ directory. >q_test.x
 echo === errors if 'user_eg' and 'user_eg2' not found ===
 echo === check user_eg === >>q_test.x
 echo "user_eg 'QR1 p n Qt' 'v p' Fp" >>q_test.x
 user_eg "QR1 p n Qt" "v p" Fp >>q_test.x
 echo "user_eg2 'QR1 p' 'v p' Fp" >>q_test.x
 user_eg2 "QR1 p" "v p" Fp >>q_test.x
+echo 'user_eg3 rbox "10 D2" "2 D2" qhull "p"' >>q_test.x
+user_eg3 rbox "10 D2" "2 D2" qhull "p" >>q_test.x
 echo === check front ends ========================================================== >>q_test.x
 echo "qconvex -" >>q_test.x
 qconvex - >>q_test.x
@@ -112,8 +114,6 @@ echo "rbox 1000 s t | qhull C0.02 Qc Tv" >>q_test.x
 rbox 1000 s t | qhull C0.02 Qc Tv >>q_test.x
 echo "rbox 500 s D4 t | qhull C0.01 Qc Tv" >>q_test.x
 rbox 500 s D4 t | qhull C0.01 Qc Tv >>q_test.x
-echo "rbox 1000 s t | qhull C-0.02 Qc Tv" >>q_test.x
-rbox 1000 s t | qhull C-0.02 Qc Tv >>q_test.x
 echo "rbox 1000 s t | qhull C-0.02 Qc Tv" >>q_test.x
 rbox 1000 s t | qhull C-0.02 Qc Tv >>q_test.x
 echo "rbox 1000 s D4 t | qhull C-0.01 Qc Tv" >>q_test.x
