@@ -38,6 +38,9 @@ override_dh_auto_install:
 	done
 	@-mv --verbose debian/tmp/usr/lib/libqhullstatic.a debian/tmp/usr/lib/libqhull.a
 	@-mv --verbose debian/tmp/usr/lib/libqhullstatic_p.a debian/tmp/usr/lib/libqhull_p.a
+	find debian/tmp/usr/lib -type f -name '*.so*' \
+	 -exec chrpath --list '{}' ';' \
+	 -exec chrpath --delete '{}' ';'
 
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
