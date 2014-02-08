@@ -1,3 +1,11 @@
+qhull (2012.1-2) unstable; urgency=medium
+
+  * Build dependency on cmake is needed.
+  * Remove ancient install-time scripts related to /usr/doc/ transition.
+  * Create backwards-compatibility links in /usr/include/qhull/.
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sat, 08 Feb 2014 22:45:45 +0000
+
 qhull (2012.1-1) unstable; urgency=low
 
   * New upstream release (closes: #621909)
