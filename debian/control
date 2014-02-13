@@ -5,6 +5,7 @@ Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.
 Uploaders: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 9),
+	       dh-exec (>= 0.3),
 	       cmake,
 	       chrpath,
 	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
@@ -15,6 +16,8 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/qhull.g
 Package: libqhull6
 Section: libs
 Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: calculate convex hulls and related structures (shared library)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
@@ -27,6 +30,8 @@ Description: calculate convex hulls and related structures (shared library)
 Package: libqhull-dev
 Section: libdevel
 Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
 Depends: libqhull6 (= ${binary:Version}), ${misc:Depends}
 Description: calculate convex hulls and related structures (development files)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
