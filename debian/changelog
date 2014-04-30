@@ -1,3 +1,10 @@
+qhull (2012.1-5) unstable; urgency=medium
+
+  * add symbols file
+  * silence lintian binary-file-built-without-LFS-support
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Wed, 30 Apr 2014 13:13:14 +0100
+
 qhull (2012.1-4) unstable; urgency=medium
 
   * Add convenience link to #include <qhull/qhull.h> to simplify transition.
