@@ -1,4 +1,5 @@
 version=3
-# https://savannah.nongnu.org/files/?group=qhull qhull-([\d+\.]+)\.tar\.gz
-http://www.qhull.org/download/qhull-(\d[\d\.]*)-src\.tgz
-# http://www.qhull.org/download/qhull-(\d[\d\.]*)\.tar\.gz
+http://www.qhull.org/download/qhull-(\d[\d\.]*)-src.*\.tgz
+
+# Need to manually rename, e.g., this is version 2015.2
+# http://www.qhull.org/download/qhull-2015-src-7.2.0.tgz
