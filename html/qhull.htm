@@ -17,7 +17,8 @@
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a><br>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
 <b>To:</b> <a href="#synopsis">sy</a>nopsis &#149; <a href="#input">in</a>put
 &#149; <a href="#outputs">ou</a>tputs &#149; <a href="#controls">co</a>ntrols
 &#149; <a href="#options">op</a>tions
@@ -116,7 +117,7 @@ hull contains non-simplicial facets (e.g., a hypercube). See
 are there extra points in a 4-d or higher convex hull?</a><br>
 </p>
 
-<p><b>Copyright &copy; 1995-2012 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2015 C.B. Barber</b></p>
 
 <hr>
 
@@ -253,7 +254,8 @@ individually or together.</p>
         See <a href=qvoronoi.htm>qvoronoi</a>.</dd>
     <dt><a name="H">qhull H</a></dt>
     <dd>compute the halfspace intersection about a point via polar
-        duality.  See <a href=qhalf.htm>qhalf</a>.</dd>
+        duality.  The point is below the hyperplane that defines the halfspace.
+        See <a href=qhalf.htm>qhalf</a>.</dd>
 </dl>
 </blockquote>
 
@@ -339,7 +341,8 @@ Qhull control options:
     Q8   - do not process near-inside points
     Q9   - process furthest of furthest points
     Q10  - no special processing for narrow distributions
-        Q11  - copy normals and recompute centrums for tricoplanar facets
+    Q11  - copy normals and recompute centrums for tricoplanar facets
+    Q12  - do not error on wide merge due to duplicate ridge and nearly coincident points
 
 Towpaths Trace options:
     T4   - trace at level n, 4=all, 5=mem/gauss, -1= events
@@ -451,7 +454,8 @@ Print options:
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a><br>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
 <b>To:</b> <a href="#synopsis">sy</a>nopsis &#149; <a href="#input">in</a>put
 &#149; <a href="#outputs">ou</a>tputs &#149; <a href="#controls">co</a>ntrols
 &#149; <a href="#options">op</a>tions

@@ -65,15 +65,20 @@ Functions and macros from qset.h.  Counts occurrences in this test.  Does not co
     SETsecond_ -- 1 test
     SETsecondt_ -- 2 tests
     SETtruncate_ -- 2 tests
+
+    Copyright (c) 2012-2015 C.B. Barber. All rights reserved.
+    $Id: //main/2015/qhull/src/testqset/testqset.c#4 $$Change: 2062 $
+    $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
 */
+
+#include "libqhull/user.h"  /* QHULL_CRTDBG */
+#include "libqhull/qset.h"
+#include "libqhull/mem.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "qset.h"
-#include "mem.h"
 
 typedef int i2T;
 #define MAXerrorCount 100 /* quit after n errors */
@@ -88,43 +93,51 @@ enum {
     MAXint= 0x7fffffff,
 };
 
-char prompt[]= "testqset N [M] -- Test qset.c and mem.c\n\
+char prompt[]= "testqset N [M] [T5] -- Test qset.c and mem.c\n\
+  \n\
+  If this test fails then qhull will not work.\n\
+  \n\
   Test qsets of 0..N integers with a check every M iterations (default ~log10)\n\
   Additional checking and logging if M is 1\n\
+  \n\
+  T5 turns on memory logging (qset does not log)\n\
+  \n\
   For example:\n\
     testqset 10000\n\
 ";
 
 int error_count= 0;  /* Global error_count.  checkSetContents() keeps its own error count.  It exits on too many errors */
 
+/* Macros normally defined in geom.h */
+#define fmax_( a,b )  ( ( a ) < ( b ) ? ( b ) : ( a ) )
+
 /* Macros normally defined in user.h */
 
-#define qh_MEMalign ((int)(sizeof(void *)))
+#define realT double
+#define qh_MEMalign ((int)(fmax_(sizeof(realT), sizeof(void *))))
 #define qh_MEMbufsize 0x10000       /* allocate 64K memory buffers */
 #define qh_MEMinitbuf 0x20000      /* initially allocate 128K buffer */
 
 /* Macros normally defined in QhullSet.h */
 
 
-/* Functions normally defined in usermem.h */
+/* Functions normally defined in user.h for usermem.c */
 
-void qh_exit(int exitcode) {
-    exit(exitcode);
-} /* exit */
+void    qh_exit(int exitcode);
+void    qh_fprintf_stderr(int msgcode, const char *fmt, ... );
+void    qh_free(void *mem);
+void   *qh_malloc(size_t size);
 
-void qh_free(void *mem) {
-    free(mem);
-} /* free */
-
-void *qh_malloc(size_t size) {
-    return malloc(size);
-} /* malloc */
+/* Normally defined in user.c */
 
 void    qh_errexit(int exitcode, void *f, void *r)
 {
-    f= r; /* unused */
+    (void)f; /* unused */
+    (void)r; /* unused */
     qh_exit(exitcode);
 }
+
+/* Normally defined in userprintf.c */
 
 void    qh_fprintf(FILE *fp, int msgcode, const char *fmt, ... )
 {
@@ -134,7 +147,8 @@ void    qh_fprintf(FILE *fp, int msgcode, const char *fmt, ... )
     va_list args;
 
     if (!fp) {
-        fprintf(stderr, "qh_fprintf: fp not defined for '%s'", fmt);
+        /* Do not use qh_fprintf_stderr.  This is a standalone program */
+        fprintf(stderr, "QH6232 qh_fprintf: fp not defined for '%s'", fmt);
         qh_errexit(6232, NULL, NULL);
     }
     if(fmtlen>0){
@@ -157,7 +171,7 @@ void    qh_fprintf(FILE *fp, int msgcode, const char *fmt, ... )
 
 /* Defined below in order of use */
 int main(int argc, char **argv);
-void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int *checkEvery);
+void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int *checkEvery, int *traceLevel);
 void setupMemory(int tracelevel, int numInts, int **intarray);
 
 void testSetappendSettruncate(int numInts, int *intarray, int checkEvery);
@@ -177,10 +191,16 @@ int main(int argc, char **argv) {
     int numInts;
     int checkEvery= MAXint;
     int curlong, totlong;
-    int tracelevel= 4; /* 4 normally.  5 for memory tracing */
+    int traceLevel= 4; /* 4 normally, no tracing since qset does not log.  5 for memory tracing */
 
-    readOptions(argc, argv, prompt, &numInts, &checkEvery);
-    setupMemory(tracelevel, numInts, &intarray);
+#if defined(_MSC_VER) && defined(_DEBUG) && defined(QHULL_CRTDBG)  /* user.h */
+    _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_DELAY_FREE_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) );
+    _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE | _CRTDBG_MODE_DEBUG );
+    _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
+#endif
+
+    readOptions(argc, argv, prompt, &numInts, &checkEvery, &traceLevel);
+    setupMemory(traceLevel, numInts, &intarray);
 
     testSetappendSettruncate(numInts, intarray, checkEvery);
     testSetdelSetadd(numInts, intarray, checkEvery);
@@ -207,14 +227,15 @@ int main(int argc, char **argv) {
     return 0;
 }/*main*/
 
-void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int *checkEvery)
+void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int *checkEvery, int *traceLevel)
 {
     long numIntsArg;
     long checkEveryArg;
     char *endp;
+    int isTracing= 0;
 
-    if (argc != 2 && argc != 3) {
-        printf(promptstr);
+    if (argc < 2 || argc > 4) {
+        printf("%s", promptstr);
         exit(0);
     }
     numIntsArg= strtol(argv[1], &endp, 10);
@@ -228,7 +249,11 @@ void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int
     }
     *numInts= (int)numIntsArg;
 
-    if(argc>2){
+    if(argc==3 && argv[2][0]=='T' && argv[2][1]=='5' ){
+        isTracing= 1;
+        *traceLevel= 5;
+    }
+    if(argc==4 || (argc==3 && !isTracing)){
         checkEveryArg= strtol(argv[2], &endp, 10);
         if(checkEveryArg<1){
             qh_fprintf(stderr, 6321, "checkEvery argument should be 1 or greater.  Got '%s'\n", argv[2]);
@@ -237,6 +262,15 @@ void readOptions(int argc, char **argv, const char *promptstr, int *numInts, int
         if(checkEveryArg>MAXint){
             qh_fprintf(stderr, 6322, "qset does not currently support 64-bit ints.  Maximum checkEvery is %d\n", MAXint);
             exit(1);
+        }
+        if(argc==4){
+            if(argv[3][0]=='T' && argv[3][1]=='5' ){
+                isTracing= 1;
+                *traceLevel= 5;
+            }else{
+                qh_fprintf(stderr, 6242, "Optional third argument must be 'T5'.  Got '%s'\n", argv[3]);
+                exit(1);
+            }
         }
         *checkEvery= (int)checkEveryArg;
     }
@@ -320,7 +354,7 @@ void testSetappendSettruncate(int numInts, int *intarray, int checkEvery)
 void testSetdelSetadd(int numInts, int *intarray, int checkEvery)
 {
     setT *ints=qh_setnew(1);
-    int i,j, isCheck;
+    int i,j,isCheck;
 
     qh_fprintf(stderr, 8003, "\n\nTesting qh_setdelnthsorted and qh_setaddnth 1..%d. Test", numInts-1);
     for(j=1; j<numInts; j++){  /* size 0 not valid */
@@ -331,6 +365,7 @@ void testSetdelSetadd(int numInts, int *intarray, int checkEvery)
             checkSetContents("qh_setappend", ints, j, 0, -1, -1);
             for(i= 0; i<j && i<100; i++){  /* otherwise too slow */
                 isCheck= log_i(ints, "", i, numInts, checkEvery);
+                (void)isCheck; /* unused */
                 qh_setdelnthsorted(ints, i);
                 qh_setaddnth(&ints, i, intarray+i);
                 if(checkEvery==1){
@@ -439,7 +474,7 @@ void testSetdelsortedEtc(int numInts, int *intarray, int checkEvery)
                 qh_setdelnthsorted(ints, i/2);
                 if (checkEvery==1)
                   checkSetContents("qh_setdelnthsorted", ints, j-1, 0, i/2+1, -1);
-                /* FIXUP qh_setdelnth  move-to-front */
+                /* test qh_setdelnth and move-to-front */
                 qh_setdelsorted(ints, intarray+i/2+1);
                 checkSetContents("qh_setdelsorted 2", ints, j-2, 0, i/2+2, -1);
                 qh_setaddsorted(&ints, intarray+i/2+1);

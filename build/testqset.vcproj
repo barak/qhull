@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="testqset"
-	ProjectGUID="{C9E3DBF2-AA34-3900-9761-5A846CAB6397}"
+	ProjectGUID="{2D714931-0586-42C5-A0F9-1A4ECD251890}"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -52,7 +52,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -80,14 +80,15 @@
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
 				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
-				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "
+				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\testqset.exe"
-				Version="6.0"
+				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\bin\testqset.pdb"
 				SubSystem="1"
+				ImportLibrary="..\lib\testqset_d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -152,7 +153,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -169,7 +170,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -178,13 +179,14 @@
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
 				AdditionalOptions=" /STACK:10000000 /machine:X86"
-				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "
+				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\testqset.exe"
-				Version="6.0"
+				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\bin\testqset.pdb"
 				SubSystem="1"
+				ImportLibrary="..\lib\testqset.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -249,7 +251,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -266,7 +268,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -275,13 +277,14 @@
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
 				AdditionalOptions=" /STACK:10000000 /machine:X86"
-				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "
+				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\testqset.exe"
-				Version="6.0"
+				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\bin\testqset.pdb"
 				SubSystem="1"
+				ImportLibrary="..\lib\testqset.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -346,7 +349,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -364,7 +367,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -373,14 +376,15 @@
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
 				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
-				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "
+				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\testqset.exe"
-				Version="6.0"
+				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\bin\testqset.pdb"
 				SubSystem="1"
+				ImportLibrary="..\lib\testqset.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -424,6 +428,22 @@
 			</File>
 			<File
 				RelativePath="..\src\testqset\testqset.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\usermem.c"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			>
+			<File
+				RelativePath="..\src\libqhull\mem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\qset.h"
 				>
 			</File>
 		</Filter>

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="libqhull"
-	ProjectGUID="{5D02D0DA-335E-33A3-A3B2-0746F1C0E068}"
+	ProjectGUID="{51BD63AB-336E-4215-B725-21F144BCBCBC}"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -52,15 +52,15 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;qhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;libqhull_EXPORTS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Debug"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhull_d.pdb"
+				ProgramDataBaseFileName="..\bin\qhull.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -70,8 +70,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;qhull_EXPORTS"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;libqhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -82,12 +82,12 @@
 				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\qhull_d.dll"
-				Version="6.3"
+				Version="7.1"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="..\src\libqhull\qhull-exports.def"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\lib\qhull_d.pdb"
+				ProgramDatabaseFile="..\bin\qhull.pdb"
 				ImportLibrary="..\lib\qhull_d.lib"
 			/>
 			<Tool
@@ -153,14 +153,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Release"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhull.pdb"
+				ProgramDataBaseFileName="..\bin\qhull.pdb"
 				WarningLevel="3"
 				CompileAs="1"
 			/>
@@ -169,8 +169,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -181,11 +181,11 @@
 				AdditionalOptions=" /STACK:10000000 /machine:X86"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\qhull.dll"
-				Version="6.3"
+				Version="7.1"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="..\src\libqhull\qhull-exports.def"
-				ProgramDatabaseFile="..\lib\qhull.pdb"
+				ProgramDatabaseFile="..\bin\qhull.pdb"
 				ImportLibrary="..\lib\qhull.lib"
 			/>
 			<Tool
@@ -251,14 +251,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="MinSizeRel"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhull.pdb"
+				ProgramDataBaseFileName="..\bin\qhull.pdb"
 				WarningLevel="3"
 				CompileAs="1"
 			/>
@@ -267,8 +267,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -279,11 +279,11 @@
 				AdditionalOptions=" /STACK:10000000 /machine:X86"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\qhull.dll"
-				Version="6.3"
+				Version="7.1"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="..\src\libqhull\qhull-exports.def"
-				ProgramDatabaseFile="..\lib\qhull.pdb"
+				ProgramDatabaseFile="..\bin\qhull.pdb"
 				ImportLibrary="..\lib\qhull.lib"
 			/>
 			<Tool
@@ -349,14 +349,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="RelWithDebInfo"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhull.pdb"
+				ProgramDataBaseFileName="..\bin\qhull.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -366,8 +366,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qhull_EXPORTS"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;libqhull_EXPORTS"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -378,12 +378,12 @@
 				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  "
 				OutputFile="..\bin\qhull.dll"
-				Version="6.3"
+				Version="7.1"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="..\src\libqhull\qhull-exports.def"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\lib\qhull.pdb"
+				ProgramDatabaseFile="..\bin\qhull.pdb"
 				ImportLibrary="..\lib\qhull.lib"
 			/>
 			<Tool
