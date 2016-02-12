@@ -18,11 +18,12 @@ build_pass:CONFIG(debug, debug|release){
    OBJECTS_DIR = Release
 }
 
-INCLUDEPATH += ../libqhull
+INCLUDEPATH += ..
 
 SOURCES += testqset.c
 SOURCES += ../libqhull/qset.c
 SOURCES += ../libqhull/mem.c
+SOURCES += ../libqhull/usermem.c
 
 HEADERS += ../libqhull/mem.h
 HEADERS += ../libqhull/qset.h

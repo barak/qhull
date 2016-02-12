@@ -19,7 +19,8 @@ Contents<br>
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a><br>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
 <b>To: </b><a href="#TOC">Qhull imprecision</a>: Table of Contents
 (please wait while loading)
 
@@ -46,7 +47,7 @@ convex. It verifies that all points are on or below all facets. </p>
 <p>Qhull automatically tests for convexity if it detects
 precision errors while constructing the hull. </p>
 
-<p><b>Copyright &copy; 1995-2012 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2015 C.B. Barber</b></p>
 
 <hr>
 
@@ -417,7 +418,7 @@ produce wide facets.
 turned off ('<a href="qh-optq.htm#Q10">Q10</a>'), qhull may produce
 a wide facet:</p>
 <pre>
-         RBOX 1000 L100000 s G1e-16 t1002074964 | QHULL Tv Q10
+         rbox 1000 L100000 s G1e-16 t1002074964 | qhull Tv Q10
 </pre>
 
 <p>
@@ -427,8 +428,8 @@ approximation. For example, if you do not use qdelaunay nor option
 Delaunay triangulation of nearly cocircular points may produce a poor
 approximation:
 <pre>
-         RBOX s 5000 W1e-13 D2 t1002151341 | QHULL d Qt
-         RBOX 1000 s W1e-13 t1002231672 | QHULL d Tv
+         rbox s 5000 W1e-13 D2 t1002151341 | qhull d Qt
+         rbox 1000 s W1e-13 t1002231672 | qhull d Tv
 </pre>
 
 <p>During
@@ -449,7 +450,7 @@ Use option '<a href="qh-optq.htm#Q10">Q10</a>' to try Qhull without
 special processing for narrow distributions.
 For example, special processing is needed for:
 <pre>
-         RBOX 1000 L100000 s G1e-16 t1002074964 | QHULL Tv Q10
+         rbox 1000 L100000 s G1e-16 t1002074964 | qhull Tv Q10
 </pre>
 
 <p>You may turn off the warning message by reducing
@@ -465,18 +466,44 @@ the furthest-site Delaunay triangulation of nearly cocircular points plus the or
 <pre>
         rbox s 1000 W1e-13 P0 D2 t996799242 | qhull d Tv
         rbox 1000 s Z1 G1e-13 t1002152123 | qhull Tv
-        RBOX 1000 s Z1 G1e-13 t1002231668 | QHULL Tv
+        rbox 1000 s Z1 G1e-13 t1002231668 | qhull Tv
 </pre>
 
 <p>
 <li><b>Quadratic running time</b> -- If the output contains large, non-simplicial
 facets, the running time for Qhull may be quadratic in the size of the triangulated
-output.   For example, <tt>RBOX 1000 s W1e-13 c G2 | QHULL d</tt> is 4 times
+output.   For example, <tt>rbox 1000 s W1e-13 c G2 | qhull d</tt> is 4 times
 faster for 500 points.  The convex hull contains two large nearly spherical facets and
 many nearly coplanar facets.  Each new point retriangulates the spherical facet and repartitions the remaining points into all of the nearly coplanar facets.
 In this case, quadratic running time is avoided if you use qdelaunay,
 add option '<a href="qh-optq.htm#Qbb">Qbb</a>',
 or add the origin ('P0') to the input.
+<p>
+<li><b>Nearly coincident points on an edge</b> -- Multiple, nearly coincident points on
+an edge with non-simplicial facets may lead to wide facets or quadratic running time.
+For example, either the convex hull
+in 4-D of a narrow lens with coincident points or the Delaunay triangulation of
+nearly coincident points may lead to very wide facets (e.g., 2267021951.3x).
+
+<p>For Delaunay triangulations an edge occurs between the corresponding upper
+and lower convex hull.  Points on this edge correspond to vertices of the convex hull of the input sites.
+After multiple facet merges, four facets may share the same, duplicate ridge and must be merged.
+Some of these facets may be long and narrow, leading to a very wide merged facet.
+Starting with Qhull 2015.1, an error is reported.
+
+<p>Duplicate ridges occur when the horizon facets for a new point is "pinched".
+In a duplicate ridge, a subridge (e.g., a line segment in 3-d) is shared by two horizon facets.
+At least two of its vertices are nearly coincident.  Qhull 2015.1 adds the 'Cn,r,m' option to rbox.
+This option generates nearly coincident points.  For example, every point of the following
+distributions has a nearly coincident point within a 1e-13 ball.
+Substantially smaller or larger balls do not lead to pinched horizons.
+<pre>
+        rbox L100 1000 D4 s C1,1e-13 t | qhull
+        rbox 75 C1,1E-13 t | qhull d
+</pre>
+For Delaunay triangulations, a bounding box may alleviate this error (e.g.,  <tt>rbox 500 C1,1E-13 t c G1 | qhull d</tt>).
+A later release of qhull will avoid pinched horizons by merging duplicate subridges.  A subridge is
+merged by merging adjacent vertices.
 <p>
 <li><b>Facet with zero-area</b> --
 It is possible for a zero-area facet to be convex with its
@@ -780,7 +807,8 @@ Contents<br>
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a><br>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
 <b>To:</b> <a href="#TOC">Qhull imprecision: Table of Contents</a>
 
 <!-- GC common information -->

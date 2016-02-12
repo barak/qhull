@@ -17,7 +17,8 @@
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a></p>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
 
 <hr>
 <!-- Main text of document -->
@@ -29,7 +30,7 @@ height="100"></a> Qhull control options (Q)</h1>
 <p>This section lists the control options for Qhull. These
 options are indicated by 'Q' followed by a letter. </p>
 
-<p><b>Copyright &copy; 1995-2012 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2015 C.B. Barber</b></p>
 
 <hr>
 
@@ -41,7 +42,8 @@ options are indicated by 'Q' followed by a letter. </p>
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a></p>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
 
 <h2>Qhull control options</h2>
 
@@ -122,6 +124,8 @@ options are indicated by 'Q' followed by a letter. </p>
     <dd>no special processing for narrow distributions</dd>
     <dt><a href="#Q11">Q11</a></dt>
     <dd>copy normals and recompute centrums for tricoplanar facets</dd>
+    <dt><a href="#Q12">Q12</a></dt>
+    <dd>do not error on wide merge due to duplicate ridge and nearly coincident points</dd>
     <dt><a href="#Qm">Qm</a></dt>
     <dd>process points only if they would increase the max. outer
         plane </dd>
@@ -308,7 +312,7 @@ defines these parameters and a maximum number of retries. See <a
 href="qh-impre.htm#joggle">Merged facets or joggled input</a>. </p>
 
 <p>Users of joggled input should consider converting to
-triangulated output ('<A href="../html/qh-optq.htm#Qt">Qt</A>').  Triangulated output is
+triangulated output ('<a href="../html/qh-optq.htm#Qt">Qt</a>').  Triangulated output is
 approximately 1000 times more accurate than joggled input.
 
 <p>Option 'QJ' also sets '<a href="qh-optq.htm#Qbb">Qbb</a>' for
@@ -681,6 +685,23 @@ as duplicate ridges and concave facets.  For example, if qh_triangulate()
 is added to qh_addpoint(), RBOX 1000 s W1e-12 t1001813667 P0 | QHULL d Q11 Tv,
 reports an error due to a duplicate ridge.
 
+<h3><a href="#qhull">&#187;</a><a name="Q12">Q12 - do not error
+on wide merge due to duplicate ridge and nearly coincident points</a></h3>
+
+<p>In 3-d and higher Delaunay Triangulations or 4-d and higher convex hulls, multiple,
+nearly coincident points may lead to very wide facets.  An error is reported if a
+merge across a duplicate ridge would increase the facet width by 100x or more.
+
+<p>Use option 'Q12' to log a warning instead of throwing an error.
+
+<p>For Delaunay triangulations, a bounding box may alleviate this error (e.g., <tt>rbox 500 C1,1E-13 t c G1 | qhull d</tt>).
+This avoids the ill-defined edge between upper and lower convex hulls.
+The problem will be fixed in a future release of Qhull.
+
+<p>To demonstrate the problem, use rbox option 'Cn,r,m' to generate nearly coincident points.
+For more information, see "Nearly coincident points on an edge"
+in <a href="qh-impre.htm#limit</a>Nearly coincident points on an edge</a>.
+
 <!-- Navigation links -->
 <hr>
 
@@ -694,7 +715,8 @@ reports an error due to a duplicate ridge.
 &#149; <a href="qh-optp.htm#print">Print</a>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
-&#149; <a href="qh-optt.htm#trace">Trace</a></p>
+&#149; <a href="qh-optt.htm#trace">Trace</a>
+&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
 <!-- GC common information -->
 <hr>
 

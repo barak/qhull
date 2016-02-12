@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="qhullstatic"
-	ProjectGUID="{3A95DE97-A2DE-4E8B-8E2D-F17652AEB947}"
+	ProjectGUID="{5B24F2E7-EF6E-4AF6-B2CE-1E049B1A12AC}"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -52,7 +52,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -60,7 +60,7 @@
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Debug"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullstatic_d.pdb"
+				ProgramDataBaseFileName="..\bin\qhullstatic.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -134,14 +134,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Release"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullstatic.pdb"
+				ProgramDataBaseFileName="..\bin\qhullstatic.pdb"
 				WarningLevel="3"
 				CompileAs="1"
 			/>
@@ -151,7 +151,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -214,14 +214,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="MinSizeRel"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullstatic.pdb"
+				ProgramDataBaseFileName="..\bin\qhullstatic.pdb"
 				WarningLevel="3"
 				CompileAs="1"
 			/>
@@ -231,7 +231,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -294,14 +294,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="RelWithDebInfo"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullstatic.pdb"
+				ProgramDataBaseFileName="..\bin\qhullstatic.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -312,7 +312,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				AdditionalIncludeDirectories="..\src;..\src\libqhull;"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -410,6 +410,54 @@
 			</File>
 			<File
 				RelativePath="..\src\libqhull\userprintf_rbox.c"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			>
+			<File
+				RelativePath="..\src\libqhull\geom.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\io.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\libqhull.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\mem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\merge.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\poly.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\qhull_a.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\qset.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\random.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\stat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\libqhull\user.h"
 				>
 			</File>
 		</Filter>

@@ -36,40 +36,40 @@
    These examples, call qh_qhull() directly.  They allow
    tighter control on the code loaded with Qhull.
 
-   For a C++ example, see user_eg3.cpp
+   For a C++ example, see user_eg3/user_eg3_r.cpp
 
    Summaries are sent to stderr if other output formats are used
 
-   compiled by 'make user_eg'
+   compiled by 'make bin/user_eg'
 
    see libqhull.h for data structures, macros, and user-callable functions.
 */
 
 #define qh_QHimport
-#include "qhull_a.h"
+#include "libqhull/qhull_a.h"
 
 /*-------------------------------------------------
 -internal function prototypes
 */
-void print_summary (void);
-void makecube (coordT *points, int numpoints, int dim);
-void makeDelaunay (coordT *points, int numpoints, int dim, int seed);
-void findDelaunay (int dim);
-void makehalf (coordT *points, int numpoints, int dim);
+void print_summary(void);
+void makecube(coordT *points, int numpoints, int dim);
+void makeDelaunay(coordT *points, int numpoints, int dim, int seed);
+void findDelaunay(int dim);
+void makehalf(coordT *points, int numpoints, int dim);
 
 /*-------------------------------------------------
 -print_summary()
 */
-void print_summary (void) {
+void print_summary(void) {
   facetT *facet;
   int k;
 
-  printf ("\n%d vertices and %d facets with normals:\n",
+  printf("\n%d vertices and %d facets with normals:\n",
                  qh num_vertices, qh num_facets);
   FORALLfacets {
     for (k=0; k < qh hull_dim; k++)
-      printf ("%6.2g ", facet->normal[k]);
-    printf ("\n");
+      printf("%6.2g ", facet->normal[k]);
+    printf("\n");
   }
 }
 
@@ -77,7 +77,7 @@ void print_summary (void) {
 -makecube- set points to vertices of cube
   points is numpoints X dim
 */
-void makecube (coordT *points, int numpoints, int dim) {
+void makecube(coordT *points, int numpoints, int dim) {
   int j,k;
   coordT *point;
 
@@ -98,11 +98,11 @@ void makecube (coordT *points, int numpoints, int dim) {
 notes:
   makeDelaunay() in user_eg2.c uses qh_setdelaunay() to project points in place.
 */
-void makeDelaunay (coordT *points, int numpoints, int dim, int seed) {
+void makeDelaunay(coordT *points, int numpoints, int dim, int seed) {
   int j,k;
   coordT *point, realr;
 
-  printf ("seed: %d\n", seed);
+  printf("seed: %d\n", seed);
   qh_RANDOMseed_( seed);
   for (j=0; j<numpoints; j++) {
     point= points + j*dim;
@@ -122,7 +122,7 @@ warning:
   This is not implemented for tricoplanar facets ('Qt'),
   See <a href="../html/qh-code.htm#findfacet">locate a facet with qh_findbestfacet()</a>
 */
-void findDelaunay (int dim) {
+void findDelaunay(int dim) {
   int k;
   coordT point[ 100];
   boolT isoutside;
@@ -132,17 +132,17 @@ void findDelaunay (int dim) {
 
   for (k= 0; k < dim; k++)
     point[k]= 0.5;
-  qh_setdelaunay (dim+1, 1, point);
-  facet= qh_findbestfacet (point, qh_ALL, &bestdist, &isoutside);
+  qh_setdelaunay(dim+1, 1, point);
+  facet= qh_findbestfacet(point, qh_ALL, &bestdist, &isoutside);
   if (facet->tricoplanar) {
     fprintf(stderr, "findDelaunay: not implemented for triangulated, non-simplicial Delaunay regions (tricoplanar facet, f%d).\n",
        facet->id);
-    qh_errexit (qh_ERRqhull, facet, NULL);
+    qh_errexit(qh_ERRqhull, facet, NULL);
   }
   FOREACHvertex_(facet->vertices) {
     for (k=0; k < dim; k++)
-      printf ("%5.2f ", vertex->point[k]);
-    printf ("\n");
+      printf("%5.2f ", vertex->point[k]);
+    printf("\n");
   }
 } /*.findDelaunay.*/
 
@@ -152,7 +152,7 @@ void findDelaunay (int dim) {
 
   each halfspace consists of dim coefficients followed by an offset
 */
-void makehalf (coordT *points, int numpoints, int dim) {
+void makehalf(coordT *points, int numpoints, int dim) {
   int j,k;
   coordT *point;
 
@@ -174,7 +174,7 @@ void makehalf (coordT *points, int numpoints, int dim) {
 #define TOTpoints (SIZEcube + SIZEdiamond)
 
 /*--------------------------------------------------
--main- derived from call_qhull in user.c
+-main- derived from Qhull-template in user.c
 
   see program header
 
@@ -182,7 +182,7 @@ void makehalf (coordT *points, int numpoints, int dim) {
   triangulation or Voronoi vertices, and halfspace intersection
 
 */
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   int dim= DIM;             /* dimension of points */
   int numpoints;            /* number of points */
   coordT points[(DIM+1)*TOTpoints]; /* array of coordinates for each point */
@@ -197,14 +197,18 @@ int main (int argc, char *argv[]) {
   int curlong, totlong;     /* memory remaining after qh_memfreeshort */
   int i;
 
-  printf ("This is the output from user_eg.c\n\n\
+  QHULL_LIB_CHECK
+
+  printf("This is the output from user_eg.c\n\n\
 It shows how qhull() may be called from an application using the qhull\n\
-shared library.  It is not part of qhull itself.  If it appears accidently,\n\
-please remove user_eg.c from your project.\n\n");
+shared library.  user_eg is not part of qhull itself.  If it appears\n\
+accidently, please remove user_eg.c from your project.  If it fails\n\
+immediately, user_eg.c was incorrectly linked to the reentrant library.\n\
+Also try 'user_eg T1 2>&1'\n\n");
 
 #if qh_QHpointer  /* see user.h */
   if (qh_qh){
-      printf ("QH6233: Qhull link error.  The global variable qh_qh was not initialized\n\
+      printf("QH6233: Qhull link error.  The global variable qh_qh was not initialized\n\
 to NULL by global.c.  Please compile user_eg.c with -Dqh_QHpointer_dllimport\n\
 as well as -Dqh_QHpointer, or use libqhullstatic, or use a different tool chain.\n\n");
       return -1;
@@ -215,13 +219,13 @@ as well as -Dqh_QHpointer, or use libqhullstatic, or use a different tool chain.
     Run 1: convex hull
   */
   printf( "\ncompute convex hull of cube after rotating input\n");
-  sprintf (flags, "qhull s Tcv %s", argc >= 2 ? argv[1] : "");
+  sprintf(flags, "qhull s Tcv %s", argc >= 2 ? argv[1] : "");
   numpoints= SIZEcube;
-  makecube (points, numpoints, DIM);
+  makecube(points, numpoints, DIM);
   for (i=numpoints; i--; )
     rows[i]= points+dim*i;
-  qh_printmatrix (outfile, "input", rows, numpoints, dim);
-  exitcode= qh_new_qhull (dim, numpoints, points, ismalloc,
+  qh_printmatrix(outfile, "input", rows, numpoints, dim);
+  exitcode= qh_new_qhull(dim, numpoints, points, ismalloc,
                       flags, outfile, errfile);
   if (!exitcode) {                  /* if no error */
     /* 'qh facet_list' contains the convex hull */
@@ -231,22 +235,22 @@ as well as -Dqh_QHpointer, or use libqhullstatic, or use a different tool chain.
     }
   }
   qh_freeqhull(!qh_ALL);                   /* free long memory  */
-  qh_memfreeshort (&curlong, &totlong);    /* free short memory and memory allocator */
+  qh_memfreeshort(&curlong, &totlong);    /* free short memory and memory allocator */
   if (curlong || totlong)
-    fprintf (errfile, "qhull internal warning (user_eg, #1): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
+    fprintf(errfile, "qhull internal warning (user_eg, #1): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
 
   /*
     Run 2: Delaunay triangulation
   */
 
   printf( "\ncompute %d-d Delaunay triangulation\n", dim);
-  sprintf (flags, "qhull s d Tcv %s", argc >= 3 ? argv[2] : "");
+  sprintf(flags, "qhull s d Tcv %s", argc >= 3 ? argv[2] : "");
   numpoints= SIZEcube;
-  makeDelaunay (points, numpoints, dim, (int)time(NULL));
+  makeDelaunay(points, numpoints, dim, (int)time(NULL));
   for (i=numpoints; i--; )
     rows[i]= points+dim*i;
-  qh_printmatrix (outfile, "input", rows, numpoints, dim);
-  exitcode= qh_new_qhull (dim, numpoints, points, ismalloc,
+  qh_printmatrix(outfile, "input", rows, numpoints, dim);
+  exitcode= qh_new_qhull(dim, numpoints, points, ismalloc,
                       flags, outfile, errfile);
   if (!exitcode) {                  /* if no error */
     /* 'qh facet_list' contains the convex hull */
@@ -257,12 +261,12 @@ as well as -Dqh_QHpointer, or use libqhullstatic, or use a different tool chain.
        /* ... your code ... */
     }
     printf( "\nfind %d-d Delaunay triangle closest to [0.5, 0.5, ...]\n", dim);
-    exitcode= setjmp (qh errexit);
+    exitcode= setjmp(qh errexit);
     if (!exitcode) {
       /* Trap Qhull errors in findDelaunay().  Without the setjmp(), Qhull
          will exit() after reporting an error */
       qh NOerrexit= False;
-      findDelaunay (DIM);
+      findDelaunay(DIM);
     }
     qh NOerrexit= True;
   }
@@ -271,56 +275,55 @@ as well as -Dqh_QHpointer, or use libqhullstatic, or use a different tool chain.
     qhT *oldqhA, *oldqhB;
     coordT pointsB[DIM*TOTpoints]; /* array of coordinates for each point */
 
-
     printf( "\nsave first triangulation and compute a new triangulation\n");
     oldqhA= qh_save_qhull();
-    sprintf (flags, "qhull s d Tcv %s", argc >= 3 ? argv[2] : "");
+    sprintf(flags, "qhull s d Tcv %s", argc >= 3 ? argv[2] : "");
     numpoints= SIZEcube;
-    makeDelaunay (pointsB, numpoints, dim, (int)time(NULL)+1);
+    makeDelaunay(pointsB, numpoints, dim, (int)time(NULL)+1);
     for (i=numpoints; i--; )
       rows[i]= pointsB+dim*i;
-    qh_printmatrix (outfile, "input", rows, numpoints, dim);
-    exitcode= qh_new_qhull (dim, numpoints, pointsB, ismalloc,
+    qh_printmatrix(outfile, "input", rows, numpoints, dim);
+    exitcode= qh_new_qhull(dim, numpoints, pointsB, ismalloc,
                       flags, outfile, errfile);
     if (!exitcode)
       print_summary();
     printf( "\nsave second triangulation and restore first one\n");
     oldqhB= qh_save_qhull();
-    qh_restore_qhull (&oldqhA);
+    qh_restore_qhull(&oldqhA);
     print_summary();
     printf( "\nfree first triangulation and restore second one.\n");
-    qh_freeqhull (qh_ALL);               /* free short and long memory used by first call */
+    qh_freeqhull(qh_ALL);               /* free short and long memory used by first call */
                                          /* do not use qh_memfreeshort */
-    qh_restore_qhull (&oldqhB);
+    qh_restore_qhull(&oldqhB);
     print_summary();
   }
 #endif
   qh_freeqhull(!qh_ALL);                 /* free long memory */
-  qh_memfreeshort (&curlong, &totlong);  /* free short memory and memory allocator */
+  qh_memfreeshort(&curlong, &totlong);  /* free short memory and memory allocator */
   if (curlong || totlong)
-    fprintf (errfile, "qhull internal warning (user_eg, #2): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
+    fprintf(errfile, "qhull internal warning (user_eg, #2): did not free %d bytes of long memory (%d pieces)\n", totlong, curlong);
 
   /*
     Run 3: halfspace intersection about the origin
   */
   printf( "\ncompute halfspace intersection about the origin for a diamond\n");
-  sprintf (flags, "qhull H0 s Tcv %s", argc >= 4 ? argv[3] : "Fp");
+  sprintf(flags, "qhull H0 s Tcv %s", argc >= 4 ? argv[3] : "Fp");
   numpoints= SIZEcube;
-  makehalf (points, numpoints, dim);
+  makehalf(points, numpoints, dim);
   for (i=numpoints; i--; )
     rows[i]= points+(dim+1)*i;
-  qh_printmatrix (outfile, "input as halfspace coefficients + offsets", rows, numpoints, dim+1);
+  qh_printmatrix(outfile, "input as halfspace coefficients + offsets", rows, numpoints, dim+1);
   /* use qh_sethalfspace_all to transform the halfspaces yourself.
      If so, set 'qh feasible_point and do not use option 'Hn,...' [it would retransform the halfspaces]
   */
-  exitcode= qh_new_qhull (dim+1, numpoints, points, ismalloc,
+  exitcode= qh_new_qhull(dim+1, numpoints, points, ismalloc,
                       flags, outfile, errfile);
   if (!exitcode)
     print_summary();
-  qh_freeqhull (!qh_ALL);
-  qh_memfreeshort (&curlong, &totlong);
+  qh_freeqhull(!qh_ALL);
+  qh_memfreeshort(&curlong, &totlong);
   if (curlong || totlong)  /* could also check previous runs */
-    fprintf (stderr, "qhull internal warning (user_eg, #3): did not free %d bytes of long memory (%d pieces)\n",
+    fprintf(stderr, "qhull internal warning (user_eg, #3): did not free %d bytes of long memory (%d pieces)\n",
        totlong, curlong);
   return exitcode;
 } /* main */

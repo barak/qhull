@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="qhullcpp"
-	ProjectGUID="{2C448FFE-CDF6-4639-BB23-39588F006C73}"
+	ProjectGUID="{7326816B-C401-4ACA-8027-03BA7A98C16B}"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -52,15 +52,15 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;qh_QHpointer"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Debug"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullcpp_d.pdb"
+				ProgramDataBaseFileName="..\bin\qhullcpp.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="2"
@@ -70,8 +70,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;qh_QHpointer"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -134,14 +134,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="Release"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullcpp.pdb"
+				ProgramDataBaseFileName="..\bin\qhullcpp.pdb"
 				WarningLevel="3"
 				CompileAs="2"
 			/>
@@ -150,8 +150,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -214,14 +214,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="MinSizeRel"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullcpp.pdb"
+				ProgramDataBaseFileName="..\bin\qhullcpp.pdb"
 				WarningLevel="3"
 				CompileAs="2"
 			/>
@@ -230,8 +230,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -294,14 +294,14 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
+				AdditionalIncludeDirectories="..\src;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
 				AssemblerListingLocation="RelWithDebInfo"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="..\lib\qhullcpp.pdb"
+				ProgramDataBaseFileName="..\bin\qhullcpp.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="2"
@@ -311,8 +311,8 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;qh_QHpointer"
-				AdditionalIncludeDirectories="..\src\libqhullcpp;..\src;..\src\libqhull;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				AdditionalIncludeDirectories="..\src;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -420,88 +420,109 @@
 				RelativePath="..\src\libqhullcpp\RoadLogEvent.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\src\libqhullcpp\UsingLibQhull.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="..\src\libqhullcpp\Coordinates.h">
+				RelativePath="..\src\libqhullcpp\Coordinates.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\functionObjects.h">
+				RelativePath="..\src\libqhullcpp\functionObjects.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\PointCoordinates.h">
+				RelativePath="..\src\libqhullcpp\PointCoordinates.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\Qhull.h">
+				RelativePath="..\src\libqhullcpp\Qhull.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullError.h">
+				RelativePath="..\src\libqhullcpp\QhullError.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullFacet.h">
+				RelativePath="..\src\libqhullcpp\QhullFacet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullFacetList.h">
+				RelativePath="..\src\libqhullcpp\QhullFacetList.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullFacetSet.h">
+				RelativePath="..\src\libqhullcpp\QhullFacetSet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullHyperplane.h">
+				RelativePath="..\src\libqhullcpp\QhullHyperplane.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullIterator.h">
+				RelativePath="..\src\libqhullcpp\QhullIterator.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullLinkedList.h">
+				RelativePath="..\src\libqhullcpp\QhullLinkedList.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullPoint.h">
+				RelativePath="..\src\libqhullcpp\QhullPoint.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullPoints.h">
+				RelativePath="..\src\libqhullcpp\QhullPoints.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullPointSet.h">
+				RelativePath="..\src\libqhullcpp\QhullPointSet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullQh.h">
+				RelativePath="..\src\libqhullcpp\QhullQh.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullRidge.h">
+				RelativePath="..\src\libqhullcpp\QhullRidge.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullSet.h">
+				RelativePath="..\src\libqhullcpp\QhullSet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullSets.h">
+				RelativePath="..\src\libqhullcpp\QhullSets.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullStat.h">
+				RelativePath="..\src\libqhullcpp\QhullStat.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullVertex.h">
+				RelativePath="..\src\libqhullcpp\QhullVertex.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\QhullVertexSet.h">
+				RelativePath="..\src\libqhullcpp\QhullVertexSet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\RboxPoints.h">
+				RelativePath="..\src\libqhullcpp\RboxPoints.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\UsingLibQhull.h">
+				RelativePath="..\src\libqhullcpp\RoadError.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\RoadError.h">
+				RelativePath="..\src\libqhullcpp\RoadLogEvent.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\libqhullcpp\RoadLogEvent.h">
+				RelativePath="..\src\qhulltest\RoadTest.h"
+				>
 			</File>
 		</Filter>
 	</Files>
