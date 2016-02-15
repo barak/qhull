@@ -8,10 +8,10 @@ Access globals via a pointer to allocated memory.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/libqhull/user.h b/src/libqhull/user.h
-index a3322aa..e5063c7 100644
+index 523aa7b..2438f28 100644
 --- a/src/libqhull/user.h
 +++ b/src/libqhull/user.h
-@@ -599,7 +599,7 @@ stop after qh_JOGGLEmaxretry attempts
+@@ -609,7 +609,7 @@ stop after qh_JOGGLEmaxretry attempts
  #error QH6207 Qhull error: Use qh_QHpointer_dllimport instead of qh_dllimport with qh_QHpointer
  #endif
  #else

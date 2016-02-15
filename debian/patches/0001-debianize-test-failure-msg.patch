@@ -8,10 +8,10 @@ Redirect users to the Debian BTS in the error message of rbox.
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/src/libqhull/io.c b/src/libqhull/io.c
-index 09a0079..6601ffd 100644
+index 401987e..17b09d0 100644
 --- a/src/libqhull/io.c
 +++ b/src/libqhull/io.c
-@@ -3932,10 +3932,7 @@ qhull warning: instead of %d %d-dimensional points, input contains\n\
+@@ -3933,10 +3933,7 @@ qhull warning: instead of %d %d-dimensional points, input contains\n\
      if (!strcmp(qh rbox_command, "./rbox D4"))
        qh_fprintf(qh ferr, 8055, "\n\
  This is the qhull test case.  If any errors or core dumps occur,\n\
