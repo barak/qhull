@@ -14,7 +14,7 @@
   <!ENTITY dhpackage   "#command#">
 
   <!ENTITY debian      "<productname>Debian</productname>">
-  <!ENTITY docfile     "/usr/share/doc/libqhull-dev/html/#command#.htm">
+  <!ENTITY docfile     "/usr/share/doc/libqhull-doc/html/#command#.htm">
 ]>
 
 <!-- Template manual page for the Qhull commands, DocBook source file
@@ -64,7 +64,7 @@
     <para>
       This program is documented fully in <ulink
       url="file://&docfile;">HTML
-      format,</ulink> available in the libqhull-dev package.
+      format,</ulink> available in the libqhull-doc package.
     </para>
 
   </refsect1>
