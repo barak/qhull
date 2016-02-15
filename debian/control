@@ -3,7 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Barak A. Pearlmutter <bap@debian.org>
-Standards-Version: 3.9.5
+Standards-Version: 3.9.7
 Build-Depends: debhelper (>= 9),
 	       dh-exec (>= 0.3),
 	       cmake,
@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 9),
 	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
 Homepage: http://www.qhull.org
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/qhull.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/qhull.git
+Vcs-Browser: https://anonscm.debian.org/gitweb/?p=debian-science/packages/qhull.git
 
 Package: libqhull7
 Section: libs
