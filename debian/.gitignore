@@ -3,6 +3,7 @@
 /*.debhelper.log
 /*.substvars
 /*.xml
+/debhelper-build-stamp
 /files
 /libqhull-dev/
 /libqhull-doc/
