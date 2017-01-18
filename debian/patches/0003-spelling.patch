@@ -1,0 +1,35 @@
+From: "Barak A. Pearlmutter" <barak+git@pearlmutter.net>
+Date: Wed, 18 Jan 2017 13:29:12 +0000
+Subject: spelling
+
+---
+ src/libqhull/poly2.c     | 2 +-
+ src/libqhull_r/poly2_r.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/libqhull/poly2.c b/src/libqhull/poly2.c
+index f6dc15c..de3e6ad 100644
+--- a/src/libqhull/poly2.c
++++ b/src/libqhull/poly2.c
+@@ -3177,7 +3177,7 @@ void qh_vertexneighbors(void /*qh.facet_list*/) {
+ 
+   if (qh VERTEXneighbors)
+     return;
+-  trace1((qh ferr, 1035, "qh_vertexneighbors: determing neighboring facets for each vertex\n"));
++  trace1((qh ferr, 1035, "qh_vertexneighbors: determining neighboring facets for each vertex\n"));
+   qh vertex_visit++;
+   FORALLfacets {
+     if (facet->visible)
+diff --git a/src/libqhull_r/poly2_r.c b/src/libqhull_r/poly2_r.c
+index 475e8c6..b8ae9af 100644
+--- a/src/libqhull_r/poly2_r.c
++++ b/src/libqhull_r/poly2_r.c
+@@ -3177,7 +3177,7 @@ void qh_vertexneighbors(qhT *qh /*qh.facet_list*/) {
+ 
+   if (qh->VERTEXneighbors)
+     return;
+-  trace1((qh, qh->ferr, 1035, "qh_vertexneighbors: determing neighboring facets for each vertex\n"));
++  trace1((qh, qh->ferr, 1035, "qh_vertexneighbors: determining neighboring facets for each vertex\n"));
+   qh->vertex_visit++;
+   FORALLfacets {
+     if (facet->visible)
