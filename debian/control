@@ -27,6 +27,20 @@ Description: calculate convex hulls and related structures (shared library)
  .
  This package contains the shared C library.
 
+Package: libqhull-r7
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: calculate convex hulls and related structures (shared library)
+ Qhull computes convex hulls, Delaunay triangulations, halfspace
+ intersections about a point, Voronoi diagrams, furthest-site
+ Delaunay triangulations, and furthest-site Voronoi diagrams. It
+ runs in 2-d, 3-d, 4-d, and higher dimensions.
+ .
+ This package contains the reentrant version of the shared C library.
+
 Package: libqhull-dev
 Section: libdevel
 Architecture: any
