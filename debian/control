@@ -46,7 +46,7 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libqhull7 (= ${binary:Version}), ${misc:Depends}
+Depends: libqhull7 (= ${binary:Version}), libqhull-r7 (= ${binary:Version}), ${misc:Depends}
 Description: calculate convex hulls and related structures (development files)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
  intersections about a point, Voronoi diagrams, furthest-site
