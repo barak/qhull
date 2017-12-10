@@ -1,3 +1,10 @@
+qhull (2015.2-4) unstable; urgency=medium
+
+  * Team upload.
+  * Add missing Depends: libqhull-r7 (Closes: #883817)
+
+ -- Jochen Sprickerhof <jspricke@debian.org>  Sat, 09 Dec 2017 19:18:30 +0100
+
 qhull (2015.2-3) unstable; urgency=medium
 
   * bump policy version
