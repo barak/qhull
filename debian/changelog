@@ -1,6 +1,7 @@
 qhull (2015.2-5) UNRELEASED; urgency=medium
 
   * Strip unusual field spacing from debian/control.
+  * Bump debhelper from old 11 to 12.
 
  -- Barak A. Pearlmutter <bap@debian.org>  Fri, 04 Oct 2019 18:27:52 +0100
 
