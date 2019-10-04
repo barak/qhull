@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 11),
 	       chrpath,
 	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
 Homepage: https://www.qhull.org
-Vcs-Git:  https://salsa.debian.org/science-team/qhull.git
+Vcs-Git: https://salsa.debian.org/science-team/qhull.git
 Vcs-Browser: https://salsa.debian.org/science-team/qhull
 
 Package: libqhull7
