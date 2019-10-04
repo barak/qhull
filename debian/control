@@ -59,6 +59,7 @@ Description: calculate convex hulls and related structures (development files)
 Package: libqhull-doc
 Section: doc
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}
 Description: calculate convex hulls and related structures (documentation files)
  Qhull computes convex hulls, Delaunay triangulations, halfspace
