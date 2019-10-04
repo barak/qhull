@@ -7,10 +7,10 @@ Subject: qhullcpp-shared
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 59dff41..fc4701f 100644
+index 9d44056..c2dd8d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -459,7 +459,7 @@ endif(UNIX)
+@@ -464,7 +464,7 @@ endif(UNIX)
  #     Do not create libqhullcpp as a shared library.  Qhull C++ classes may change layout and size. 
  # ---------------------------------------
  

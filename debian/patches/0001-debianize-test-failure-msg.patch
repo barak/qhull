@@ -8,12 +8,12 @@ Redirect users to the Debian BTS in the error message of rbox.
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/src/libqhull/io.c b/src/libqhull/io.c
-index 401987e..17b09d0 100644
+index 81e1424..cfacb9e 100644
 --- a/src/libqhull/io.c
 +++ b/src/libqhull/io.c
-@@ -3933,10 +3933,7 @@ qhull warning: instead of %d %d-dimensional points, input contains\n\
-     if (!strcmp(qh rbox_command, "./rbox D4"))
-       qh_fprintf(qh ferr, 8055, "\n\
+@@ -3978,10 +3978,7 @@ coordT *qh_readpoints(int *numpoints, int *dimension, boolT *ismalloc) {
+   if (!strcmp(qh rbox_command, "./rbox D4"))
+     qh_fprintf(qh ferr, 8055, "\n\
  This is the qhull test case.  If any errors or core dumps occur,\n\
 -recompile qhull with 'make new'.  If errors still occur, there is\n\
 -an incompatibility.  You should try a different compiler.  You can also\n\
@@ -22,4 +22,4 @@ index 401987e..17b09d0 100644
 +file a bug report against the libqhull<soversion> Debian package.\n\
  \n\
  Type 'qhull' for a short list of options.\n");
-   }
+   qh_free(qh line);
