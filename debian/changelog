@@ -1,9 +1,12 @@
-qhull (2015.2-5) UNRELEASED; urgency=medium
+qhull (2019.1-1) unstable; urgency=medium
 
   * Strip unusual field spacing from debian/control.
   * Bump debhelper from old 11 to 12.
+  * New upstream version
+  * Track minor upstream fix commits
+  * Bump standards version
 
- -- Barak A. Pearlmutter <bap@debian.org>  Fri, 04 Oct 2019 18:27:52 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Fri, 04 Oct 2019 19:03:45 +0100
 
 qhull (2015.2-4) unstable; urgency=medium
 
