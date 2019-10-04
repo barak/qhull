@@ -24,20 +24,21 @@
 #   FILES          miscellaneous files for printing
 #   TFILES         .txt versions of html files
 #   FILES          all other files
-#   LIBQHULL_OBJS  specifies the object files of libqhullstatic_r.a
+#   LIBQHULL_OBJS  specifies the object files of libqhullstatic.a
 #
 # Results
 #   rbox           Generates points sets for qhull, qconvex, etc.
 #   qhull          Computes convex hulls and related structures
 #   qconvex, qdelaunay, qhalf, qvoronoi
 #                  Specializations of qhull for each geometric structure
-#   libqhullstatic_r.a Static library for non-reentrant qhull
-#   testqset_r     Standalone test of non-reentrant qset_r.c with mem_r.c
+#   libqhullstatic.a Static library for non-reentrant qhull
+#   testqset       Standalone test of non-reentrant qset.c with mem.c
 #   user_eg        An example of using qhull (non-reentrant)
 #   user_eg2       An example of using qhull (non-reentrant)
 #
 # Make targets
 #   make           Build results using gcc or another compiler
+#   make all
 #   make clean     Remove object files
 #   make cleanall  Remove generated files
 #   make doc       Print documentation
@@ -50,7 +51,7 @@
 #
 # Do not replace tabs with spaces.  Needed for build rules
 # Unix line endings (\n)
-# $Id: //main/2015/qhull/src/libqhull/Makefile#8 $
+# $Id: //main/2019/qhull/src/libqhull/Makefile#4 $
 
 DESTDIR = /usr/local
 BINDIR	= $(DESTDIR)/bin
@@ -66,9 +67,12 @@ PRINTC = enscript -2r
 # PRINTC = lpr
 
 #for Gnu's gcc compiler, -O3 for optimization, -g for debugging, -pg for profiling
+# Qhull uses less memory with 32-bit builds (-m32)
 # -fpic  needed for gcc x86_64-linux-gnu.  Not needed for mingw
+# caller may defined CC_WARNINGS
+M32       = -m32
 CC        = gcc
-CC_OPTS1  = -O3 -ansi -I../../src -fpic $(CC_WARNINGS)
+CC_OPTS1  = -O3 -ansi -I../../src -fpic $(CC_WARNINGS) ${M32}
 
 # for Sun's cc compiler, -fast or O2 for optimization, -g for debugging, -Xc for ANSI
 #CC       = cc
@@ -90,7 +94,7 @@ CC_OPTS2 = $(CC_OPTS1)
 all: qhull_links qhull_all qtest
 
 help:
-	head -n 50 Makefile
+	head -n 51 Makefile
 
 clean:
 	rm -f *.o 
@@ -109,6 +113,7 @@ install:
 	mkdir -p $(BINDIR)
 	mkdir -p $(DOCDIR)
 	mkdir -p $(INCDIR)/libqhull
+	mkdir -p $(LIBDIR)
 	mkdir -p $(MANDIR)
 	cp -p qconvex qdelaunay qhalf qhull qvoronoi rbox $(BINDIR)
 	cp -p libqhullstatic.a $(LIBDIR)
@@ -131,21 +136,22 @@ printc:
 # Same definitions as ../../Makefile
 
 LIBQHULLS_OBJS_1= global.o stat.o geom2.o poly2.o merge.o \
-        libqhull.o geom.o poly.o qset.o mem.o random.o 
+	libqhull.o geom.o poly.o qset.o mem.o random.o 
 
 LIBQHULLS_OBJS_2= $(LIBQHULLS_OBJS_1) usermem.o userprintf.o io.o user.o
 
 LIBQHULLS_OBJS= $(LIBQHULLS_OBJS_2)  rboxlib.o userprintf_rbox.o
 
 LIBQHULL_HDRS= user.h libqhull.h qhull_a.h geom.h \
-        io.h mem.h merge.h poly.h random.h \
-        qset.h stat.h
+	io.h mem.h merge.h poly.h random.h \
+	qset.h stat.h
 
-# CFILES ordered alphabetically after libqhull.c 
+# CFILES for 'printc', ordered alphabetically after libqhull.c 
 CFILES= ../qhull/unix.c libqhull.c geom.c geom2.c global.c io.c \
 	mem.c merge.c poly.c poly2.c random.c rboxlib.c \
 	qset.c stat.c user.c usermem.c userprintf.c \
-	../qconvex/qconvex.c ../qdelaunay/qdelaun.c ../qhalf/qhalf.c ../qvoronoi/qvoronoi.c
+	../qconvex/qconvex.c ../qdelaunay/qdelaun.c \
+	../qhalf/qhalf.c ../qvoronoi/qvoronoi.c
 
 TXTFILES= ../../Announce.txt ../../REGISTER.txt ../../COPYING.txt ../../README.txt ../Changes.txt
 DOCFILES= ../../html/rbox.txt ../../html/qhull.txt
@@ -156,25 +162,26 @@ DOCFILES= ../../html/rbox.txt ../../html/qhull.txt
 # Work around problems with ../ in Red Hat Linux
 qhull_links:
 	# On MINSYS, 'ln -s' may create a copy instead of a symbolic link
-	[ -f qconvex.c ]    || ln -s ../qconvex/qconvex.c
-	[ -f qdelaun.c ]    || ln -s ../qdelaunay/qdelaun.c
-	[ -f qhalf.c ]	    || ln -s ../qhalf/qhalf.c
-	[ -f qvoronoi.c ]   || ln -s ../qvoronoi/qvoronoi.c
-	[ -f rbox.c ]	    || ln -s ../rbox/rbox.c
-	[ -f testqset.c ]   || ln -s ../testqset/testqset.c
-	[ -f unix.c ]	    || ln -s ../qhull/unix.c
-	[ -f user_eg.c ]    || ln -s ../user_eg/user_eg.c
-	[ -f user_eg2.c ]   || ln -s ../user_eg2/user_eg2.c
+	[ -f qconvex.c ]  || ln -s ../qconvex/qconvex.c
+	[ -f qdelaun.c ]  || ln -s ../qdelaunay/qdelaun.c
+	[ -f qhalf.c ]    || ln -s ../qhalf/qhalf.c
+	[ -f qvoronoi.c ] || ln -s ../qvoronoi/qvoronoi.c
+	[ -f rbox.c ]     || ln -s ../rbox/rbox.c
+	[ -f testqset.c ] || ln -s ../testqset/testqset.c
+	[ -f unix.c ]     || ln -s ../qhull/unix.c
+	[ -f user_eg.c ]  || ln -s ../user_eg/user_eg.c
+	[ -f user_eg2.c ] || ln -s ../user_eg2/user_eg2.c
+	# user_eg3.c not compiled.  It requires all of libqhullcpp; use qhull/Makefile instead
 
 # compile qhull without using bin/libqhullstatic.a
 qhull_all: qconvex.o qdelaun.o qhalf.o qvoronoi.o unix.o user_eg.o user_eg2.o rbox.o testqset.o $(LIBQHULLS_OBJS)
-	$(CC) -o qconvex $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qconvex.o 
+	$(CC) -o qconvex $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qconvex.o
 	$(CC) -o qdelaunay $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qdelaun.o
-	$(CC) -o qhalf $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qhalf.o 
-	$(CC) -o qvoronoi $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qvoronoi.o 
-	$(CC) -o qhull $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) unix.o
+	$(CC) -o qhalf $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qhalf.o
+	$(CC) -o qvoronoi $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) qvoronoi.o
+	$(CC) -o qhull $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) unix.o 
 	$(CC) -o rbox $(CC_OPTS2) -lm $(LIBQHULLS_OBJS) rbox.o
-	$(CC) -o user_eg $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) user_eg.o
+	$(CC) -o user_eg $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_2) user_eg.o 
 	$(CC) -o user_eg2 $(CC_OPTS2) -lm $(LIBQHULLS_OBJS_1) user_eg2.o  usermem.o userprintf.o io.o
 	$(CC) -o testqset $(CC_OPTS2) -lm mem.o qset.o usermem.o testqset.o
 	-ar -rs libqhullstatic.a $(LIBQHULLS_OBJS)
@@ -199,7 +206,7 @@ qtest:
 	@echo ============================================
 	@echo
 	@echo ============================================
-	@echo == For all make targets
+	@echo == To show all make targets
 	@echo '==     make help'
 	@echo ============================================
 	@echo
