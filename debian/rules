@@ -65,6 +65,7 @@ override_dh_link:
 	done
 	rm --verbose debian/libqhull-dev/usr/include/libqhull/*.htm
 	rm --verbose debian/libqhull-dev/usr/include/libqhull_r/*.htm
+	rm --verbose debian/libqhull-dev/usr/include/qhull/*.htm
 	dh_link
 
 override_dh_compress:
