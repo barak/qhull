@@ -1,0 +1,22 @@
+From: D Haley <mycae@gmx.com>
+Date: Tue, 26 Mar 2019 14:59:11 +0000
+Subject: Build qhullcpp with position independent code
+
+---
+ CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 07d3da2..57fc9f1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -466,7 +466,8 @@ endif(UNIX)
+ 
+ add_library(${qhull_CPP} STATIC ${libqhullcpp_SOURCES})
+ set_target_properties(${qhull_CPP} PROPERTIES
+-    VERSION ${qhull_VERSION})
++    VERSION ${qhull_VERSION}
++    POSITION_INDEPENDENT_CODE ON)
+ 
+ # ---------------------------------------
+ # Define qhull executables linked to qhullstatic library
