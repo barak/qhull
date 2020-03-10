@@ -3,7 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Barak A. Pearlmutter <bap@debian.org>
-Standards-Version: 4.4.1
+Standards-Version: 4.5.0
 Build-Depends: debhelper-compat (= 12),
 	       dh-exec (>= 0.3),
 	       cmake,
