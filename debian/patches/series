@@ -2,3 +2,4 @@
 0002-Build-qhullcpp-with-position-independent-code.patch
 0003-Add-config.cmake.in-to-README-and-qhull-zip.sh.patch
 0004-Review-and-fix-Qhull-html-and-option-links.patch
+0005-Fix-privacy-breach.patch
