@@ -1,0 +1,2531 @@
+From: Brad Barber <bradb@shore.net>
+Date: Sun, 30 Jun 2019 16:36:14 -0400
+Subject: Review and fix Qhull html and option links
+
+---
+ eg/qhull-zip.sh             |  19 +++-
+ html/index.htm              |  18 ++--
+ html/qconvex.htm            |  12 +--
+ html/qdelau_f.htm           |   8 +-
+ html/qdelaun.htm            |  18 ++--
+ html/qh-code.htm            |  40 +++----
+ html/qh-eg.htm              |  55 +++++-----
+ html/qh-faq.htm             |  47 ++++----
+ html/qh-impre.htm           |  11 +-
+ html/qh-optc.htm            |  20 ++--
+ html/qh-optf.htm            |  92 +++++++---------
+ html/qh-optg.htm            |  24 ++---
+ html/qh-opto.htm            |  18 ++--
+ html/qh-optp.htm            |  14 ++-
+ html/qh-optq.htm            |  64 +++++------
+ html/qh-optt.htm            |  21 ++--
+ html/qh-quick.htm           | 255 ++++++++++++++++++++++----------------------
+ html/qhalf.htm              |   8 +-
+ html/qhull.htm              |   2 +-
+ html/qvoron_f.htm           |  10 +-
+ html/qvoronoi.htm           |  10 +-
+ index.htm                   |  15 ++-
+ src/Changes.txt             |   6 +-
+ src/libqhull/qh-set.htm     |   3 +-
+ src/libqhull_r/qh-set_r.htm |   3 +-
+ 25 files changed, 373 insertions(+), 420 deletions(-)
+
+diff --git a/eg/qhull-zip.sh b/eg/qhull-zip.sh
+index 2f434b4..0f18f9c 100644
+--- a/eg/qhull-zip.sh
++++ b/eg/qhull-zip.sh
+@@ -9,8 +9,8 @@
+ #   can not use path with $zip_file 
+ #   odd error messages if can't locate directory
+ #
+-# $Id: //main/2019/qhull/eg/qhull-zip.sh#12 $$Change: 2722 $
+-# $DateTime: 2019/06/28 21:07:44 $$Author: bbarber $
++# $Id: //main/2019/qhull/eg/qhull-zip.sh#14 $$Change: 2725 $
++# $DateTime: 2019/06/30 16:34:48 $$Author: bbarber $
+ 
+ if [[ $# -ne 3 ]]; then
+         echo 'Missing date stamp -- eg/qhull-zip.sh 2019 2019.1 7.3.2' 
+@@ -288,13 +288,20 @@ if [[ -r $root_dir/$qhull_zip_file ]]; then
+     find . -type f | grep -vE '/bin/|q_benchmark|q_test' | xargs grep '\-20' | grep -v -E '(page=|ISBN|sql-2005|utility-2000|written 2002-2003|tail -n -20|Spinellis|WEBSIDESTORY|D:06-5-2007|server-2005)' >Dates.txt
+     find . -type f | grep -vE '/bin/|q_benchmark|q_test' | xargs grep -i 'qhull *20' >>Dates.txt
+     find . -type f | grep -vE '/bin/|q_benchmark|q_test' | xargs grep -E 'SO=|SO |VERSION|FIXUP' >>Dates.txt
+-    log_step $LINENO "Search for error codes into zip/Errors.matched"
++    log_step $LINENO "Search for error codes into zip/Errors-matched.txt"
+     (find */src -type f) | grep -vE '_test\.cpp|\.log|Changes\.txt' | xargs grep -Eh ', [67][0-9][0-9][0-9]|"QH[67][0-9]|qh_fprintf_stderr\([67][0-9][0-9][0-9]' | sed -r 's/^[^Q67]*QH//' | sed -r 's/^.*qh_fprintf_stderr\(//' | sed -r 's/^[^67]*(errfile|ferr|fp|stderr), //' | sed 's/\\n"[,\)].*/ EOL/' | sed -r 's/_r([: ])/\1/' | sort >Errors.txt
+     (cat Errors.txt | sed 's/, .*//'; for ((i=6001; i<6400; i++)); do echo $i; done;  for ((i=7001; i<7200; i++)); do echo $i; done) | sort | uniq -c | grep -v '^ *3 ' | sed -r 's/^[^0-9]*([0-9]) (.*)/\2 \1 NOT-MATCHED/' >Errors-not-matched.txt
+-    cat Errors.txt | grep -v 'EOL$' | sort -u >Errors.matched
++    cat Errors.txt | grep -v 'EOL$' | sort -u >Errors-matched.txt
+     log_step $LINENO "Search for mismatched '*_r.h' references to zip/FileRef.txt"
+     grep -E '[^_][^_][^ *][.][ch]($|[^a-z>])|/libqhull/' */src/*/*_r.* */src/*/*_ra.* */src/libqhull_r/Makefile | grep -vE 'float.h|/html/| l.h.s. |libqhullcpp|mem.c for a standalone|qglobal.h|QhullError.|QhullSet.|string.h|unused.h|user.h and user_r.h' >FileRef.txt
+     grep -E '_r[.]|_ra[.]|/libqhull_r/' */src/qconvex/qconvex.c */src/qconvex/qconvex.c */src/qdelaunay/qdelaun.c */src/qhalf/qhalf.c */src/qvoronoi/qvoronoi.c */src/testqset/* | grep -vE 'user.h and user_r.h' >>FileRef.txt
++    log_step $LINENO "Search for mismatched option links in htm files to Links-single.txt"
++    findf htm | xargs grep 'qh-opt.*\#' | tee Links-all.txt | sed -r -e 's/^[^:]*://' -e 's/qh-opt/\nqh-opt/g' | grep 'qh-opt.*<' | sed -r -e 's/<.*//' | LC_ALL=C  sort | uniq -c >Links-counts.txt
++    grep ' 1 ' Links-counts.txt >Links-single.txt
++    log_step $LINENO "Search for other internal links to Links-check-other.txt"
++    findf htm | xargs grep -E 'http[^#]*htm#|href="?#|name='  | tee Links-other.txt | sed -e 's/#/\n#/g' -e 's/name="/\n#/g' -e 's/name=/\nname=/g' | grep -E '^#|name=' | sed -r -e 's/[" ].*//' | grep -vE ';|#[1-9][0-9]|#3dd|#[Hdv]$|[0-9][0-9]$|[a-z]T$|QJ$|convex|option|startup|voronoi|name=(as_q|num|sitesearch)' | LC_ALL=C  sort | uniq -c | grep ' 1 ' >Links-check-other.txt
++    log_step $LINENO "Search for mismatched link quotes"
++    findf htm | xargs grep -E '"'  | sed -e 's/"[^"]*"//g' | grep '"' | grep -vE 'html/qhull|html/rbox|working/debian' > Links-check-quotes.txt 
+ fi
+ if [[ -r $root_dir/$qhull_tgz_file ]]; then
+     exit_if_fail $LINENO "mkdir -p $TEMP_DIR/tgz && cd $TEMP_DIR/tgz"
+@@ -309,6 +316,9 @@ log_step $LINENO "==============================================================
+ log_step $LINENO "Check *qhull-zip-.../zip/Dates.txt for timestamps that need updating"
+ log_step $LINENO "Check *qhull-zip-.../zip/Errors-matched.txt for mismatched codes, errors not ending in NL, errors on multiple lines, and recently missing codes"
+ log_step $LINENO "Check *qhull-zip-.../zip/Errors-not-matched.txt for unused error codes (count==1) or multiply-defined codes (count>2)"
++log_step $LINENO "Check *qhull-zip-.../zip/Links-single.txt for single use option links in Links-all.txt"
++log_step $LINENO "Check *qhull-zip-.../zip/Links-check-other.txt for unknown tags in Links-other.txt"
++log_step $LINENO "Check *qhull-zip-.../zip/Links-check-quotes.txt for quotes that cross a line"
+ log_step $LINENO "Check q_egtest examples in Geomview"
+ log_step $LINENO "Check for 18 projects in Release mode, including qhulltest"
+ log_step $LINENO "Check build dependencies for programs."
+@@ -367,6 +377,7 @@ log_step $LINENO "Compare previous zip release, Dates.txt, and md5sum"
+ log_step $LINENO "Compare zip and tgz for CRLF vs LF"
+ log_step $LINENO "Compare qh_prompt* for unix_r.c,qconvex.c,etc."
+ log_step $LINENO "Check html links with Firefox Link Analyzer (fast but doesn't check #..."
++log_step $LINENO "  Replace old links with web.archive.org (archive.is)"
+ log_step $LINENO "Check all files for FIXUP comments, including Makefile, html, etc."
+ log_step $LINENO "Extract zip to download/ and compare directories"
+ log_step $LINENO "Check for 32-bit release executables from DevStudio (<500K and 'Ts' 32-bit allocations)"
+diff --git a/html/index.htm b/html/index.htm
+index d7b1221..73f1552 100644
+--- a/html/index.htm
++++ b/html/index.htm
+@@ -92,8 +92,7 @@ reports the maximum outer and inner plane.
+ 
+ <hr>
+ 
+-<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull manual: Table of
+-Contents </a></h2>
++<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull manual: Table of Contents</a></h2>
+ 
+ <ul>
+     <li><a href="#when">When</a> to use Qhull
+@@ -185,7 +184,7 @@ Contents </a></h2>
+         href="http://www.faqs.org/faqs/graphics/algorithms-faq/">FAQ</a> for computer graphics algorithms and
+                 Exaflop's <a href="http://web.archive.org/web/19990826064500/http://www.exaflop.org/docs/cgafaq/cga6.html">geometric</a> structures (archived).
+     <li>Amenta's <a href="http://www.geom.uiuc.edu/software/cglist">Directory
+-        of Computational Geometry Software </a></li>
++        of Computational Geometry Software</a></li>
+     <li>Erickson's <a
+         href="http://jeffe.cs.illinois.edu/compgeom/">Computational Geometry Software</a> </li>
+         <li>Fukuda's <a
+@@ -326,8 +325,7 @@ add constraints by adding additional points to the triangulation.</p>
+ objects. Use <tt>qdelaunay</tt> to subdivide a convex object.</p>
+ 
+ </blockquote>
+-<h2><a href="#TOC">&#187;</a><a name="description">Description of
+-Qhull </a></h2>
++<h2><a href="#TOC">&#187;</a><a name="description">Description of Qhull</a></h2>
+ <blockquote>
+ 
+ <h3><a href="#TOC">&#187;</a><a name="definition">definition</a></h3>
+@@ -419,9 +417,9 @@ qvoronoi == qhull v Qbb
+ <p>Single letters are used for output formats and precision
+ constants. The other options are grouped into menus for formats
+ ('<a href="qh-optf.htm#format">F</a>'), Geomview ('<a
+-href="qh-optg.htm#geomview">G </a>'), printing ('<a
++href="qh-optg.htm#geomview">G</a>'), printing ('<a
+ href="qh-optp.htm#print">P</a>'), Qhull control ('<a
+-href="qh-optq.htm#qhull">Q </a>'), and tracing ('<a
++href="qh-optq.htm#qhull">Q</a>'), and tracing ('<a
+ href="qh-optt.htm#trace">T</a>'). The menu options may be listed
+ together (e.g., 'GrD3' for 'Gr' and 'GD3'). Options may be in any
+ order. Capitalized options take a numeric argument (except for '<a
+@@ -508,7 +506,7 @@ requirements, and floating-point error handling. </p>
+     <li>A <em>coordinate</em> is a real number in floating point
+         format. </li>
+     <li>A <em>point</em> is an array of <i>d</i> coordinates.
+-        With option '<a href="qh-optq.htm#QJn">QJ</a>', the
++        With option '<a href="qh-optq.htm#QJ">QJ</a>', the
+         coordinates are joggled by a small amount. </li>
+     <li>A <em>vertex</em> is an input point. </li>
+     <li>A <em>hyperplane</em> is <i>d</i> normal coefficients and
+@@ -878,9 +876,9 @@ Springer-Verlag, 443:400-413, 1990. </p>
+ <p><a name="edel01">Edelsbrunner</a>, H, <i>Geometry and Topology for Mesh Generation</i>,
+ Cambridge University Press, 2001.
+ 
+-<p><a name=gart99>Gartner, B.</a>, "Fast and robust smallest enclosing balls", <i>Algorithms - ESA '99</i>, LNCS 1643.
++<p><a name="gart99">Gartner, B.</a>, "Fast and robust smallest enclosing balls", <i>Algorithms - ESA '99</i>, LNCS 1643.
+ 
+-<p><a name=golub83>Golub, G.H. and van Loan, C.F.</a>, <i>Matric Computations</i>, Baltimore, Maryland, USA: John Hopkins Press, 1983
++<p><a name="golub83">Golub, G.H. and van Loan, C.F.</a>, <i>Matric Computations</i>, Baltimore, Maryland, USA: John Hopkins Press, 1983
+ 
+ <p><a name="fort93">Fortune, S.</a>, &quot;Computational
+ geometry,&quot; in R. Martin, editor, <i>Directions in Geometric
+diff --git a/html/qconvex.htm b/html/qconvex.htm
+index 21f3038..4af7974 100644
+--- a/html/qconvex.htm
++++ b/html/qconvex.htm
+@@ -61,7 +61,7 @@ href="qh-eg.htm#how">How Qhull adds a point</a>.</p>
+                 points on its surface.</dd>
+             <dt>&nbsp;</dt>
+             <dt><b>Example:</b> rbox x W1e-12 1000 | qconvex
+-            <a href="qh-optq.htm#QR">QR0</a></dt>
++            <a href="qh-optq.htm#QRn">QR0</a></dt>
+         <dd>Compute the convex hull of 1000 points near the
+                     surface of a randomly rotated simplex.  Report
+                         the maximum thickness of a facet.</dd>
+@@ -110,7 +110,7 @@ all facets will be simplicial (e.g., triangles in 2-d).  For the cube
+ example, it will have 12 facets.  Some facets may be
+ degenerate and have zero area.
+ 
+-<p>If you use '<a href="qh-optq.htm#QJn">QJ</a>' (joggled input),
++<p>If you use '<a href="qh-optq.htm#QJ">QJ</a>' (joggled input),
+ all facets will be simplicial.  The corresponding vertices will be
+ slightly perturbed and identical points will be joggled apart.
+ Joggled input is less accurate that triangulated
+@@ -183,7 +183,7 @@ input</a></h3>
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qconvex &lt; data.txt), a pipe (e.g., rbox 10 | qconvex),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qconvex TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qconvex TI data.txt).
+ 
+ <p>Comments start with a non-numeric character.  Error reporting is
+ simpler if there is one point per line.  Dimension
+@@ -389,14 +389,14 @@ individually or together.</p>
+     <dt><a href="qh-optq.htm#Qt">Qt</a></dt>
+     <dd>triangulated output.  Qhull triangulates non-simplicial facets.  It may produce
+      degenerate facets of zero area.</dd>
+-    <dt><a href="qh-optq.htm#QJn">QJ</a></dt>
++    <dt><a href="qh-optq.htm#QJ">QJ</a></dt>
+     <dd>joggle the input instead of merging facets.  This guarantees simplicial facets
+         (e.g., triangles in 3-d).  It is less accurate than triangulated output ('Qt').</dd>
+     <dt><a href="qh-optq.htm#Qc">Qc</a></dt>
+     <dd>keep coplanar points</dd>
+     <dt><a href="qh-optq.htm#Qi">Qi</a></dt>
+     <dd>keep interior points</dd>
+-    <dt><a href="qh-opto.htm#f">f </a></dt>
++    <dt><a href="qh-opto.htm#f">f</a></dt>
+     <dd>facet dump.  Print the data structure for each facet.</dd>
+     <dt><a href="qh-optq.htm#QVn">QVn</a></dt>
+     <dd>select facets containing point <em>n</em> as a vertex,</dd>
+@@ -409,7 +409,7 @@ individually or together.</p>
+     <dd>report progress after constructing <em>n</em> facets</dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+diff --git a/html/qdelau_f.htm b/html/qdelau_f.htm
+index 47b6ced..8f04acf 100644
+--- a/html/qdelau_f.htm
++++ b/html/qdelau_f.htm
+@@ -53,7 +53,7 @@ href="qvoron_f.htm">furthest-site Voronoi diagram</a>.
+     <dt>&nbsp;</dt>
+     <dt><b>Example:</b> rbox 10 D2 | qdelaunay <a
+         href="qh-optq.htm#Qu">Qu</a> <a
+-        href="qh-optq.htm#QJn">QJ</a> <a href="qh-opto.htm#s">s</a>
++        href="qh-optq.htm#QJ">QJ</a> <a href="qh-opto.htm#s">s</a>
+         <a href="qh-opto.htm#i">i</a> <a href="qh-optt.htm#TO">TO
+         result</a></dt>
+     <dd>Compute the 2-d, furthest-site Delaunay triangulation of 10 random
+@@ -108,7 +108,7 @@ joggled input ('<a href="qh-optq.htm#QJn">QJ</a>').
+ </p>
+ 
+ <p>The 'qdelaunay' program is equivalent to
+-'<a href=qhull.htm#outputs>qhull d</a> <a href=qh-optq.htm#Qbb>Qbb</a>'.  It disables the following Qhull
++'<a href="qhull.htm#outputs">qhull d</a> <a href="qh-optq.htm#Qbb">Qbb</a>'.  It disables the following Qhull
+ <a href=qh-quick.htm#options>options</a>: <i>d n v H U Qb QB Qc Qf Qg Qi
+ Qm Qr Qv Qx TR E V FC Fi Fo Fp Ft FV Q0,etc</i>.
+ 
+@@ -137,7 +137,7 @@ input</a></h3>
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qdelaunay Qu &lt; data.txt), a pipe (e.g., rbox 10 | qdelaunay Qu),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qdelaunay Qu TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qdelaunay Qu TI data.txt).
+ 
+ <p>For example, this is a square containing four random points.
+ Its furthest-site Delaunay
+@@ -292,7 +292,7 @@ controls</a></h3>
+         'good').</dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result.</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+diff --git a/html/qdelaun.htm b/html/qdelaun.htm
+index 2327288..80d86f0 100644
+--- a/html/qdelaun.htm
++++ b/html/qdelaun.htm
+@@ -57,7 +57,7 @@ by O'Rourke [<a href="index.htm#orou94">'94</a>]. </p>
+         regions to the console.  Produce triangulated output.</dd>
+     <dt>&nbsp;</dt>
+     <dt><b>Example:</b> rbox 10 D2 | qdelaunay <a
+-        href="qh-optq.htm#QJn">QJ</a> <a href="qh-opto.htm#s">s</a>
++        href="qh-optq.htm#QJ">QJ</a> <a href="qh-opto.htm#s">s</a>
+         <a href="qh-opto.htm#i">i</a> <a href="qh-optt.htm#TO">TO
+         result</a></dt>
+     <dd>Compute the 2-d Delaunay triangulation of 10 random
+@@ -70,7 +70,7 @@ by O'Rourke [<a href="index.htm#orou94">'94</a>]. </p>
+ <p>Qhull computes the Delaunay triangulation by computing a
+ convex hull. It lifts the input sites to a paraboloid by adding
+ the sum of the squares of the coordinates. It scales the height
+-of the paraboloid to improve numeric precision ('<a href=qh-optq.htm#Qbb>Qbb</a>').
++of the paraboloid to improve numeric precision ('<a href="qh-optq.htm#Qbb">Qbb</a>').
+ It computes the convex
+ hull of the lifted sites, and projects the lower convex hull to
+ the input.
+@@ -82,7 +82,7 @@ href="qdelau_f.htm">furthest-site Delaunay triangulation</a>.
+ See the examples, <a href="qh-eg.htm#delaunay">Delaunay and
+ Voronoi diagrams</a>.</p>
+ 
+-<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (qh-faq.htm#TOC">local</a>) - Delaunay and
++<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (<a href="qh-faq.htm#TOC">local</a>) - Delaunay and
+ Voronoi diagram questions.</p>
+ 
+ <p>By default, qdelaunay merges cocircular and cospherical regions.
+@@ -113,7 +113,7 @@ joggled input ('<a href="qh-optq.htm#QJn">QJ</a>').
+ </p>
+ 
+ <p>The 'qdelaunay' program is equivalent to
+-'<a href=qhull.htm#outputs>qhull d</a> <a href=qh-optq.htm#Qbb>Qbb</a>'.
++'<a href="qhull.htm#outputs">qhull d</a> <a href="qh-optq.htm#Qbb">Qbb</a>'.
+ It disables the following Qhull
+ <a href=qh-quick.htm#options>options</a>: <i>d n v H U Qb QB Qc Qf Qg Qi
+ Qm Qr Qv Qx TR E V FC Fi Fo Fp Ft FV Q0,etc</i>.
+@@ -171,7 +171,7 @@ input</a></h3>
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qdelaunay &lt; data.txt), a pipe (e.g., rbox 10 | qdelaunay),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qdelaunay TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qdelaunay TI data.txt).
+ 
+ <p>For example, this is four cocircular points inside a square.  Its Delaunay
+ triangulation contains 8 triangles and one four-sided
+@@ -345,7 +345,7 @@ degenerate facets of zero area.</dd>
+         'good').</dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result.</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+@@ -370,12 +370,14 @@ href="qh-optg.htm#G">G</a>') displays the corresponding convex
+ hull (a paraboloid). </p>
+ 
+ <p>To view a 2-d Delaunay triangulation, use 'qdelaunay <a
+-href="qh-optg.htm#GDn">GrD2</a>' to drop the last dimension. This
++href="qh-optg.htm#GDn">GrD2</a>' to drop the last dimension and view ridges.
++This
+ is the same as viewing the hull without perspective (see
+ Geomview's 'cameras' menu). </p>
+ 
+ <p>To view a 3-d Delaunay triangulation, use 'qdelaunay <a
+-href="qh-optg.htm#GDn">GrD3</a>' to drop the last dimension. You
++href="qh-optg.htm#GDn">GrD3</a>' to drop the last dimension and
++view ridges. You
+ may see extra edges. These are interior edges that Geomview moves
+ towards the viewer (see 'lines closer' in Geomview's camera
+ options). Use option '<a href="qh-optg.htm#Gt">Gt</a>' to make
+diff --git a/html/qh-code.htm b/html/qh-code.htm
+index a3a2715..7cf305b 100644
+--- a/html/qh-code.htm
++++ b/html/qh-code.htm
+@@ -10,10 +10,7 @@
+ 
+     <p>
+         <a name="TOP"><b>Up:</b></a> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+-        <b>Up:</b> <a href="index.htm#TOC">
+-            Qhull manual: Table of
+-            Contents
+-        </a><br>
++        <b>Up:</b> <a href="index.htm#TOC">Qhull manual: Table of Contents</a><br>
+         <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
+         &#149; <a href="qh-quick.htm#options">Options</a>
+         &#149; <a href="qh-opto.htm#output">Output</a>
+@@ -42,8 +39,7 @@ height="100"></a> Qhull code</h1>
+ 
+ <hr>
+ 
+-<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull code: Table of
+-Contents </a></h2>
++<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull code: Table of Contents</a></h2>
+ 
+ <ul>
+     <li><a href="#reentrant">Reentrant</a> Qhull
+@@ -589,7 +585,7 @@ the convex hull is either the distance to this facet or the
+ distance to a subface of the facet.</p>
+ 
+ <blockquote>
+-<p><b>Warning:</b> If triangulated output ('<a href=qh-optq.htm#Qt>Qt</a>') and
++<p><b>Warning:</b> If triangulated output ('<a href="qh-optq.htm#Qt">Qt</a>') and
+ the best facet was triangulated, qh_findbestfacet() returns one of
+ the corresponding 'tricoplanar' facets.  The actual best facet may be a different
+ tricoplanar facet from the same set of facets.
+@@ -685,8 +681,7 @@ call qh_check_maxout() to compute outer planes
+ terminate qhull</pre>
+ </blockquote>
+ 
+-<h3><a href="#TOC">&#187;</a><a name="constrained">Constrained
+-Delaunay triangulation </a></h3>
++<h3><a href="#TOC">&#187;</a><a name="constrained">Constrained Delaunay triangulation</a></h3>
+ 
+ <p>With a fair amount of work, Qhull is suitable for constrained
+ Delaunay triangulation. See Shewchuk, ACM Symposium on
+@@ -700,7 +695,7 @@ separation may be incorrect. [H. Geron] </p>
+ 
+ <h3><a href="#TOC">&#187;</a><a name="tricoplanar">Tricoplanar facets and option 'Qt'</h3>
+ 
+-<p>Option '<a href=qh-optq.htm#Qt>Qt</a>' triangulates non-simplicial
++<p>Option '<a href="qh-optq.htm#Qt">Qt</a>' triangulates non-simplicial
+ facets (e.g., a square facet in 3-d or a cubical facet in 4-d).
+ All facets share the same apex (i.e., the first vertex in facet->vertices).
+ For each triangulated facet, Qhull
+@@ -729,7 +724,7 @@ corresponds to a vertex of the convex hull and a Voronoi vertex
+ corresponds to an adjacent facet. A facet is
+ &quot;upperdelaunay&quot; if it corresponds to a Voronoi vertex
+ &quot;at-infinity&quot;. Qhull uses qh_printvoronoi in <tt>io.c</tt>
+-for '<a href=qvoronoi.htm>qvoronoi</a> <a href="qh-opto.htm#o">o'</a> </p>
++for '<a href=qvoronoi.htm>qvoronoi</a> <a href="qh-opto.htm#o">o</a>' </p>
+ 
+ <blockquote>
+     <pre>
+@@ -800,7 +795,7 @@ graph of the convex hull. </p>
+ 
+ <p>Qhull continually checks its execution, so most errors will stop Qhull with an error message.
+ Additional checking occurs for verified output ('<a href="qh-optt.htm#Tv">Tv</a>'), check
+-frequently ('<a href="qh-optt.htm#Tc">Tc</a>'), check for duplicate ridges ('<a href="qh-optt.htm#Q15">T15</a>'),
++frequently ('<a href="qh-optt.htm#Tc">Tc</a>'), check for duplicate ridges ('<a href="qh-optq.htm#Q15">Q15</a>'),
+ and tracing at level 4 ('<a href="qh-optt.htm#Tn">T4</a>'). </p>
+ 
+ <p>If Qhull detects an error, it writes a descriptive error message to stderr, and exits with an exit status code (see following).
+@@ -915,7 +910,7 @@ If you sort by address and sequence number, each allocate should be paired with
+ When Qhull reports an error, it reports "Last merge was #nnn".
+ <li>'<a href="qh-optt.htm#TPn">TPn</a>' -- turn on tracing when point n is added to hull or point n is referenced.
+ When Qhull reports an error, it reports "Last point added to hull was pnnn".
+-<li>'<a href="qh-optt.htm#TVn">TVn</a>' -- stop Qhull after adding point n, -n for before
++<li>'<a href="qh-optt.htm#TVn2">TVn</a>' -- stop Qhull after adding point n, -n for before
+ <li>'<a href="qh-optt.htm#TWn">TWn</a>' -- trace merge facets when width > n
+ </ul></p>
+ 
+@@ -930,12 +925,13 @@ Logging will be significantly slower than normal.</p>
+ 
+ <p>The following debugging plan usually identifies the error
+ <ol>
+-<li>Trace execution at level 1 with flush after each qh_fprintf and output to stdout ('<a href="qh-optq.htm#T1">T1</a> <a href="qh-optq.htm#Tf">Tf</a> <a href="qh-optq.htm#Tz">Tz</a>').
+-<li>Repeat at level 4 after the last qh_addpoint (QH1049, '<a href="qh-optq.htm#TPn">TPn</a>').
++<li>Trace execution at level 1 with flush after each qh_fprintf
++and output to stdout ('<a href="qh-optt.htm#Tn">T1</a> <a href="qh-optt.htm#Tf">Tf</a> <a href="qh-optt.htm#Tz">Tz</a>').
++<li>Repeat at level 4 after the last qh_addpoint (QH1049, '<a href="qh-optt.htm#TPn">TPn</a>').
+ Add line numbers to the log by piping the output through 'grep -n .'.
+ <ul>
+-<li>If there is too much level 4 output,
+-repeat at level 2 to find the last qh_mergefacet (QH2081) and then trace at level 4 from the last merge ('<a href="qh-optq.htm#TMn">TMn</a>').
++<li>If there is too much level 4 output, repeat at level 2 to find the last
++qh_mergefacet (QH2081) and then trace at level 4 from the last merge ('<a href="qh-optt.htm#TMn">TMn</a>').
+ <li>If there is still too much level 4 output, identify one of the last level 3 events and add debugging
+ to the corresponding trace3 call.  Be sure to mark the code for removal.  For example<br>
+ <pre>
+@@ -1029,8 +1025,7 @@ qh.tracefacet_id, qh.traceridge_id, or qh.tracevertex_id in global_r.c/qh_initqh
+ <li>qh_tracemerge in merge_r.c -- called after each merge.  It is a good location for debugging code.
+ </ul>
+ 
+-<h2><a href="#TOC">&#187;</a><a name="performance">Performance of
+-Qhull </a></h2>
++<h2><a href="#TOC">&#187;</a><a name="performance">Performance of Qhull</a></h2>
+ 
+ <p>Empirically, Qhull's performance is balanced in the sense that
+ the average case happens on average. This may always be true if
+@@ -1211,7 +1206,7 @@ sys     0m0.015s
+ </pre>
+ </ul>
+ 
+-<h2><a href="#TOC">&#187;</a><a name="enhance">Enhancements to Qhull </a></h2>
++<h2><a href="#TOC">&#187;</a><a name="enhance">Enhancements to Qhull</a></h2>
+ 
+ <p>There are many ways in which Qhull can be improved. </p>
+ 
+@@ -1484,10 +1479,7 @@ Performance improvements:
+ 
+ <p>
+     <b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>) <br>
+-    <b>Up:</b> <a href="index.htm#TOC">
+-        Qhull manual: Table of
+-        Contents
+-    </a><br>
++    <b>Up:</b> <a href="index.htm#TOC">Qhull manual: Table of Contents</a><br>
+     <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
+     &#149; <a href="qh-quick.htm#options">Options</a>
+     &#149; <a href="qh-opto.htm#output">Output</a>
+diff --git a/html/qh-eg.htm b/html/qh-eg.htm
+index 3130a4b..87ad0e5 100644
+--- a/html/qh-eg.htm
++++ b/html/qh-eg.htm
+@@ -56,8 +56,7 @@ normalization option on the 'obscure' menu.</p>
+ 
+ <hr>
+ 
+-<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull examples: Table of
+-Contents </a></h2>
++<h2><a href="#TOP">&#187;</a><a name="TOC">Qhull examples: Table of Contents</a></h2>
+ 
+ <ul>
+     <li><a href="#2d">2-d and 3-d examples</a></li>
+@@ -114,7 +113,7 @@ Contents </a></h2>
+         </ul>
+     </li>
+     <li><a href="#TOC">&#187;</a><a name="merge">Facet merging for
+-        imprecision </a><ul>
++        imprecision</a><ul>
+             <li><a href="#20">eg.20.cone</a></li>
+             <li><a href="#21a">eg.21a.roundoff.errors</a></li>
+             <li><a href="#21b">eg.21b.roundoff.fixed</a></li>
+@@ -146,7 +145,7 @@ Contents </a></h2>
+ <h2><a href="#TOC">&#187;</a>2-d and 3-d examples</h2>
+ 
+ <h3><a href="#2d">&#187;</a><a name="01">rbox c D3 | qconvex G
+-&gt;eg.01.cube </a></h3>
++&gt;eg.01.cube</a></h3>
+ 
+ <p>The first example is a cube in 3-d. The color of each facet
+ indicates its normal. For example, normal [0,0,1] along the Z
+@@ -158,14 +157,14 @@ that each facet is a square that qconvex merged from coplanar
+ triangles.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="02">rbox c d G3.0 | qconvex G
+-&gt;eg.02.diamond.cube </a></h3>
++&gt;eg.02.diamond.cube</a></h3>
+ 
+ <p>The second example is a cube plus a diamond ('d') scaled by <tt>rbox</tt>'s
+ 'G' option. In higher dimensions, diamonds are much simpler than
+ hypercubes. </p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="03">rbox s 100 D3 | qconvex G
+-&gt;eg.03.sphere </a></h3>
++&gt;eg.03.sphere</a></h3>
+ 
+ <p>The <tt>rbox s</tt> option generates random points and
+ projects them to the d-sphere. All points should be on the convex
+@@ -175,7 +174,7 @@ facets and printing the vertices, e.g.,<i> rbox 1000 s | qconvex
+ A-0.95 p | qconvex G &gt;eg.99</i>.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="04">rbox s 100 D2 | qconvex G
+-&gt;eg.04.circle </a></h3>
++&gt;eg.04.circle</a></h3>
+ 
+ <p>In 2-d, there are many ways to generate a convex hull. One of
+ the earliest algorithms, and one of the fastest, is the 2-d
+@@ -184,7 +183,7 @@ href="index.htm#pre-sha85">'85</a>]. It was the model for
+ Qhull.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="05">rbox 10 l | qconvex G
+-&gt;eg.05.spiral </a></h3>
++&gt;eg.05.spiral</a></h3>
+ 
+ <p>One rotation of a spiral.</p>
+ 
+@@ -204,13 +203,13 @@ least 0.03 below the planes of its neighbors. This guarantees
+ that the facets are convex.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="07">rbox 1000 D3 | qconvex G
+-&gt;eg.07.box </a></h3>
++&gt;eg.07.box</a></h3>
+ 
+ <p>Here's the same distribution but in 3-d with Qhull handling
+ machine roundoff errors. Note the large number of facets. </p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="08a">rbox c G0.4 s 500 | qconvex G
+-&gt;eg.08a.cube.sphere </a></h3>
++&gt;eg.08a.cube.sphere</a></h3>
+ 
+ <p>The sphere is just barely poking out of the cube. Try the same
+ distribution with randomization turned on ('<a
+@@ -227,13 +226,13 @@ algorithm builds most of the sphere before it adds the cube's
+ vertices.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="08b">rbox d G0.6 s 500 | qconvex G
+-&gt;eg.08b.diamond.sphere </a></h3>
++&gt;eg.08b.diamond.sphere</a></h3>
+ 
+ <p>This is a combination of the diamond distribution and the
+ sphere.</p>
+ 
+ <h3><a href="#2d">&#187;</a><a name="09">rbox 100 L3 G0.5 s | qconvex
+-G &gt;eg.09.lens </a></h3>
++G &gt;eg.09.lens</a></h3>
+ 
+ <p>Each half of the lens distribution lies on a sphere of radius
+ three. A directed search for the furthest facet below a point
+@@ -262,20 +261,20 @@ of the facets that are visible from the point. Qhull will replace
+ these facets with new facets.</p>
+ 
+ <h3><a href="#how">&#187;</a><a name="10b">rbox 100 s
+-P0.5,0.5,0.5|qconvex Ga QG-0 &gt;eg.10b.sphere.beyond </a></h3>
++P0.5,0.5,0.5|qconvex Ga QG-0 &gt;eg.10b.sphere.beyond</a></h3>
+ 
+ <p>These are the facets that are not visible from the point.
+ Qhull will keep these facets.</p>
+ 
+ <h3><a href="#how">&#187;</a><a name="10c">rbox 100 s P0.5,0.5,0.5 |
+-qconvex PG Ga QG0 &gt;eg.10c.sphere.horizon </a></h3>
++qconvex PG Ga QG0 &gt;eg.10c.sphere.horizon</a></h3>
+ 
+ <p>These facets are the horizon facets; they border the visible
+ facets. The inside edges are the horizon ridges. Each horizon
+ ridge will form the base for a new facet.</p>
+ 
+ <h3><a href="#how">&#187;</a><a name="10d">rbox 100 s P0.5,0.5,0.5 |
+-qconvex Ga QV0 PgG &gt;eg.10d.sphere.cone </a></h3>
++qconvex Ga QV0 PgG &gt;eg.10d.sphere.cone</a></h3>
+ 
+ <p>This is the cone of points from the new point to the horizon
+ facets.  Try combining this image with <tt>eg.10c.sphere.horizon</tt>
+@@ -295,7 +294,7 @@ a point that is furthest in an outside set. A point like
+ qhull Ga QV0g Q0 &gt;eg.14.sphere.corner</a></h3>
+ 
+ <p>The '<a href="qh-optq.htm#QVn">QVn</a>', '<a
+-href="qh-optq.htm#QGn">QGn </a>' and '<a href="qh-optp.htm#Pdk">Pdk</a>'
++href="qh-optq.htm#QGn">QGn</a>' and '<a href="qh-optp.htm#Pdk">Pdk</a>'
+ options define good facets for Qhull. In this case '<a
+ href="qh-optq.htm#QVn">QV0</a>' defines the 0'th point
+ [0.5,0.5,0.5] as the good vertex, and '<a href="qh-optq.htm#Qg">Qg</a>'
+@@ -369,7 +368,7 @@ GnraD2 &gt;eg.17b.delaunay.2i</a></h3>
+ merges the non-unique Delaunay triangles into a hexagon.</p>
+ 
+ <h3><a href="#delaunay">&#187;</a><a name="17c">qdelaunay &lt;eg.data.17
+-Ga &gt;eg.17c.delaunay.2-3 </a></h3>
++Ga &gt;eg.17c.delaunay.2-3</a></h3>
+ 
+ <p>This is how Qhull generated both diagrams. Use Geomview's
+ 'obscure' menu to turn off normalization, and Geomview's
+@@ -402,7 +401,7 @@ example uses joggled input ('<a href="qh-optq.htm#QJn">QJ</a>').
+ Normally, you should use neither 'QJ' nor 'Qt' for Voronoi diagrams.
+ 
+ <h3><a href="#delaunay">&#187;</a><a name="17e">qvoronoi &lt;eg.data.17
+-Gna &gt;eg.17e.voronoi.2i </a></h3>
++Gna &gt;eg.17e.voronoi.2i</a></h3>
+ 
+ <p>This looks the same as the previous diagrams, but take a look
+ at the data.  Run 'qvoronoi p &lt;eg/eg.data.17'.  This prints
+@@ -421,7 +420,7 @@ input sites define one Voronoi vertex near the origin. </p>
+ four triangles.  Each triangle is assigned the same Voronoi vertex.</p>
+ 
+ <h3><a href="#delaunay">&#187;</a><a name="17f"> rbox c G0.1 d |
+-qdelaunay Gt Qz &lt;eg.17f.delaunay.3 </a></h3>
++qdelaunay Gt Qz &lt;eg.17f.delaunay.3</a></h3>
+ 
+ <p>This is the 3-d Delaunay triangulation of a small cube inside
+ a prism. Since the outside ridges are transparent, it shows the
+@@ -432,7 +431,7 @@ to add a point &quot;at infinity&quot;. This avoids a degenerate
+ input due to cospherical points.</p>
+ 
+ <h3><a href="#delaunay">&#187;</a><a name="18a">rbox 10 D2 d | qdelaunay
+-Qu G &gt;eg.18a.furthest.2-3 </a></h3>
++Qu G &gt;eg.18a.furthest.2-3</a></h3>
+ 
+ <p>The furthest-site Voronoi diagram contains Voronoi regions for
+ points that are <i>furthest </i>from an input site. It is the
+@@ -465,7 +464,7 @@ Geomview's 'cameras' menu to turn off perspective. Then load this
+ with the upper convex hull.</p>
+ 
+ <h3><a href="#delaunay">&#187;</a><a name="19">rbox 10 D3 | qvoronoi QV5
+-p | qconvex G &gt;eg.19.voronoi.region.3 </a></h3>
++p | qconvex G &gt;eg.19.voronoi.region.3</a></h3>
+ 
+ <p>This shows the Voronoi region for input site 5 of a 3-d
+ Voronoi diagram.</p>
+@@ -473,7 +472,7 @@ Voronoi diagram.</p>
+ <h2><a href="#TOC">&#187;</a>Facet merging for imprecision</h2>
+ 
+ <h3><a href="#merge">&#187;</a><a name="20">rbox r s 20 Z1 G0.2 |
+-qconvex G &gt;eg.20.cone </a></h3>
++qconvex G &gt;eg.20.cone</a></h3>
+ 
+ <p>There are two things unusual about this <a
+ href="http://www.geom.uiuc.edu/graphics/pix/Special_Topics/Computational_Geometry/cone.html">cone</a>.
+@@ -486,7 +485,7 @@ triangles instead of rectangles. By requiring convexity, Qhull
+ has recovered the original design.</p>
+ 
+ <h3><a href="#merge">&#187;</a><a name="21a">rbox 200 s | qhull Q0
+-R0.01 Gav Po &gt;eg.21a.roundoff.errors </a></h3>
++R0.01 Gav Po &gt;eg.21a.roundoff.errors</a></h3>
+ 
+ <p>This is the convex hull of 200 cospherical points with
+ precision errors ignored ('<a href="qh-optq.htm#Q0">Q0</a>'). To
+@@ -508,14 +507,14 @@ If it did not report flipped facets, increase the number of
+ points or perturbation.</p>
+ 
+ <h3><a href="#merge">&#187;</a><a name="21b">rbox 200 s | qconvex Qc
+-R0.01 Gpav &gt;eg.21b.roundoff.fixed </a></h3>
++R0.01 Gpav &gt;eg.21b.roundoff.fixed</a></h3>
+ 
+ <p>Qhull handles the random perturbations and returns an
+ imprecise <a
+ href="http://www.geom.uiuc.edu/graphics/pix/Special_Topics/Computational_Geometry/fixed.html">sphere</a>.
+ In this case, the output is a weak approximation to the points.
+ This is because a random perturbation of '<a
+-href="qh-optc.htm#Rn">R0.01 </a>' is equivalent to losing all but
++href="qh-optc.htm#Rn">R0.01</a>' is equivalent to losing all but
+ 1.8 digits of precision. The outer planes float above the points
+ because Qhull needs to allow for the maximum roundoff error. </p>
+ <p>
+@@ -584,7 +583,7 @@ the topological ridges, i.e., as triangles between three
+ vertices. That is why the cube looks lopsided.</p>
+ 
+ <h3><a href="#4d">&#187;</a><a name="30">rbox 5000 D4 | qconvex s
+-C-0.02 C0.1 Gh &gt;eg.30.4d.merge.cube </a></h3>
++C-0.02 C0.1 Gh &gt;eg.30.4d.merge.cube</a></h3>
+ 
+ <p><a
+ href="http://www.geom.uiuc.edu/graphics/pix/Special_Topics/Computational_Geometry/4dcube.html">Here</a>
+@@ -607,7 +606,7 @@ convexity constraint for post-merging ('<a href="qh-optc.htm#Cn2">C0.1</a>').
+ It deletes the small facets.</p>
+ 
+ <h3><a href="#4d">&#187;</a><a name="31">rbox 20 D3 | qdelaunay G
+-&gt;eg.31.4d.delaunay </a></h3>
++&gt;eg.31.4d.delaunay</a></h3>
+ 
+ <p>The Delaunay triangulation of 3-d sites corresponds to a 4-d
+ convex hull. You can't see 4-d directly but each facet is a 3-d
+@@ -640,7 +639,7 @@ Geomview's <tt>ndview</tt> on this example.</p>
+ <h2><a href="#TOC">&#187;</a>Halfspace intersections</h2>
+ 
+ <h3><a href="#half">&#187;</a><a name="33a">rbox 10 r s Z1 G0.3 |
+-qconvex G &gt;eg.33a.cone </a></h3>
++qconvex G &gt;eg.33a.cone</a></h3>
+ 
+ <h3><a href="#half">&#187;</a><a name="33b">rbox 10 r s Z1 G0.3 |
+ qconvex FV n | qhalf G &gt;eg.33b.cone.dual</a></h3>
+diff --git a/html/qh-faq.htm b/html/qh-faq.htm
+index 828eb4a..5fee7fc 100644
+--- a/html/qh-faq.htm
++++ b/html/qh-faq.htm
+@@ -86,7 +86,7 @@ using joggled input ('<a href="qh-optq.htm#QJn">QJ</a>').
+ 
+ <hr>
+ 
+-<h2><a href="#TOP">&#187;</a><a name="TOC">FAQ: Table of Contents </a></h2>
++<h2><a href="#TOP">&#187;</a><a name="TOC">FAQ: Table of Contents</a></h2>
+ 
+ <p>Within each category, the most recently asked questions are
+ first.
+@@ -125,7 +125,7 @@ first.
+         <li><a href="#3dd">How</a> do I construct a 3-d Delaunay triangulation?
+         <li><a href="#2d">How</a> do I get the triangles for a 2-d Delaunay
+     triangulation and the vertices of its Voronoi diagram?
+-        <li><a href="#big">Can </a>Qhull triangulate a
++        <li><a href="#big">Can</a> Qhull triangulate a
+             hundred 16-d points?</li>
+         </ul>
+ 
+@@ -335,8 +335,8 @@ find the ones that you need. </p>
+ 
+ <p>You will need to decide how Qhull should handle precision
+ problems. It can triangulate the output ('<a
+- href="qh-optq.htm#Qt" >Qt</a>'), joggle the input ('<a
+- href="qh-optq.htm#QJn" >QJ</a>'), or merge facets (the default). </p>
++ href="qh-optq.htm#Qt">Qt</a>'), joggle the input ('<a
++ href="qh-optq.htm#QJn">QJ</a>'), or merge facets (the default). </p>
+ 
+ <ul>
+     <li>With triangulated output, Qhull merges facets and triangulates
+@@ -417,7 +417,7 @@ Statistics for: rbox c D2 | qconvex FA
+ points in a 4-d or higher convex hull?</h4><blockquote>
+ 
+ <p>Options '<a
+-href="qh-opto.htm#i" >i</a>' (in 4-D and higher) and '<a href="qh-optf.htm#Ft">Ft</a>'
++href="qh-opto.htm#i">i</a>' (in 4-D and higher) and '<a href="qh-optf.htm#Ft">Ft</a>'
+  (in 3-D and higher) use "extra" points for non-simplicial facets (e.g., a face
+ of a cube or hypercube).  These points are not part
+ of the convex hull.  Options 'i' and 'Ft' triangulate non-simplicial facets using
+@@ -497,7 +497,7 @@ C:\qhull&gt;rbox c D4 | qconvex Pd0:0.5 Fv
+ </blockquote>
+ 
+ <p>The coordinates of the extra point are printed with the '<A
+-href="qh-optf.htm#Ft" >Ft</a>' option.  For centrums, option 'Ft' uses
++href="qh-optf.htm#Ft">Ft</a>' option.  For centrums, option 'Ft' uses
+ indices one less than option 'i'.  In this case, point 16 represents
+ the centrum of the facet.</p>
+ 
+@@ -687,8 +687,8 @@ occurs twice. Once for tetrahedron 9 5 8 7 and the other for
+ tetrahedron 2 9 5 8. </p>
+ 
+ <p>You can also use the Qhull library to generate the triangles.
+-See "<a href="#ridges2">How</a> do I visit the ridges of a
+-Delaunay triangulation?"</p>
++See '<a href="#ridges2">How</a> do I visit the ridges of a
++Delaunay triangulation?'</p>
+ 
+ </blockquote><h4><a href="#TOC">&#187;</a><a name="3dd">How</a> do I construct a
+ 3-d Delaunay triangulation?</h4><blockquote>
+@@ -750,10 +750,8 @@ C:\qhull&gt;rbox r y c G0.1 | qdelaunay Fv
+ </blockquote>
+ 
+ <p>If you want simplicial output use options
+-'<a href="qh-optq.htm#Qt">Qt</a> <A
+- href="qh-optf.htm#Ft" >i</a>' or
+-'<a href="qh-optq.htm#QJn">QJ</a> <A
+- href="qh-optf.htm#Ft" >i</a>', e.g.,
++'<a href="qh-optq.htm#Qt">Qt</a> <a href="qh-optf.htm#Ft">i</a>' or
++'<a href="qh-optq.htm#QJn">QJ</a> <a href="qh-optf.htm#Ft">i</a>', e.g.,
+ </p>
+ 
+ <blockquote>
+@@ -849,7 +847,7 @@ or
+     <p>rbox 10 D2 | qconvex Fx </p>
+ </blockquote>
+ 
+-</blockquote><h4><a href="#TOC">&#187;</a><a name="big">Can </a>Qhull triangulate
++</blockquote><h4><a href="#TOC">&#187;</a><a name="big">Can</a> Qhull triangulate
+ a hundred 16-d points?</h4><blockquote>
+ 
+ <p>No. This is an immense structure. A triangulation of 19, 16-d
+@@ -860,8 +858,7 @@ megabytes of memory. When Qhull uses virtual memory, it becomes
+ too slow to use. </p>
+ 
+ </blockquote>
+-<h2><a href="#TOC">&#187;</a><a name="voronoi">Voronoi
+-diagram questions</a></h2>
++<h2><a href="#TOC">&#187;</a><a name="voronoi">Voronoi diagram questions</a></h2>
+ 
+ <h4><a href="#TOC">&#187;</a><a name="volume">How</a> do I compute the volume of a Voronoi region?</h4><blockquote>
+ 
+@@ -1475,9 +1472,9 @@ side of a lens-shaped distribution may be closer to a point than
+ all of the facet's neighbors. The exhaustive search may be
+ skipped for spherical distributions. </p>
+ 
+-<p>Also see, "<a href="#vclosest">How</a> do I find the
++<p>Also see, '<a href="#vclosest">How</a> do I find the
+ Delaunay triangle that is closest to a
+-point?" </p>
++point?' </p>
+ 
+ </blockquote><h4><a href="#TOC">&#187;</a><a name="vclosest">How</a> do I find the
+ Delaunay triangle or Voronoi region that is closest to a point?</h4><blockquote>
+@@ -1496,7 +1493,7 @@ adjacent facet.  Determine the closest vertex to find the corresponding
+ Voronoi region.  Do not use options
+ '<a href="qh-optq.htm#Qbb">Qbb</a>', '<a href="qh-optq.htm#QbB">QbB</a>',
+ '<a href="qh-optq.htm#Qbk">Qbk:n</a>', or '<A
+- href="qh-optq.htm#QBk" >QBk:n</a>' since these scale the last
++ href="qh-optq.htm#QBk">QBk:n</a>' since these scale the last
+ coordinate.  Optimizations of qh_findbestfacet() should
+ be possible for Delaunay triangulations.</p>
+ 
+@@ -1525,14 +1522,13 @@ the point, or it is the
+ closest Delaunay triangle along the convex hull of the input set.
+ 
+ <p>Point location is an active research area in Computational
+-Geometry.  For a practical approach, see Mucke, et al, "Fast randomized
+-point location without preprocessing in two- and
+-three-dimensional Delaunay triangulations," <i>Computational
+-Geometry '96</i>, p. 274-283, May 1996.
++Geometry.  For a practical approach, see Mucke, et al,
++"Fast randomized point location without preprocessing in two- and three-dimensional Delaunay triangulations,"
++<i>Computational Geometry '96</i>, p. 274-283, May 1996.
+ For an introduction to planar point location see [O'Rourke '93].
+-Also see, "<A
++Also see, '<A
+  href="#closest" >How</a> do I find the facet that is closest to a
+-point?" </p>
++point?' </p>
+ 
+ <p>To locate the closest Voronoi region, determine the closest
+ vertex of the closest Delaunay triangle. </p>
+@@ -1599,8 +1595,7 @@ the vertex order and the flag facet-&gt;toporient.</p>
+ </blockquote>
+ <hr><!-- Navigation links -->
+ 
+-<p><a><b>Up:</b> </a><a
+- href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
++<p><b>Up:</b><a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+ <b>Up:</b> <a href="http://github.com/qhull/qhull/wiki">Qhull Wiki</a> and
+ <a href="http://www.qhull.org/html/qh-faq.htm">FAQ</a> (<a href="qh-faq.htm">local</a>) <br>
+ <b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: Table of Contents <br>
+diff --git a/html/qh-impre.htm b/html/qh-impre.htm
+index ced6da4..44681bd 100644
+--- a/html/qh-impre.htm
++++ b/html/qh-impre.htm
+@@ -52,7 +52,7 @@ precision errors while constructing the hull. </p>
+ <hr>
+ 
+ <h2><a href="#TOP">&#187;</a><a name="TOC">Qhull
+-imprecision: Table of Contents </a></h2>
++imprecision: Table of Contents</a></h2>
+ 
+ <ul>
+     <li><a href="#prec">Precision problems</a></li>
+@@ -404,8 +404,7 @@ distance computation. This is about 2,000 times better than
+ joggled input. Most applications though will not notice the
+ difference. </p>
+ 
+-<h2><a href="#TOC">&#187;</a><a name="delaunay">Delaunay
+-triangulations </a></h2>
++<h2><a href="#TOC">&#187;</a><a name="delaunay">Delaunay triangulations</a></h2>
+ 
+ <p>Programs that use Delaunay triangulations traditionally assume
+ a triangulated input. By default, <a href=qdelaun.htm>qdelaunay</a>
+@@ -455,7 +454,7 @@ For example, compare the first results with the later two results:  [T. Abraham]
+ </blockquote>
+ 
+ 
+-<h2><a href="#TOC">&#187;</a><a name="imprecise">Merged facets </a></h2>
++<h2><a href="#TOC">&#187;</a><a name="imprecise">Merged facets</a></h2>
+ 
+ <p>Qhull detects precision
+ problems when computing distances. A precision problem occurs if
+@@ -489,9 +488,9 @@ roundoff error above its hyperplane and the distance computation
+ can be high by the maximum roundoff error.</p>
+ 
+ <p>With the '<a href="qh-optc.htm#Cn">C-n</a>' or '<a
+-href="qh-optc.htm#An">A-n </a>' options, Qhull merges non-convex
++href="qh-optc.htm#An">A-n</a>' options, Qhull merges non-convex
+ facets while constructing the hull. The remaining facets are
+-clearly convex. With the '<a href="qh-optq.htm#Qx">Qx </a>'
++clearly convex. With the '<a href="qh-optq.htm#Qx">Qx</a>'
+ option, Qhull merges coplanar facets after constructing the hull.
+ While constructing the hull, it merges coplanar horizon facets,
+ flipped facets, concave facets and duplicated ridges. With '<a
+diff --git a/html/qh-optc.htm b/html/qh-optc.htm
+index 26eec53..615a9b1 100644
+--- a/html/qh-optc.htm
++++ b/html/qh-optc.htm
+@@ -132,8 +132,7 @@ maximum roundoff error.</p>
+ <p>If 'An' is set without '<a href="#Cn2">Cn</a>', then '<a
+ href="#Cn2">C0</a>' is automatically set. </p>
+ 
+-<h3><a href="#prec">&#187;</a><a name="C0">C-0 - handle all precision
+-errors </a></h3>
++<h3><a href="#prec">&#187;</a><a name="C0">C-0 - handle all precision errors</a></h3>
+ 
+ <p>Qhull handles precision errors by merging facets. The default option 'C-0'
+ handles all precision errors in 2-d, 3-d, and 4-d. It may be used in higher dimensions, but
+@@ -203,30 +202,27 @@ convex. The statistic &quot;max. distance of a new vertex to a
+ facet&quot; (from option '<a href="qh-optt.htm#Ts">Ts</a>') is a
+ reasonable upper bound for the actual roundoff error. </p>
+ 
+-<h3><a href="#prec">&#187;</a><a name="Rn">Rn - randomly perturb
+-computations </a></h3>
++<h3><a href="#prec">&#187;</a><a name="Rn">Rn - randomly perturb computations</a></h3>
+ 
+ <p>This option perturbs every distance, hyperplane, and angle
+ computation by up to <i>(+/- n * max_coord)</i>. It simulates the
+ effect of roundoff errors. Unless '<a href="#En">En</a>' is
+ explicitly set, it is adjusted for 'Rn'. The command 'qhull Rn'
+ will generate a convex hull despite the perturbations. See the <a
+-href="qh-eg.htm#merge">Examples </a>section for an example.</p>
++href="qh-eg.htm#merge">Examples</a> section for an example.</p>
+ 
+ <p>Options 'Rn C-n' have the effect of '<a href="#Wn">W2n</a>'
+ and '<a href="#Cn">C-2n</a>'. To use time as the random number
+ seed, use option '<a href="qh-optq.htm#QRn">QR-1</a>'.</p>
+ 
+-<h3><a href="#prec">&#187;</a><a name="Un">Un - max distance for a
+-new, coplanar point </a></h3>
++<h3><a href="#prec">&#187;</a><a name="Un">Un - max distance for a new, coplanar point</a></h3>
+ 
+ <p>This allows the user to set coplanarity. When pre-merging ('<a
+-href="#Cn">C-n </a>', '<a href="#An">A-n</a>' or '<a
++href="#Cn">C-n</a>', '<a href="#An">A-n</a>' or '<a
+ href="qh-optq.htm#Qx">Qx</a>'), Qhull merges a new point into any
+ coplanar facets. The default value for 'Un' is '<a href="#Vn">Vn</a>'.</p>
+ 
+-<h3><a href="#prec">&#187;</a><a name="Vn">Vn - min distance for a
+-visible facet </a></h3>
++<h3><a href="#prec">&#187;</a><a name="Vn">Vn - min distance for a visible facet</a></h3>
+ 
+ <p>This allows the user to set facet visibility. When adding a
+ point to the convex hull, Qhull determines all facets that are
+@@ -237,7 +233,7 @@ the point to the facet is greater than 'Vn'.</p>
+ error ('<a href="#En">En</a>'). With merging, the default value
+ is the pre-merge centrum ('<a href="#Cn">C-n</a>') in 2-d or 3-d,
+ or three times that in other dimensions. If the outside width is
+-specified with option '<a href="#Wn">Wn </a>', the maximum,
++specified with option '<a href="#Wn">Wn</a>', the maximum,
+ default value for 'Vn' is '<a href="#Wn">Wn</a>'.</p>
+ 
+ <p>Qhull warns if 'Vn' is greater than '<a href="#Wn">Wn</a>' and
+@@ -251,7 +247,7 @@ plane for outside points</a></h3>
+ <p>Points are added to the convex hull only if they are clearly
+ outside of a facet. A point is outside of a facet if its distance
+ to the facet is greater than 'Wn'. Without pre-merging, the
+-default value for 'Wn' is '<a href="#En">En </a>'. If the user
++default value for 'Wn' is '<a href="#En">En</a>'. If the user
+ specifies pre-merging and does not set 'Wn', than 'Wn' is set to
+ the maximum of '<a href="#Cn">C-n</a>' and <i>maxcoord*(1 - </i><a
+ href="#An"><i>A-n</i></a><i>)</i>.</p>
+diff --git a/html/qh-optf.htm b/html/qh-optf.htm
+index 7101ed7..e4024ca 100644
+--- a/html/qh-optf.htm
++++ b/html/qh-optf.htm
+@@ -27,7 +27,7 @@
+ 
+ <p>This section lists the format options for Qhull. These options
+ are indicated by 'F' followed by a letter. See <A
+- href="qh-opto.htm#output" >Output</a>, <a href="qh-optp.htm#print">Print</a>,
++ href="qh-opto.htm#output">Output</a>, <a href="qh-optp.htm#print">Print</a>,
+ and <a href="qh-optg.htm#geomview">Geomview</a> for other output
+ options. </p>
+ 
+@@ -128,8 +128,7 @@ may also be used.</p>
+ 
+ <hr>
+ 
+-<h3><a href="#format">&#187;</a><a name="Fa">Fa - print area for each
+-facet </a></h3>
++<h3><a href="#format">&#187;</a><a name="Fa">Fa - print area for each facet</a></h3>
+ 
+ <p>The first line is the number of facets. The remaining lines
+ are the area for each facet, one facet per line. See '<A
+@@ -155,18 +154,18 @@ facet's hyperplane. If so, the approximation is less than the
+ actual value and it may be significantly less or 0.0. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="FA">FA - compute total area
+-and volume for option 's' </a></h3>
++and volume for option 's'</a></h3>
+ 
+ <p>With option 'FA', Qhull includes the total area and volume in
+ the summary ('<a href="qh-opto.htm#s">s</a>').  Option '<a href="#FS">FS</a>' also includes the total area and volume.
+ If facets are
+ merged, the area and volume are approximations. Option 'FA' is
+ automatically set for options '<a href="#Fa">Fa</a>', '<A
+- href="qh-optp.htm#PAn" >PAn</a>', and '<a href="qh-optp.htm#PFn">PFn</a>'.
++ href="qh-optp.htm#PAn">PAn</a>', and '<a href="qh-optp.htm#PFn">PFn</a>'.
+ </p>
+ 
+ <p>With '<a href="qdelaun.htm">qdelaunay</a> <A
+- href="qh-opto.htm#s" >s</a> FA', Qhull computes the total area of
++ href="qh-opto.htm#s">s</a> FA', Qhull computes the total area of
+ the Delaunay triangulation. This equals the volume of the convex
+ hull of the data points. With options '<a href="qdelau_f.htm">qdelaunay Qu</a>
+ <a href="qh-opto.htm#s">s</a> FA', Qhull computes the
+@@ -176,7 +175,7 @@ equals of the total area of the Delaunay triangulation. </p>
+ <p>See '<a href="#Fa">Fa</a>' for further details.  Option '<a href="#FS">FS</a>' also computes the total area and volume.</p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Fc">Fc - print coplanar
+-points for each facet </a></h3>
++points for each facet</a></h3>
+ 
+ <p>The output starts with the number of facets. Then each facet
+ is printed one per line. Each line is the number of coplanar
+@@ -196,7 +195,7 @@ coplanar point coordinates. Use '<a href="qh-optf.htm#Fv">Fv</a>'
+ to print vertices. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="FC">FC - print centrum or
+-Voronoi vertex for each facet </a></h3>
++Voronoi vertex for each facet</a></h3>
+ 
+ <p>The output starts with the dimension followed by the number of
+ facets. Then each facet centrum is printed, one per line. For
+@@ -204,7 +203,7 @@ facets. Then each facet centrum is printed, one per line. For
+ printed instead. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Fd">Fd - use cdd format for
+-input </a></h3>
++input</a></h3>
+ 
+ <p>The input starts with comments. The first comment is reported
+ in the summary. Data starts after a "begin" line. The
+@@ -221,11 +220,11 @@ convention. The first two lines of the input may be an interior
+ point in '<a href="#FV">FV</a>' format.</p>
+ 
+ <h3><a href="#format">&#187;</a><a name="FD">FD - use cdd format for
+-normals </a></h3>
++normals</a></h3>
+ 
+ <p>Option 'FD' prints normals ('<a href="qh-opto.htm#n">n</a>', '<A
+  href="#Fo" >Fo</a>', '<a href="#Fi">Fi</a>') or points ('<A
+- href="qh-opto.htm#p" >p</a>') in cdd format. The first line is the
++ href="qh-opto.htm#p">p</a>') in cdd format. The first line is the
+ command line that invoked Qhull. Data starts with a
+ "begin" line. The next line is the number of normals or
+ points followed by the dimension plus one and "real".
+@@ -234,17 +233,15 @@ coefficients. The offset for points is 1.0. For normals,
+ the offset and coefficients use the opposite sign from Qhull.
+ The data ends with an "end" line.</p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FF">FF - print facets w/o
+-ridges </a></h3>
++<h3><a href="#format">&#187;</a><a name="FF">FF - print facets w/o ridges</a></h3>
+ 
+ <p>Option 'FF' prints all fields of all facets (as in '<A
+- href="qh-opto.htm#f" >f</a>') without printing the ridges. This is
++ href="qh-opto.htm#f">f</a>') without printing the ridges. This is
+ useful in higher dimensions where a facet may have many ridges.
+ For simplicial facets, options 'FF' and '<a href="qh-opto.htm#f">f
+ </a>' are equivalent.</p>
+ 
+-<h3><a href="#format">&#187;</a><a name="Fi">Fi - print inner planes
+-for each facet </a></h3>
++<h3><a href="#format">&#187;</a><a name="Fi">Fi - print inner planes for each facet</a></h3>
+ 
+ <p>The first line is the dimension plus one. The second line is
+ the number of facets. The remainder is one inner plane per line.
+@@ -255,7 +252,7 @@ It is an offset from the facet's hyperplane. It includes a
+ roundoff error for computing the vertex distance.</p>
+ 
+ <p>Note that the inner planes for Geomview output ('<A
+- href="qh-optg.htm#Gi" >Gi</a>') include an additional offset for
++ href="qh-optg.htm#Gi">Gi</a>') include an additional offset for
+ vertex visualization and roundoff error. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Fi2">Fi - print separating
+@@ -269,7 +266,7 @@ number of indices and floats. The first pair of indices indicates
+ an adjacent pair of input sites. The next <i>d</i> floats are the
+ normalized coefficients for the hyperplane, and the last float is
+ the offset. The hyperplane is oriented toward '<A
+- href="qh-optq.htm#QVn" >QVn</a>' (if defined), or the first input
++ href="qh-optq.htm#QVn">QVn</a>' (if defined), or the first input
+ site of the pair. </p>
+ 
+ <p>Use '<a href="qh-optf.htm#Fo2">Fo</a>' for unbounded regions,
+@@ -287,16 +284,14 @@ non-zero. The deviations appear to be largest when the
+ corresponding Delaunay triangles are large and thin; for example,
+ the Voronoi diagram of nearly cospherical points. </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FI">FI - print ID for each
+-facet </a></h3>
++<h3><a href="#format">&#187;</a><a name="FI">FI - print ID for each facet</a></h3>
+ 
+ <p>Print facet identifiers. These are used internally and listed
+ with options '<a href="qh-opto.htm#f">f</a>' and '<a href="#FF">FF</a>'.
+-Options '<a href="#Fn">Fn </a>' and '<a href="#FN">FN</a>' use
++Options '<a href="#Fn">Fn</a>' and '<a href="#FN">FN</a>' use
+ facet identifiers for negative indices. </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="Fm">Fm - print merge count
+-for each facet </a></h3>
++<h3><a href="#format">&#187;</a><a name="Fm">Fm - print merge count for each facet</a></h3>
+ 
+ <p>The first line is the number of facets. The remainder is the
+ number of merges for each facet, one per line. At most 511 merges
+@@ -304,7 +299,7 @@ are reported for a facet. See '<a href="qh-optp.htm#PMn">PMn</a>'
+ for printing the facets with the most merges. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="FM">FM - print Maple
+-output </a></h3>
++output</a></h3>
+ 
+ <p>Qhull writes a Maple file for 2-d and 3-d convex hulls,
+ 2-d and 3-d halfspace intersections,
+@@ -364,7 +359,7 @@ convex hull.
+ for other URLs.
+ 
+ <h3><a href="#format">&#187;</a><a name="Fn">Fn - print neighboring
+-facets for each facet </a></h3>
++facets for each facet</a></h3>
+ 
+ <p>The output starts with the number of facets. Then each facet
+ is printed one per line. Each line is the number of neighbors
+@@ -381,11 +376,11 @@ the neighbors are unordered.
+ only good facets ('<a href="qh-optp.htm#Pg">Pg</a>', <a href="qdelaun.htm" >qdelaunay</a>,
+ <a href="qvoronoi.htm" >qvoronoi</a>). It
+ is the negation of the facet's ID (option '<a href="#FI">FI</a>').
+-For example, negative indices are used for facets "at
+-infinity" in the Delaunay triangulation.</p>
++For example, negative indices are used for facets "at infinity" in
++the Delaunay triangulation.</p>
+ 
+ <h3><a href="#format">&#187;</a><a name="FN">FN - print neighboring
+-facets for each point </a></h3>
++facets for each point</a></h3>
+ 
+ <p>The first line is the number of points. Then each point is
+ printed, one per line. For unassigned points (either interior or
+@@ -393,7 +388,7 @@ coplanar), the line is "0". For assigned coplanar
+ points ('<a href="qh-optq.htm#Qc">Qc</a>'), the line is
+ "1" followed by the index of the facet that is furthest
+ below the point. For assigned interior points ('<A
+- href="qh-optq.htm#Qi" >Qi</a>'), the line is "1"
++ href="qh-optq.htm#Qi">Qi</a>'), the line is "1"
+ followed by the index of the facet that is least above the point.
+ For vertices that do not belong to good facet, the line is
+ "0"</p>
+@@ -416,15 +411,14 @@ Delaunay triangulation.</p>
+ Voronoi region for each input site. Option 'FN' lists the regions
+ in site ID order. Option 'FN' corresponds to the second half of
+ option '<a href="qh-opto.htm#o">o</a>'. To convert from 'FN' to '<A
+- href="qh-opto.htm#o" >o</a>', replace negative indices with zero
++ href="qh-opto.htm#o">o</a>', replace negative indices with zero
+ and increment non-negative indices by one. </p>
+ 
+ <p>If you are using the <a href="qh-code.htm#library">Qhull
+ library</a> or <a href="qh-code.htm#cpp">C++ interface</a>, option 'FN' has the side effect of reordering the
+ neighbors for a vertex </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="Fo">Fo - print outer planes
+-for each facet </a></h3>
++<h3><a href="#format">&#187;</a><a name="Fo">Fo - print outer planes for each facet</a></h3>
+ 
+ <p>The first line is the dimension plus one. The second line is
+ the number of facets. The remainder is one outer plane per line.
+@@ -442,7 +436,7 @@ distance is used instead. This can be much larger than the actual
+ outer planes.</p>
+ 
+ <p>Note that the outer planes for Geomview output ('<A
+- href="qh-optg.htm#G" >G</a>') include an additional offset for
++ href="qh-optg.htm#G">G</a>') include an additional offset for
+ vertex/point visualization, 'lines closer,' and roundoff error.</p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Fo2">Fo - print separating
+@@ -456,7 +450,7 @@ number of indices and floats. The first pair of indices indicates
+ an adjacent pair of input sites. The next <i>d</i> floats are the
+ normalized coefficients for the hyperplane, and the last float is
+ the offset. The hyperplane is oriented toward '<A
+- href="qh-optq.htm#QVn" >QVn</a>' (if defined), or the first input
++ href="qh-optq.htm#QVn">QVn</a>' (if defined), or the first input
+ site of the pair. </p>
+ 
+ <p>Option 'Fo' gives the hyperplanes for the unbounded rays of
+@@ -469,8 +463,7 @@ and '<a href="qh-optf.htm#Fv2">Fv</a>' for the corresponding
+ Voronoi vertices. Use '<a href="qh-optt.htm#Tv">Tv</a>' to verify
+ that the corresponding Voronoi vertices lie on the hyperplane. </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FO">FO - print list of
+-selected options </a></h3>
++<h3><a href="#format">&#187;</a><a name="FO">FO - print list of selected options</a></h3>
+ 
+ <p>Lists selected options and default values to stderr.
+ Additional 'FO's are printed to stdout. </p>
+@@ -490,8 +483,7 @@ is its offset, the halfspace intersection occurs at
+ [x/-b,y/-b,z/-b] plus the interior point. If <i>b&gt;=0</i>, the
+ halfspace intersection is unbounded. </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FP">FP - print nearest
+-vertex for coplanar points </a></h3>
++<h3><a href="#format">&#187;</a><a name="FP">FP - print nearest vertex for coplanar points</a></h3>
+ 
+ <p>The output starts with the number of coplanar points. Then
+ each coplanar point is printed one per line. Each line is the
+@@ -500,7 +492,7 @@ point, the corresponding facet ID, and the distance. Sort the
+ lines to list the coplanar points nearest to each vertex. </p>
+ 
+ <p>Use options '<a href="qh-optq.htm#Qc">Qc</a>' and/or '<A
+- href="qh-optq.htm#Qi" >Qi</a>' with 'FP'. Options 'Qc FP' prints
++ href="qh-optq.htm#Qi">Qi</a>' with 'FP'. Options 'Qc FP' prints
+ coplanar points while 'Qci FP' prints coplanar and interior
+ points.  Option 'Qc' is automatically selected if 'Qi' is not
+ selected.
+@@ -519,11 +511,10 @@ facets are triangulated ('<a href="qh-optq.htm#Qt">Qt</a>'), option
+ 'FP' may be inefficient.  It redetermines the original vertex set
+ for each coplanar point.</p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FQ">FQ - print command for
+-qhull and input </a></h3>
++<h3><a href="#format">&#187;</a><a name="FQ">FQ - print command for qhull and input</a></h3>
+ 
+-<p>Prints qhull and input command, e.g., "rbox 10 s | qhull
+-FQ".   Option 'FQ' may be repeated multiple times.</p>
++<p>Prints qhull and input command, e.g., 'rbox 10 s | qhull FQ'.
++Option 'FQ' may be repeated multiple times.</p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Fs">Fs - print summary</a></h3>
+ 
+@@ -571,8 +562,8 @@ or reals.</p>
+ <p>The total volume measures the volume of the intersection of
+ the halfspaces defined by each facet. It is computed from the
+ facet area. Both area and volume are approximations for
+-non-simplicial facets. See option '<a href="#Fa">Fa </a>' for
+-further notes. Option '<a href="#FA">FA </a>' also computes the total area and volume. </p>
++non-simplicial facets. See option '<a href="#Fa">Fa</a>' for
++further notes. Option '<a href="#FA">FA</a>' also computes the total area and volume. </p>
+ 
+ <h3><a href="#format">&#187;</a><a name="Ft">Ft - print triangulation</a></h3>
+ 
+@@ -610,8 +601,8 @@ may even have a flipped orientation. Use triangulated input ('<A
+ same as option '<a href="qh-opto.htm#o">o</a>' without the lifted
+ coordinate.  Since 'Ft' is invalid for merged Delaunay facets, option
+ 'Ft' is not available for qdelaunay or qvoronoi.  It may be used with
+-joggled input ('<a  href="qh-optq.htm#QJn" >QJ</a>') or triangulated output ('<A
+- href="qh-optq.htm#Qt" >Qt</a>'), for example, rbox 10 c G 0.01 | qhull d QJ Ft</p>
++joggled input ('<a  href="qh-optq.htm#QJn">QJ</a>') or triangulated output ('<A
++ href="qh-optq.htm#Qt">Qt</a>'), for example, rbox 10 c G 0.01 | qhull d QJ Ft</p>
+ 
+ <p>If you add a point-at-infinity with '<a href="qh-optq.htm#Qz">Qz</a>',
+ it is printed after the input sites and before any centrums. It
+@@ -649,7 +640,7 @@ unbounded ray is directed from the Voronoi vertices to infinity. </p>
+ 
+ <p>Use '<a href="qh-optf.htm#Fo2">Fo</a>' for separating
+ hyperplanes of outer, unbounded regions. Use '<A
+- href="qh-optf.htm#Fi2" >Fi</a>' for separating hyperplanes of
++ href="qh-optf.htm#Fi2">Fi</a>' for separating hyperplanes of
+ inner, bounded regions. </p>
+ 
+ <p>Option 'Fv' does not list ridges that require more than one
+@@ -668,8 +659,7 @@ can formally describe these cases or
+ write code to handle them, please send email to <A
+  href="mailto:qhull@qhull.org" >qhull@qhull.org</a>. </p>
+ 
+-<h3><a href="#format">&#187;</a><a name="FV">FV - print average
+-vertex </a></h3>
++<h3><a href="#format">&#187;</a><a name="FV">FV - print average vertex</a></h3>
+ 
+ <p>The average vertex is the average of all vertex coordinates.
+ It is an interior point for halfspace intersection. The first
+@@ -696,7 +686,7 @@ counterclockwise order (by qh_ORIENTclock in user.h). </p>
+ 
+ <p>In 3-d and higher convex hulls, the extreme points (vertices)
+ are sorted by index. This is the same order as option '<A
+- href="qh-opto.htm#p" >p</a>' when it doesn't include coplanar or
++ href="qh-opto.htm#p">p</a>' when it doesn't include coplanar or
+ interior points. </p>
+ 
+ <p>For Delaunay triangulations, 'Fx' lists the extreme
+diff --git a/html/qh-optg.htm b/html/qh-optg.htm
+index 1e694f4..d27aabc 100644
+--- a/html/qh-optg.htm
++++ b/html/qh-optg.htm
+@@ -121,13 +121,11 @@ corresponding paraboloid.  Geomview displays the 2-d Voronoi
+ diagram. For halfspace intersections, it displays the
+ dual convex hull.
+ 
+-<h3><a href="#geomview">&#187;</a><a name="Ga">Ga - display all
+-points as dots </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="Ga">Ga - display all points as dots</a></h3>
+ 
+ <p>Each input point is displayed as a green dot.</p>
+ 
+-<h3><a href="#geomview">&#187;</a><a name="Gc">Gc - display centrums
+-(3-d) </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="Gc">Gc - display centrums (3-d)</a></h3>
+ 
+ <p>The centrum is defined by a green radius sitting on a blue
+ plane. The plane corresponds to the facet's hyperplane. If you
+@@ -136,8 +134,7 @@ neighboring centrums are below the facet. The radius is defined
+ by '<a href="qh-optc.htm#Cn">C-n</a>' or '<a
+ href="qh-optc.htm#Cn2">Cn</a>'.</p>
+ 
+-<h3><a href="#geomview">&#187;</a><a name="GDn">GDn - drop dimension
+-n in 3-d and 4-d output </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="GDn">GDn - drop dimension n in 3-d and 4-d output</a></h3>
+ 
+ <p>The result is a 2-d or 3-d object. In 4-d, this corresponds to
+ viewing the 4-d object from the nth axis without perspective.
+@@ -166,7 +163,7 @@ hyperplane intersections (3-d, 4-d)</a></h3>
+ 
+ <p>In 3-d, the intersection is a black line. It lies on two
+ neighboring hyperplanes, c.f., the blue squares associated with
+-centrums ('<a href="#Gc">Gc </a>'). In 4-d, the ridges are
++centrums ('<a href="#Gc">Gc</a>'). In 4-d, the ridges are
+ projected to the intersection of both hyperplanes. If you turn on
+ edges (Geomview's 'appearances' menu), each triangle corresponds
+ to one ridge. The ridges may overlap each other.</p>
+@@ -179,8 +176,7 @@ parallel to the facet's hyperplane. The inner plane's color is
+ the opposite of the outer plane's color, i.e., <i>[1-r,1-g,1-b] </i>.
+ Its edges are determined by the vertices.</p>
+ 
+-<h3><a href="#geomview">&#187;</a><a name="Gn">Gn - do not display
+-planes </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="Gn">Gn - do not display planes</a></h3>
+ 
+ <p>By default, Geomview displays the precise plane (no merging)
+ or both inner and output planes (if merging). If merging,
+@@ -195,7 +191,7 @@ parallel to the facet's hyperplane. Its color is determined by
+ the facet's normal, and its edges are determined by the vertices.</p>
+ 
+ <h3><a href="#geomview">&#187;</a><a name="Gp">Gp - display coplanar
+-points and vertices as radii </a></h3>
++points and vertices as radii</a></h3>
+ 
+ <p>Coplanar points ('<a href="qh-optq.htm#Qc">Qc</a>'), interior
+ points ('<a href="qh-optq.htm#Qi">Qi</a>'), outside points ('<a
+@@ -205,7 +201,7 @@ perpendicular to the corresponding facet. Vertices are aligned
+ with an interior point. The radii define a ball which corresponds
+ to the imprecision of the point. The imprecision is the maximum
+ of the roundoff error, the centrum radius, and <i>maxcoord * (1 -
+-</i><a href="qh-optc.htm#An"><i>A-n</i></a><i>)</i>. It is at
++</i><a href="qh-optc.htm#An">A-n</a><i>)</i>. It is at
+ least 1/20'th of the maximum coordinate, and ignores post merging
+ if pre-merging is done.</p>
+ 
+@@ -217,8 +213,7 @@ coplanar points while 'Qci Gpv' displays coplanar and interior
+ points.  Option 'Qc' is automatically selected if 'Qi' is not
+ selected with options 'Gpv'.
+ 
+-<h3><a href="#geomview">&#187;</a><a name="Gr">Gr - display ridges
+-(3-d) </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="Gr">Gr - display ridges (3-d)</a></h3>
+ 
+ <p>A ridge connects the two vertices that are shared by
+ neighboring facets. It is displayed in green. A ridge is the
+@@ -226,8 +221,7 @@ topological edge between two facets while the hyperplane
+ intersection is the geometric edge between two facets. Ridges are
+ always displayed in 4-d.</p>
+ 
+-<h3><a href="#geomview">&#187;</a><a name="Gt">Gt - transparent 3-d
+-Delaunay </a></h3>
++<h3><a href="#geomview">&#187;</a><a name="Gt">Gt - transparent 3-d Delaunay</a></h3>
+ 
+ <p>A 3-d Delaunay triangulation looks like a convex hull with
+ interior facets. Option 'Gt' removes the outside ridges to reveal
+diff --git a/html/qh-opto.htm b/html/qh-opto.htm
+index ec32ff5..fd67ab3 100644
+--- a/html/qh-opto.htm
++++ b/html/qh-opto.htm
+@@ -86,8 +86,7 @@ Other outputs may be specified as follows. </p>
+ 
+ <hr>
+ 
+-<h3><a href="#output">&#187;</a><a name="f">f - print all fields of
+-all facets </a></h3>
++<h3><a href="#output">&#187;</a><a name="f">f - print all fields of all facets</a></h3>
+ 
+ <p>Print all fields of <a href=http://www.qhull.org/src/libqhull_r/libqhull_r.h#facetT>facetT</a> for all facets.
+ The facet is the primary <a href=index.htm#structure>data structure</a> for
+@@ -103,8 +102,7 @@ href="qh-code.htm#cpp">C++ interface</a>.</p>
+ <p>Use the '<a href="qh-optf.htm#FF">FF</a>' option to print the
+ facets but not the ridges. </p>
+ 
+-<h3><a href="#output">&#187;</a><a name="i">i - print vertices
+-incident to each facet </a></h3>
++<h3><a href="#output">&#187;</a><a name="i">i - print vertices incident to each facet</a></h3>
+ 
+ <p>The first line is the number of facets. The remaining lines
+ list the vertices for each facet, one facet per line. The indices
+@@ -130,8 +128,7 @@ href="qh-optf.htm#Ft">Ft</a>' to print the coordinates of the
+ centrums as well as those of the input points.  The centrum indices
+ for option 'i' are one more than the centrum indices for option 'Ft'.</p>
+ 
+-<h3><a href="#output">&#187;</a><a name="m">m - print Mathematica
+-output </a></h3>
++<h3><a href="#output">&#187;</a><a name="m">m - print Mathematica output</a></h3>
+ 
+ <p>Qhull writes a Mathematica file for 2-d and 3-d convex hulls,
+ 2-d and 3-d halfspace intersections,
+@@ -158,8 +155,7 @@ convex hull.
+ <p>See <a href="qh-faq.htm#math">Is Qhull available for Mathematica?</a>
+ for URLs.
+ 
+-<h3><a href="#output">&#187;</a><a name="n">n - print hyperplane
+-normals with offsets </a></h3>
++<h3><a href="#output">&#187;</a><a name="n">n - print hyperplane normals with offsets</a></h3>
+ 
+ <p>The first line is the dimension plus one. The second line is
+ the number of facets. The remaining lines are the normals for
+@@ -224,8 +220,7 @@ without listing Voronoi vertices.</p>
+ <p>If you are using the Qhull library, options 'v o' have the
+ side effect of reordering the neighbors for a vertex.</p>
+ 
+-<h3><a href="#output">&#187;</a><a name="p">p - print vertex and
+-point coordinates </a></h3>
++<h3><a href="#output">&#187;</a><a name="p">p - print vertex and point coordinates</a></h3>
+ 
+ <p>The first line is the dimension. The second line is the number
+ of vertices. The remaining lines are the vertices, one vertex per
+@@ -257,8 +252,7 @@ number of vertices, the dimension plus one, and &quot;real&quot;.
+ The vertices follow with a leading &quot;1&quot;. Output ends
+ with &quot;end&quot;. </p>
+ 
+-<h3><a href="#output">&#187;</a><a name="s">s - print summary to
+-stderr </a></h3>
++<h3><a href="#output">&#187;</a><a name="s">s - print summary to stderr</a></h3>
+ 
+ <p>The default output of Qhull is a summary to stderr. Options '<a
+ href="qh-optf.htm#FS">FS</a>' and '<a href="qh-optf.htm#Fs">Fs</a>'
+diff --git a/html/qh-optp.htm b/html/qh-optp.htm
+index fc807b8..494fe98 100644
+--- a/html/qh-optp.htm
++++ b/html/qh-optp.htm
+@@ -70,7 +70,7 @@ and <a href="qh-optf.htm#format">Format</a> for other output options.
+     <dd>print facets whose area is at least n</dd>
+     <dt><a href="#Pg">Pg</a></dt>
+     <dd>print good facets only (needs '<a href="qh-optq.htm#QGn">QGn</a>'
+-        or '<a href="qh-optq.htm#QVn">QVn </a>')</dd>
++        or '<a href="qh-optq.htm#QVn">QVn</a>')</dd>
+     <dt><a href="#PG">PG</a></dt>
+     <dd>print neighbors of good facets</dd>
+     <dt><a href="#PMn">PMn</a></dt>
+@@ -87,8 +87,7 @@ may be useful for <a href="qh-impre.htm#approximate">approximating
+ a hull</a>. Unless '<a href="#PG">PG</a>' is set, '<a href="#Pg">Pg</a>'
+ is automatically set. </p>
+ 
+-<h3><a href="#print">&#187;</a><a name="Pdk">Pdk:n - print facet if
+-normal[k] &gt;= n </a></h3>
++<h3><a href="#print">&#187;</a><a name="Pdk">Pdk:n - print facet if normal[k] &gt;= n</a></h3>
+ 
+ <p>For a given output, print only those facets with <i>normal[k] &gt;= n</i>
+ and <i>drop</i> the others.  For example, 'Pd0:0.5' prints facets with <i>normal[0]
+@@ -129,7 +128,7 @@ href="qh-impre.htm#approximate">approximating a hull</a>. Unless
+ '<a href="#PG">PG</a>' is set, '<a href="#Pg">Pg</a>' is
+ automatically set. </p>
+ 
+-<h3><a href="#print">&#187;</a><a name="Pg">Pg - print good facets </a></h3>
++<h3><a href="#print">&#187;</a><a name="Pg">Pg - print good facets</a></h3>
+ 
+ <p>Qhull can mark facets as &quot;good&quot;. This is used to</p>
+ 
+@@ -137,7 +136,7 @@ automatically set. </p>
+     <li>mark the lower convex hull for Delaunay triangulations
+         and Voronoi diagrams</li>
+     <li>mark the facets that are visible from a point (option '<a
+-        href="qh-optq.htm#QGn">QGn </a>')</li>
++        href="qh-optq.htm#QGn">QGn</a>')</li>
+     <li>mark the facets that contain a point (option '<a
+         href="qh-optq.htm#QVn">QVn</a>').</li>
+     <li>indicate facets with a large enough area (options '<a
+@@ -149,7 +148,7 @@ automatically set. </p>
+ <p>Option '<a href="#Pg">Pg</a>' only prints good facets that
+ also meet '<a href="#Pdk">Pdk</a>' and '<a href="#PDk">PDk</a>'
+ options. It is automatically set for options '<a href="qhull.htm#outputs">d</a>', '<a href="#PAn">PAn</a>',
+-'<a href="#PFn">PFn </a>', '<a href="#PMn">PMn </a>', '<a href="qh-optq.htm#QGn">QGn</a>',
++'<a href="#PFn">PFn</a>', '<a href="#PMn">PMn</a>', '<a href="qh-optq.htm#QGn">QGn</a>',
+ and '<a href="qh-optq.htm#QVn">QVn</a>'.</p>
+ 
+ <h3><a href="#print">&#187;</a><a name="PG">PG - print neighbors of
+@@ -218,8 +217,7 @@ facets (if any). It uses the current output options.</p>
+ <p>See '<a href="qh-optp.htm#Po">Po</a>' - force output despite
+ precision problems.
+ 
+-<h3><a href="#print">&#187;</a><a name="Pp">Pp - do not report
+-precision problems </a></h3>
++<h3><a href="#print">&#187;</a><a name="Pp">Pp - do not report precision problems</a></h3>
+ 
+ <p>With option 'Pp', Qhull does not print statistics about
+ precision problems, and it removes some of the warnings.  It
+diff --git a/html/qh-optq.htm b/html/qh-optq.htm
+index 7c3224c..b217fe2 100644
+--- a/html/qh-optq.htm
++++ b/html/qh-optq.htm
+@@ -94,7 +94,7 @@ options are indicated by 'Q' followed by a letter. </p>
+     <dd><b>Select facets</b></dd>
+     <dt><a href="#Qg">Qg</a></dt>
+     <dd>only build good facets (needs '<a href="#QGn">QGn</a>', '<a
+-        href="#QVn">QVn </a>', or '<a href="qh-optp.htm#Pdk">Pdk</a>')</dd>
++        href="#QVn">QVn</a>', or '<a href="qh-optp.htm#Pdk">Pdk</a>')</dd>
+     <dt><a href="#QGn">QGn</a></dt>
+     <dd>good facet if visible from point n, -n for not visible</dd>
+     <dt><a href="#QVn">QVn</a></dt>
+@@ -188,8 +188,7 @@ to low bound</a></h3>
+ <p>After scaling, the lower bound for dimension k of the input
+ points will be n. 'Qbk' scales coord[k] to -0.5. </p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="QBk">QBk:n - scale coord[k]
+-to upper bound </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="QBk">QBk:n - scale coord[k] to upper bound</a></h3>
+ 
+ <p>After scaling, the upper bound for dimension k of the input
+ points will be n. 'QBk' scales coord[k] to 0.5. </p>
+@@ -204,8 +203,7 @@ It happens before the Delaunay and Voronoi transformation.
+ It happens after the halfspace transformation for both the data
+ and the feasible point.</p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Qc">Qc - keep coplanar points
+-with nearest facet </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Qc">Qc - keep coplanar points with nearest facet</a></h3>
+ 
+ <p>During construction of the hull, a point is coplanar if it is
+ between '<a href="qh-optc.htm#Wn">Wn</a>' above and '<a
+@@ -217,7 +215,7 @@ different definition is used for output from Qhull. </p>
+ href="qh-optq.htm#QJn">QJ</a>'), a coplanar point includes points
+ within one joggle of the inner plane. </p>
+ 
+-<p>With option 'Qc', output formats '<a href="qh-opto.htm#p">p </a>',
++<p>With option 'Qc', output formats '<a href="qh-opto.htm#p">p</a>',
+ '<a href="qh-opto.htm#f">f</a>', '<a href="qh-optg.htm#Gp">Gp</a>',
+ '<a href="qh-optf.htm#Fc">Fc</a>', '<a href="qh-optf.htm#FN">FN</a>',
+ and '<a href="qh-optf.htm#FP">FP</a>' will print the coplanar
+@@ -239,12 +237,11 @@ if options '<a href="#Q5">Q5</a> <a href="#Q8">Q8</a>' are set, a
+ coplanar point may be missed in the output (see <a
+ href="qh-impre.htm#limit">Qhull limitations</a>).</p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Qf">Qf - partition point to
+-furthest outside facet </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Qf">Qf - partition point to furthest outside facet</a></h3>
+ 
+ <p>After adding a new point to the convex hull, Qhull partitions
+ the outside points and coplanar points of the old, visible
+-facets. Without the '<a href="qh-opto.htm#f">f </a>' option and
++facets. Without the '<a href="qh-opto.htm#f">f</a>' option and
+ merging, it assigns a point to the first facet that it is outside
+ ('<a href="qh-optc.htm#Wn">Wn</a>'). When merging, it assigns a
+ point to the first facet that is more than several times outside
+@@ -259,7 +256,7 @@ occur.</p>
+ furthest points.</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qg">Qg - only build good
+-facets (needs 'QGn' 'QVn' or 'Pdk') </a></h3>
++facets (needs 'QGn' 'QVn' or 'Pdk')</a></h3>
+ 
+ <p>Qhull has several options for defining and printing good
+ facets. With the '<a href="#Qg">Qg</a>' option, Qhull will only
+@@ -285,7 +282,7 @@ coplanar facets, then 'Qg Pg' may produce a different result than
+ See ('<a href="#Q14">Q14</a>' merge-pinched-vertices).</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="QGn">QGn - good facet if
+-visible from point n, -n for not visible </a></h3>
++visible from point n, -n for not visible</a></h3>
+ 
+ <p>With option 'QGn', a facet is good (see '<a href="#Qg">Qg</a>'
+ and '<a href="qh-optp.htm#Pg">Pg</a>') if it is visible from
+@@ -296,13 +293,12 @@ href="qh-optt.htm#TCn">TCn</a>' or '<a href="qh-optt.htm#TPn">TPn</a>').</p>
+ <p>With <a href="rbox.htm">rbox</a>, use the 'Pn,m,r' option
+ to define your point; it will be point 0 ('QG0'). </p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Qi">Qi - keep interior points
+-with nearest facet </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Qi">Qi - keep interior points with nearest facet</a></h3>
+ 
+ <p>Normally Qhull ignores points that are clearly interior to the
+ convex hull. With option 'Qi', Qhull treats interior points the
+ same as coplanar points. Option 'Qi' does not retain coplanar
+-points. You will probably want '<a href="#Qc">Qc </a>' as well. </p>
++points. You will probably want '<a href="#Qc">Qc</a>' as well. </p>
+ 
+ <p>Option 'Qi' is automatically set for '<a href=qdelaun.htm>qdelaunay</a>
+ <a href="#Qc">Qc</a>' and '<a href=qvoronoi.htm>qvoronoi</a>
+@@ -389,7 +385,7 @@ See <a href="http://www.qhull.org/src/libqhull_r/geom2_r.c#joggleinput">qh_joggl
+ for sample code.
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qm">Qm - only process points
+-that increase the maximum outer plane </a></h3>
++that increase the maximum outer plane</a></h3>
+ 
+ <p>Qhull reports the maximum outer plane in its summary ('<a
+ href="qh-opto.htm#s">s</a>'). With option 'Qm', Qhull does not
+@@ -400,7 +396,7 @@ is ignored for points above the upper convex hull of a Delaunay
+ triangulation. Option 'Qm' is no longer important for merging.</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qr">Qr - process random
+-outside points instead of furthest ones </a></h3>
++outside points instead of furthest ones</a></h3>
+ 
+ <p>Normally, Qhull processes the furthest point of a facet's
+ outside points. Option 'Qr' instead selects a random outside
+@@ -417,7 +413,7 @@ retained the previously constructed facets. </p>
+ &quot;distance tests&quot;. Qhull does not report CPU time
+ because the randomization is inefficient. </p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="QRn">QRn - random rotation </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="QRn">QRn - random rotation</a></h3>
+ 
+ <p>Option 'QRn' randomly rotates the input. For Delaunay
+ triangulations (<a href=qdelaun.htm>qdelaunay</a> or <a href=qvoronoi.htm>qvoronoi</a>),
+@@ -433,7 +429,7 @@ don't rotate but use <em>n</em> as the random number seed. </p>
+ the corresponding 'QRn' option after "Statistics for: ..."
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qs">Qs - search all points
+-for the initial simplex </a></h3>
++for the initial simplex</a></h3>
+ 
+ <p>Qhull constructs an initial simplex from <i>d+1</i> points. It
+ selects points with the maximum and minimum coordinates and
+@@ -476,7 +472,7 @@ may be ignored due to precision errors.
+ <p>With sufficient merging, the ridges of a non-simplicial facet may share more than two neighboring facets. If so, their triangulation ('<a href="#Qt">Qt</a>') will fail since two facets have the same vertex set. </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qu">Qu - compute upper hull
+-for furthest-site Delaunay triangulation </a></h3>
++for furthest-site Delaunay triangulation</a></h3>
+ 
+ <p>When computing a Delaunay triangulation (<a href=qdelaun.htm>qdelaunay</a>
+ or <a href=qvoronoi.htm>qvoronoi</a>),
+@@ -496,7 +492,7 @@ point (e.g.,
+ 'qhull d Qbb Qu' or 'qhull v Qbb Qu' on these points.</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Qv">Qv - test vertex
+-neighbors for convexity </a></h3>
++neighbors for convexity</a></h3>
+ 
+ <p>Normally, Qhull tests all facet neighbors for convexity.
+ Non-neighboring facets which share a vertex may not satisfy the
+@@ -507,7 +503,7 @@ of each vertex. The extra testing occurs after the hull is
+ constructed.. </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="QVn">QVn - good facet if it
+-includes point n, -n if not </a></h3>
++includes point n, -n if not</a></h3>
+ 
+ <p>With option 'QVn', a facet is good ('<a href="#Qg">Qg</a>',
+ '<a href="qh-optp.htm#Pg">Pg</a>') if one of its vertices is
+@@ -527,13 +523,12 @@ either in the initial simplex or it is the first
+ point added to the hull. Options 'QVn Qg' require either '<a href="#QJn">QJ</a>' or
+ '<a href="#Q0">Q0</a>' (no merging).</p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Qw">Qw - allow warnings about Qhull options </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Qw">Qw - allow warnings about Qhull options</a></h3>
+ 
+ <p>Option 'Qw' allows warning about unknown, malformed, or incompatible Qhull options.
+ If 'Qw' is not specified, option warnings produce a 'Qhull option error' and return exit status qh_ERRinput (1). </p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Qx">Qx - exact pre-merges
+-(allows coplanar facets) </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Qx">Qx - exact pre-merges (allows coplanar facets)</a></h3>
+ 
+ <p>Option 'Qx' performs exact merges while building the hull.
+ Options 'Qx' and 'C-0' are set by default in 5-d and higher.  To disable this default,
+@@ -542,7 +537,7 @@ Use option '<a href="#Q0">Q0</a>' to disable all merging, including 'Qx' and 'C-
+ </p>
+ 
+ <p>The &quot;exact&quot; pre-merges are merging a point into a
+-coplanar horizon facet (defined by '<a href="qh-optc.htm#Vn">Vn </a>', '<a
++coplanar horizon facet (defined by '<a href="qh-optc.htm#Vn">Vn</a>', '<a
+ href="qh-optc.htm#Un">Un</a>', and '<a href="qh-optc.htm#Cn">C-n</a>'),
+ merging concave facets, merging duplicate ridges, and merging
+ flipped facets. Coplanar merges and angle coplanar merges ('<a
+@@ -614,14 +609,14 @@ Within a merge-type, it merges coplanar facets by distance first.
+ </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q2">Q2 - merge all non-convex
+-at once instead of independent sets </a></h3>
++at once instead of independent sets</a></h3>
+ 
+ <p>With 'Q2', Qhull merges all facets at once instead of
+ performing merges in independent sets. This may make the facets
+ wider. </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q3">Q3 - do not merge
+-redundant vertices </a></h3>
++redundant vertices</a></h3>
+ 
+ <p>With 'Q3', Qhull does not remove redundant vertices. In 6-d
+ and higher, Qhull never removes redundant vertices (since
+@@ -629,7 +624,7 @@ vertices are highly interconnected). Option 'Q3' may be faster,
+ but it may result in wider facets. Its effect is easiest to see
+ in 3-d and 4-d.</p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Q4">Q4 - avoid merging </a>old
++<h3><a href="#qhull">&#187;</a><a name="Q4">Q4 - avoid merging</a> old
+ facets into new facets</h3>
+ 
+ <p>With 'Q4', Qhull avoids merges of an old facet into a new
+@@ -637,7 +632,7 @@ facet. This sometimes improves facet width and sometimes makes it
+ worse.  See qh_merge_nonconvex.  It is not supported for qh_merge_twisted.</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q5">Q5 - do not correct outer
+-planes at end of qhull </a></h3>
++planes at end of qhull</a></h3>
+ 
+ <p>When merging facets or approximating a hull, Qhull tests
+ coplanar points and outer planes after constructing the hull. It
+@@ -654,19 +649,19 @@ from a hyperplane.</p>
+ 
+ <p>Option 'Q5' may be used if outer planes are not needed. Outer
+ planes are needed for options '<a href="qh-opto.htm#s">s</a>', '<a
+-href="qh-optg.htm#G">G</a>', '<a href="qh-optg.htm#Go">Go </a>',
++href="qh-optg.htm#G">G</a>', '<a href="qh-optg.htm#Go">Go</a>',
+ '<a href="qh-optf.htm#Fs">Fs</a>', '<a href="qh-optf.htm#Fo">Fo</a>',
+ '<a href="qh-optf.htm#FF">FF</a>', and '<a href="qh-opto.htm#f">f</a>'.</p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q6">Q6 - do not pre-merge
+-concave or coplanar facets </a></h3>
++concave or coplanar facets</a></h3>
+ 
+ <p>With 'Q6', Qhull does not pre-merge concave or coplanar
+ facets. This demonstrates the effect of &quot;dents&quot; when
+ using '<a href="#Qx">Qx</a>'. </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q7">Q7 - depth-first
+-processing instead of breadth-first </a></h3>
++processing instead of breadth-first</a></h3>
+ 
+ <p>With 'Q7', Qhull processes facets in depth-first order instead
+ of breadth-first order. This may increase the locality of
+@@ -681,8 +676,7 @@ of its time waiting for I/O.</p>
+ 
+ <p>Under 'Q7', Qhull runs slower and the facets may be wider. </p>
+ 
+-<h3><a href="#qhull">&#187;</a><a name="Q8">Q8 - ignore near-interior
+-points </a></h3>
++<h3><a href="#qhull">&#187;</a><a name="Q8">Q8 - ignore near-interior points</a></h3>
+ 
+ <p>With 'Q8' and merging, Qhull does not process interior points
+ that are near to a facet (as defined by qh_RATIOnearInside in
+@@ -692,7 +686,7 @@ value for qh_RATIOnearInside is not known. Options 'Q8 <a
+ href="#Qc">Qc</a>' may be sufficient. </p>
+ 
+ <h3><a href="#qhull">&#187;</a><a name="Q9">Q9 - process furthest of
+-furthest points </a></h3>
++furthest points</a></h3>
+ 
+ <p>With 'Q9', Qhull processes the furthest point of all outside
+ sets. This may reduce precision problems. The furthest point of
+diff --git a/html/qh-optt.htm b/html/qh-optt.htm
+index c244d2c..ef76705 100644
+--- a/html/qh-optt.htm
++++ b/html/qh-optt.htm
+@@ -105,8 +105,7 @@ codes to trap the corresponding print statements.</p>
+ See option '<a href="#TVn2">TVn</a>' to stop after
+ adding point n.</p>
+ 
+-<h3><a href="#trace">&#187;</a><a name="Tc">Tc - check frequently
+-during execution </a></h3>
++<h3><a href="#trace">&#187;</a><a name="Tc">Tc - check frequently during execution</a></h3>
+ 
+ <p>Qhull includes frequent checks of its data structures. Option
+ 'Tc' will catch most inconsistency errors. It is slow and should
+@@ -129,8 +128,7 @@ qh_fprintf for debugging segfaults</a></h3>
+ 
+ <p>See option '<a href="#Tz">Tz</a>' for redirecting stderr.</p>
+ 
+-<h3><a href="#trace">&#187;</a><a name="TFn">TFn - report summary
+-whenever n or more facets created </a></h3>
++<h3><a href="#trace">&#187;</a><a name="TFn">TFn - report summary whenever n or more facets created</a></h3>
+ 
+ <p>Option 'TFn' reports progress whenever more than n facets are
+ created. The test occurs just before adding a new point to the
+@@ -145,8 +143,7 @@ single quotes.  If the filename does not contain spaces, TIfile is OK.</p>
+ <p>You may use I/O redirection
+ instead (e.g., 'rbox 10 | qdelaunay >results').</P>
+ 
+-<h3><a href="#trace">&#187;</a><a name="TMn">TMn - turn on tracing at
+-merge n </a></h3>
++<h3><a href="#trace">&#187;</a><a name="TMn">TMn - turn on tracing at merge n</a></h3>
+ 
+ <p>Turn on tracing at n'th merge. </p>
+ 
+@@ -184,7 +181,7 @@ freeze Windows95 (e.g., do not run, rbox 10 | qhull TO &quot;x)</p>
+ <p>
+ 
+ <h3><a href="#trace">&#187;</a><a name="TPn">TPn - turn on tracing
+-when point n added to hull </a></h3>
++when point n added to hull</a></h3>
+ 
+ <p>Option 'TPn' turns on tracing when point n is added to
+ the hull.  It also traces partitions of point n.  This option
+@@ -218,14 +215,14 @@ run.  An event trace, '<a href="#Tn">T-1</a>' reports events for all runs.
+ is reported, the options list the run number as "_run".
+ To trace this run, set 'TRn' to the same value.</p>
+ 
+-<h3><a href="#trace">&#187;</a><a name="Ts">Ts - print statistics </a></h3>
++<h3><a href="#trace">&#187;</a><a name="Ts">Ts - print statistics</a></h3>
+ 
+ <p>Option 'Ts' collects statistics and prints them to stderr. For
+ Delaunay triangulations, the angle statistics are restricted to
+ the lower or upper envelope.</p>
+ 
+ <h3><a href="#trace">&#187;</a><a name="Tv">Tv - verify result:
+-structure, convexity, and point inclusion </a></h3>
++structure, convexity, and point inclusion</a></h3>
+ 
+ <p>Option 'Tv' checks the topological structure, flipped facets, and
+ point inclusion. Facet convexity is tested if not merging or if 2-D/3-D and a merged facet.
+@@ -273,12 +270,12 @@ shows the hull at this time.  See option '<a href="#TAn">TAn</a>' to stop after
+ adding n vertices. </p>
+ 
+ <h3><a href="#trace">&#187;</a><a name="TWn">TWn - trace merge facets
+-when width &gt; n </a></h3>
++when width &gt; n</a></h3>
+ 
+ <p>Along with TMn, this option allows the user to determine the
+ cause of a wide merge.</p>
+-<h3><a href="#trace">&#187;</a><a name="Tz">Tz - send all output to
+-stdout </a></h3>
++
++<h3><a href="#trace">&#187;</a><a name="Tz">Tz - send all output to stdout</a></h3>
+ 
+ <p>Redirect stderr to stdout.  See option '<a href="#Tf">Tf</a>' for flushing writes.</p>
+ 
+diff --git a/html/qh-quick.htm b/html/qh-quick.htm
+index af28468..b705849 100644
+--- a/html/qh-quick.htm
++++ b/html/qh-quick.htm
+@@ -8,10 +8,8 @@
+ <body>
+ <!-- Navigation links -->
+     <p>
+-        <a name="TOC"><b>Up:</b></a> <a href="http://www.qhull.org">
+-            Home
+-            page
+-        </a> for Qhull (<a href="../index.htm">local</a>)<br>
++        <a name="TOC"><b>Up:</b></a> <a href="http://www.qhull.org">Home page</a> for
++        Qhull (<a href="../index.htm">local</a>)<br>
+         <b>Up:</b> <a href="index.htm#TOC">Qhull manual</a> <br>
+         <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
+         &#149; <a href="qh-quick.htm#options">Options</a>
+@@ -154,327 +152,327 @@ This section lists all programs and options in Qhull.
+ <tr>
+ <td><nobr>'<a href=qhull.htm#outputs>d</a>'
+ delaunay
+-</nobr></td><td><nobr>'<a href=qh-opto.htm#f>f</a>'
++</nobr></td><td><nobr>'<a href="qh-opto.htm#f">f</a>'
+ facet-dump
+-</nobr></td><td><nobr>'<a href=qh-optg.htm>G</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm">G</a>'
+ Geomview
+ </nobr></td><td><nobr>'<a href=qhull.htm#outputs>H</a>'
+ Halfspace
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-opto.htm#i>i</a>'
++<td><nobr>'<a href="qh-opto.htm#i">i</a>'
+ incidences
+-</nobr></td><td><nobr>'<a href=qh-opto.htm#m>m</a>'
++</nobr></td><td><nobr>'<a href="qh-opto.htm#m">m</a>'
+ mathematica
+-</nobr></td><td><nobr>'<a href=qh-opto.htm#n>n</a>'
++</nobr></td><td><nobr>'<a href="qh-opto.htm#n">n</a>'
+ normals
+-<td><nobr>'<a href=qh-opto.htm#o>o</a>'
++<td><nobr>'<a href="qh-opto.htm#o">o</a>'
+ OFF-format
+ 
+ </nobr></td></tr><tr>
+-</nobr></td><td><nobr>'<a href=qh-opto.htm#p>p</a>'
++</nobr></td><td><nobr>'<a href="qh-opto.htm#p">p</a>'
+ points
+-<td><nobr>'<a href=qh-opto.htm#s>s</a>'
++<td><nobr>'<a href="qh-opto.htm#s">s</a>'
+ summary
+ </nobr></td><td><nobr>'<a href=qhull.htm#outputs>v</a>'
+ voronoi
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fa>Fa</a>'
++<td><nobr>'<a href="qh-optf.htm#Fa">Fa</a>'
+ Farea
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fa>FA</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FA">FA</a>'
+ FArea-total
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fc>Fc</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fc">Fc</a>'
+ Fcoplanars
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FC>FC</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FC">FC</a>'
+ FCentrums
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fd>Fd</a>'
++<td><nobr>'<a href="qh-optf.htm#Fd">Fd</a>'
+ Fd-cdd-in
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FD>FD</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FD">FD</a>'
+ FD-cdd-out
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FF>FF</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FF">FF</a>'
+ FFacets-xridge
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fi>Fi</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fi">Fi</a>'
+ Finner
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fi2>Fi</a>'
++<td><nobr>'<a href="qh-optf.htm#Fi2">Fi</a>'
+ Finner-bounded
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FI>FI</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FI">FI</a>'
+ FIDs
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fm>Fm</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fm">Fm</a>'
+ Fmerges
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FM>FM</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FM">FM</a>'
+ FMaple
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fn>Fn</a>'
++<td><nobr>'<a href="qh-optf.htm#Fn">Fn</a>'
+ Fneighbors
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FN>FN</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FN">FN</a>'
+ FNeigh-vertex
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fo>Fo</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fo">Fo</a>'
+ Fouter
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fo2>Fo</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fo2">Fo</a>'
+ Fouter-unbounded
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#FO>FO</a>'
++<td><nobr>'<a href="qh-optf.htm#FO">FO</a>'
+ FOptions
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fp>Fp</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fp">Fp</a>'
+ Fpoint-intersect
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FP>FP</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FP">FP</a>'
+ FPoint-near
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FQ>FQ</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FQ">FQ</a>'
+ FQhull
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fs>Fs</a>'
++<td><nobr>'<a href="qh-optf.htm#Fs">Fs</a>'
+ Fsummary
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FS>FS</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FS">FS</a>'
+ FSize
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Ft>Ft</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Ft">Ft</a>'
+ Ftriangles
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fv>Fv</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fv">Fv</a>'
+ Fvertices
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optf.htm#Fv2>Fv</a>'
++<td><nobr>'<a href="qh-optf.htm#Fv2">Fv</a>'
+ Fvoronoi
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#FV>FV</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#FV">FV</a>'
+ FVertex-ave
+-</nobr></td><td><nobr>'<a href=qh-optf.htm#Fx>Fx</a>'
++</nobr></td><td><nobr>'<a href="qh-optf.htm#Fx">Fx</a>'
+ Fxtremes
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optg.htm#Ga>Ga</a>'
++<td><nobr>'<a href="qh-optg.htm#Ga">Ga</a>'
+ Gall-points
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gc>Gc</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gc">Gc</a>'
+ Gcentrums
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#GDn>GDn</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#GDn">GDn</a>'
+ GDrop-dim
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gh>Gh</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gh">Gh</a>'
+ Ghyperplanes
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optg.htm#Gi>Gi</a>'
++<td><nobr>'<a href="qh-optg.htm#Gi">Gi</a>'
+ Ginner
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gn>Gn</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gn">Gn</a>'
+ Gno-planes
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Go>Go</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Go">Go</a>'
+ Gouter
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gp>Gp</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gp">Gp</a>'
+ Gpoints
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optg.htm#Gr>Gr</a>'
++<td><nobr>'<a href="qh-optg.htm#Gr">Gr</a>'
+ Gridges
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gt>Gt</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gt">Gt</a>'
+ Gtransparent
+-</nobr></td><td><nobr>'<a href=qh-optg.htm#Gv>Gv</a>'
++</nobr></td><td><nobr>'<a href="qh-optg.htm#Gv">Gv</a>'
+ Gvertices
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optp.htm#PAn>PAn</a>'
++<td><nobr>'<a href="qh-optp.htm#PAn">PAn</a>'
+ PArea-keep
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#Pdk>Pdk:n</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#Pdk">Pdk:n</a>'
+ Pdrop-low
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#PDk>PDk:n</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#PDk">PDk:n</a>'
+ Pdrop-high
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#PFn>PFn</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#PFn">PFn</a>'
+ PFacet-area-keep
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optp.htm#Pg>Pg</a>'
++<td><nobr>'<a href="qh-optp.htm#Pg">Pg</a>'
+ Pgood
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#PG>PG</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#PG">PG</a>'
+ PGood-neighbors
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#PMn>PMn</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#PMn">PMn</a>'
+ PMerge-keep
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#Po>Po</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#Po">Po</a>'
+ Poutput-forced
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optp.htm#Po2>Po</a>'
++<td><nobr>'<a href="qh-optp.htm#Po2">Po</a>'
+ Poutput-error
+-</nobr></td><td><nobr>'<a href=qh-optp.htm#Pp>Pp</a>'
++</nobr></td><td><nobr>'<a href="qh-optp.htm#Pp">Pp</a>'
+ Pprecision-not
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Qa>Qa</a>'
++<td><nobr>'<a href="qh-optq.htm#Qa">Qa</a>'
+ Qallow-short
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qbk>Qbk:n</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qbk">Qbk:n</a>'
+ Qbound-low
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#QBk>QBk:n</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#QBk">QBk:n</a>'
+ QBound-high
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#QbB>QbB</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#QbB">QbB</a>'
+ QbB-scale-box
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Qbb>Qbb</a>'
++<td><nobr>'<a href="qh-optq.htm#Qbb">Qbb</a>'
+ Qbb-scale-last
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qb0>Qbk:0Bk:0</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qb0">Qbk:0Bk:0</a>'
+ Qbound-drop
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qc>Qc</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qc">Qc</a>'
+ Qcoplanar
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qi>Qi</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qi">Qi</a>'
+ Qinterior
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#QJn>QJn</a>'
++<td><nobr>'<a href="qh-optq.htm#QJn">QJn</a>'
+ QJoggle
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#QRn>QRn</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#QRn">QRn</a>'
+ QRotate
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qs>Qs</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qs">Qs</a>'
+ Qsearch-all
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qt>Qt</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qt">Qt</a>'
+ Qtriangulate
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Qu>Qu</a>'
++<td><nobr>'<a href="qh-optq.htm#Qu">Qu</a>'
+ QupperDelaunay
+-</nobr><td><nobr>'<a href=qh-optq.htm#Qw>Qw</a>'
++</nobr><td><nobr>'<a href="qh-optq.htm#Qw">Qw</a>'
+ Qwarn-allow
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qx>Qx</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qx">Qx</a>'
+ Qxact-merge
+-<td><nobr>'<a href=qh-optq.htm#Qz>Qz</a>'
++<td><nobr>'<a href="qh-optq.htm#Qz">Qz</a>'
+ Qzinfinite
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Qf>Qf</a>'
++<td><nobr>'<a href="qh-optq.htm#Qf">Qf</a>'
+ Qfurthest
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qg>Qg</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qg">Qg</a>'
+ Qgood-only
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#QGn>QGn</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#QGn">QGn</a>'
+ QGood-point
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qm>Qm</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qm">Qm</a>'
+ Qmax-outside
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Qr>Qr</a>'
++<td><nobr>'<a href="qh-optq.htm#Qr">Qr</a>'
+ Qrandom
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Qv>Qv</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Qv">Qv</a>'
+ Qvertex-neighbors
+-</nobr><td><nobr>'<a href=qh-optq.htm#QVn>QVn</a>'
++</nobr><td><nobr>'<a href="qh-optq.htm#QVn">QVn</a>'
+ QVertex-good
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Q0>Q0</a>'
++<td><nobr>'<a href="qh-optq.htm#Q0">Q0</a>'
+ Q0-no-premerge
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q1>Q1</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q1">Q1</a>'
+ Q1-angle-merge
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q2>Q2</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q2">Q2</a>'
+ Q2-no-independent
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q3>Q3</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q3">Q3</a>'
+ Q3-no-redundant
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Q4>Q4</a>'
++<td><nobr>'<a href="qh-optq.htm#Q4">Q4</a>'
+ Q4-no-old
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q5>Q5</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q5">Q5</a>'
+ Q5-no-check-out
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q6>Q6</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q6">Q6</a>'
+ Q6-no-concave
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q7>Q7</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q7">Q7</a>'
+ Q7-depth-first
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Q8>Q8</a>'
++<td><nobr>'<a href="qh-optq.htm#Q8">Q8</a>'
+ Q8-no-near-interior
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q9>Q9</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q9">Q9</a>'
+ Q9-pick-furthest
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q10>Q10</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q10">Q10</a>'
+ Q10-no-narrow
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q11>Q11</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q11">Q11</a>'
+ Q11-trinormals
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optq.htm#Q12>Q12</a>'
++<td><nobr>'<a href="qh-optq.htm#Q12">Q12</a>'
+ Q12-allow-wide
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q14>Q14</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q14">Q14</a>'
+ Q14-merge-pinched
+-</nobr></td><td><nobr>'<a href=qh-optq.htm#Q15>Q15</a>'
++</nobr></td><td><nobr>'<a href="qh-optq.htm#Q15">Q15</a>'
+ Q15-duplicate-ridges
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optt.htm#TFn>TFn</a>'
++<td><nobr>'<a href="qh-optt.htm#TFn">TFn</a>'
+ TFacet-log
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TI>TI file</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TI">TI file</a>'
+ TInput-file
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TO>TO file</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TO">TO file</a>'
+ TOutput-file
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#Ts>Ts</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#Ts">Ts</a>'
+ Tstatistics
+ 
+ </nobr></td></tr><tr>
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#Tv>Tv</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#Tv">Tv</a>'
+ Tverify
+-<td><nobr>'<a href=qh-optt.htm#Tz>Tz</a>'
++<td><nobr>'<a href="qh-optt.htm#Tz">Tz</a>'
+ Tz-stdout
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optt.htm#Tn>T4</a>'
++<td><nobr>'<a href="qh-optt.htm#Tn">T4</a>'
+ T4-trace
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#Ta>Ta</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#Ta">Ta</a>'
+ Tannotate
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TAn>TAn</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TAn">TAn</a>'
+ TAdd-stop
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#Tc>Tc</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#Tc">Tc</a>'
+ Tcheck-often
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optt.htm#TCn>TCn</a>'
++<td><nobr>'<a href="qh-optt.htm#TCn">TCn</a>'
+ TCone-stop
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#Tf>Tf</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#Tf">Tf</a>'
+ Tflush
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TMn>TMn</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TMn">TMn</a>'
+ TMerge-trace
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TPn>TPn</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TPn">TPn</a>'
+ TPoint-trace
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optt.htm#TRn>TRn</a>'
++<td><nobr>'<a href="qh-optt.htm#TRn">TRn</a>'
+ TRerun
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TVn>TV-n</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TVn">TV-n</a>'
+ TVertex-stop-before
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TVn2>TVn</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TVn2">TVn</a>'
+ TVertex-stop-after
+-</nobr></td><td><nobr>'<a href=qh-optt.htm#TWn>TWn</a>'
++</nobr></td><td><nobr>'<a href="qh-optt.htm#TWn">TWn</a>'
+ TWide-trace
+ 
+ </nobr></td></tr>
+ <tr><td>&nbsp;</td></tr><tr>
+-<td><nobr>'<a href=qh-optc.htm#An>A-n</a>'
++<td><nobr>'<a href="qh-optc.htm#An">A-n</a>'
+ Angle-max-pre
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#An2>An</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#An2">An</a>'
+ Angle-max-post
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#C0>C-0</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#C0">C-0</a>'
+ Centrum-roundoff
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#Cn>C-n</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#Cn">C-n</a>'
+ Centrum-size-pre
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optc.htm#Cn2>Cn</a>'
++<td><nobr>'<a href="qh-optc.htm#Cn2">Cn</a>'
+ Centrum-size-post
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#En>En</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#En">En</a>'
+ Error-round
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#Rn>Rn</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#Rn">Rn</a>'
+ Random-dist
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#Un>Un</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#Un">Un</a>'
+ Ucoplanar-max
+ 
+ </nobr></td></tr><tr>
+-<td><nobr>'<a href=qh-optc.htm#Vn>Vn</a>'
++<td><nobr>'<a href="qh-optc.htm#Vn">Vn</a>'
+ Visible-min
+-</nobr></td><td><nobr>'<a href=qh-optc.htm#Wn>Wn</a>'
++</nobr></td><td><nobr>'<a href="qh-optc.htm#Wn">Wn</a>'
+ Wide-outside
+ 
+ </nobr></td></tr>
+@@ -484,10 +482,7 @@ Wide-outside
+ <hr>
+ 
+ <p>
+-    <b>Up:</b> <a href="http://www.qhull.org">
+-        Home
+-        page
+-    </a> for Qhull (<a href="../index.htm">local</a>) <br>
++    <b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>) <br>
+     <b>Up:</b> <a href="index.htm#TOC">Qhull manual</a> <br>
+     <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
+     &#149; <a href="qh-quick.htm#options">Options</a>
+diff --git a/html/qhalf.htm b/html/qhalf.htm
+index 990d37b..f432530 100644
+--- a/html/qhalf.htm
++++ b/html/qhalf.htm
+@@ -196,7 +196,7 @@ examples:
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qhalf &lt; data.txt), a pipe (e.g., rbox c | qconvex FV n | qhalf),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qhalf TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qhalf TI data.txt).
+ 
+ <p>Qhull needs a feasible point to compute the halfspace
+ intersection. A feasible point is clearly inside all of the halfspaces.
+@@ -341,7 +341,7 @@ intersection.</p>
+            the number of coplanar halfspaces.  A coplanar halfspace is listed for
+            one intersection point even though it is coplanar to multiple intersection
+            points.</dd>
+-  <dt><a href="qh-optq.htm#Qc">Qi</a> <a href="qh-optf.htm#Fc">Fc</a></dt>
++  <dt><a href="qh-optq.htm#Qi">Qi</a> <a href="qh-optf.htm#Fc">Fc</a></dt>
+     <dd>list redundant halfspaces for each intersection point.  The first line is
+            the number of intersection points.  Each remaining line starts with
+            the number of redundant halfspaces.  Use options '<a href="qh-optq.htm#Qc">Qc</a> Qi Fc' to list
+@@ -393,7 +393,7 @@ intersection.</p>
+     <dt><a href="qh-optq.htm#QJn">QJ</a></dt>
+     <dd>joggle the input instead of merging facets.  In 3-d, this guarantees that
+         each intersection is defined by three hyperplanes.</dd>
+-    <dt><a href="qh-opto.htm#f">f </a></dt>
++    <dt><a href="qh-opto.htm#f">f</a></dt>
+     <dd>facet dump.  Print the data structure for each intersection (i.e.,
+         facet)</dd>
+     <dt><a href="qh-optt.htm#TFn">TFn</a></dt>
+@@ -410,7 +410,7 @@ intersection.</p>
+         halfspace intersection in one lower dimension.</dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+diff --git a/html/qhull.htm b/html/qhull.htm
+index 5f6e5b1..87bbd2a 100644
+--- a/html/qhull.htm
++++ b/html/qhull.htm
+@@ -162,7 +162,7 @@ examples:
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qhull &lt; data.txt), a pipe (e.g., rbox 10 | qhull),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qhull TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qhull TI data.txt).
+ 
+ <p>Comments start with a non-numeric character.  Error reporting is
+ simpler if there is one point per line.  Dimension
+diff --git a/html/qvoron_f.htm b/html/qvoron_f.htm
+index 8cd8e1e..1fe837a 100644
+--- a/html/qvoron_f.htm
++++ b/html/qvoron_f.htm
+@@ -77,11 +77,11 @@ facet of the Delaunay triangulation. Each furthest-site Voronoi
+ region corresponds to a vertex of the Delaunay triangulation
+ (i.e., an input site).</p>
+ 
+-<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (qh-faq.htm#TOC">local</a>) - Delaunay and
++<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (<a href="qh-faq.htm#TOC">local</a>) - Delaunay and
+ Voronoi diagram questions.</p>
+ 
+ <p>The 'qvonoroi' program is equivalent to
+-'<a href=qhull.htm#outputs>qhull v</a> <a href=qh-optq.htm#Qbb>Qbb</a>'.  It disables the following Qhull
++'<a href="qhull.htm#outputs">qhull v</a> <a href="qh-optq.htm#Qbb">Qbb</a>'.  It disables the following Qhull
+ <a href=qh-quick.htm#options>options</a>: <i>d n m v H U Qb
+ QB Qc Qf Qg Qi Qm Qr Qv Qx TR E V Fa FA FC Fp FS Ft FV Gt Q0,etc</i>.
+ 
+@@ -109,7 +109,7 @@ input</a></h3>
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qvoronoi Qu &lt; data.txt), a pipe (e.g., rbox 10 | qvoronoi Qu),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qvoronoi TI data.txt Qu).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qvoronoi TI data.txt Qu).
+ 
+ <p>For example, this is a square containing four random points.
+ Its furthest-site Voronoi diagram has on vertex and four unbounded,
+@@ -271,7 +271,7 @@ controls</a></h3>
+     <dd>select furthest-site Voronoi vertices for input site <em>n</em> </dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+@@ -281,7 +281,7 @@ controls</a></h3>
+     <dt><a href="qh-optp.htm#PDk">PDk:1</a></dt>
+     <dd>include upper and lower facets in the output.  Set <em>k</em>
+         to the last dimension (e.g., 'PD2:1' for 2-d inputs). </dd>
+-    <dt><a href="qh-opto.htm#f">f </a></dt>
++    <dt><a href="qh-opto.htm#f">f</a></dt>
+     <dd>facet dump.  Print the data structure for each facet (i.e.,
+         furthest-site Voronoi vertex).</dd>
+ </dl>
+diff --git a/html/qvoronoi.htm b/html/qvoronoi.htm
+index aa261fc..c4ec1f0 100644
+--- a/html/qvoronoi.htm
++++ b/html/qvoronoi.htm
+@@ -102,11 +102,11 @@ for further processing [see <a href="#graphics">graphics</a>].</p>
+ <p>Use option '<a href="qh-optq.htm#Qz">Qz</a>' if the input is circular, cospherical, or
+ nearly so.  It improves precision by adding a point "at infinity," above the corresponding paraboloid.
+ 
+-<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (qh-faq.htm#TOC">local</a>) - Delaunay and
++<p>See <a href="http://www.qhull.org/html/qh-faq.htm#TOC">Qhull FAQ</a> (<a href="qh-faq.htm#TOC">local</a>) - Delaunay and
+ Voronoi diagram questions.</p>
+ 
+ <p>The 'qvonoroi' program is equivalent to
+-'<a href=qhull.htm#outputs>qhull v</a> <a href=qh-optq.htm#Qbb>Qbb</a>'.  It disables the following Qhull
++'<a href="qhull.htm#outputs">qhull v</a> <a href="qh-optq.htm#Qbb">Qbb</a>'.  It disables the following Qhull
+ <a href=qh-quick.htm#options>options</a>: <i>d n v Qbb QbB Qf Qg Qm
+ Qr Qv Qx Qz TR E V Fa FA FC FD FS Ft FV Gt Q0,etc</i>.
+ 
+@@ -159,7 +159,7 @@ The input data on <tt>stdin</tt> consists of:
+ </ul>
+ 
+ <p>Use I/O redirection (e.g., qvoronoi &lt; data.txt), a pipe (e.g., rbox 10 | qvoronoi),
+-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qvoronoi TI data.txt).
++or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qvoronoi TI data.txt).
+ 
+ <p>For example, this is four cocircular points inside a square.  Their Voronoi
+ diagram has nine vertices and eight regions.  Notice the Voronoi vertex
+@@ -351,7 +351,7 @@ controls</a></h3>
+         (e.g., 'rbox c | qvoronoi Qz').</dd>
+     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
+     <dd>verify result</dd>
+-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
++    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
+     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
+     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
+     <dd>output results to file.  Use single quotes if the filename
+@@ -361,7 +361,7 @@ controls</a></h3>
+     <dt><a href="qh-optp.htm#PDk">PDk:1</a></dt>
+     <dd>include upper and lower facets in the output.  Set <em>k</em>
+         to the last dimension (e.g., 'PD2:1' for 2-d inputs). </dd>
+-    <dt><a href="qh-opto.htm#f">f </a></dt>
++    <dt><a href="qh-opto.htm#f">f</a></dt>
+     <dd>facet dump.  Print the data structure for each facet (i.e.,
+         Voronoi vertex).</dd>
+ </dl>
+diff --git a/index.htm b/index.htm
+index 221aa0a..40b105e 100644
+--- a/index.htm
++++ b/index.htm
+@@ -89,10 +89,9 @@ If you use Qhull 2003.1, please upgrade or apply <a href="http://www.qhull.org/d
+     </li>
+         <li>The <a href="http://cran.r-project.org/web/packages/geometry/geometry.pdf">geometry</a> package of <a href="http://www.r-project.org/">R</a> provides <a href="http://geometry.r-forge.r-project.org/">Qhull in R</a>.
+         <li><a href=http://www.octave.org/>GNU Octave</a> includes Qhull for <a href="http://www.gnu.org/software/octave/doc/interpreter/Geometry.html">computational geometry<a>.
+-        <li><a href=http://www.wolfram.com/products/mathematica/>Mathematica</a>'s Delaunay interface <a href=http://library.wolfram.com/infocenter/MathSource/1160/>qh-math</a>
+-        </a>
++        <li><a href=http://www.wolfram.com/products/mathematica/>Mathematica</a>'s Delaunay interface <a href=http://library.wolfram.com/infocenter/MathSource/1160/>qh-math</a>.
+      <li>The <a href="http://docs.scipy.org/doc/scipy/reference/tutorial/spatial.html">scipy.spatial</a> of <a href="http://scipy.org/">SciPy</a> is implemented with Qhull.  It includes
+-     support for Delaunay triangulations,
++     support for Delaunay triangulations.
+ </ul>
+ </form>
+ 
+@@ -164,8 +163,8 @@ and algorithms,
+ libraries for writing computational
+ geometry programs and other combinatorial algorithms
+     <li><a
+-        href="http://www.netlib.org/voronoi/hull.html">Clarkson's
+-        hull </a>program with exact arithmetic for convex hulls, Delaunay triangulations,
++        href="http://www.netlib.org/voronoi/hull.html">Clarkson's hull</a> program
++        with exact arithmetic for convex hulls, Delaunay triangulations,
+                 Voronoi volumes, and alpha shapes. </li>
+         <li><a href="http://jeffe.cs.illinois.edu/compgeom/">Erickson's
+             Computational</a> Geometry Pages and
+@@ -183,8 +182,7 @@ geometry programs and other combinatorial algorithms
+     <li><a
+         href="http://www.robertschneiders.de/meshgeneration/meshgeneration.html">Schneiders'
+         Finite Element</a> Mesh Generation page</li>
+-     <li><a href="http://www.cs.cmu.edu/~quake/triangle.html">Shewchuk's
+-        triangle </a>program for 2-d Delaunay</li>
++     <li><a href="http://www.cs.cmu.edu/~quake/triangle.html">Shewchuk's triangle</a> program for 2-d Delaunay</li>
+         <li><a href=http://www.voronoi.com>Voronoi Web Site</a> for all things Voronoi
+         <li>Young's <a href="http://homepage.usask.ca/~ijm451/finite/fe_resources/">Internet Finite Element Resources</a>
+         <li><a href="http://www.uic.unn.ru/~zny/skeleton/">Zolotykh's Skeleton</a> generates all extreme rays of a polyhedral cone using the Double Description Method</li>
+@@ -198,8 +196,7 @@ geometry programs and other combinatorial algorithms
+         for computer graphics algorithms
+     </li>
+     <li><a
+-        href="http://lpsolve.sourceforge.net/4.0/LinearProgrammingFAQ.htm">FAQ
+-        </a>for linear programming </li>
++        href="http://lpsolve.sourceforge.net/4.0/LinearProgrammingFAQ.htm">FAQ</a> for linear programming </li>
+     <li><a href="news:comp.graphics.algorithms">Newsgroup</a>:
+         comp.graphics.algorithms </li>
+         <li><a href="news:comp.soft-sys.matlab">Newsgroup</a>:
+diff --git a/src/Changes.txt b/src/Changes.txt
+index 51a7d9a..81807bb 100644
+--- a/src/Changes.txt
++++ b/src/Changes.txt
+@@ -1,4 +1,4 @@
+-$Id: //main/2019/qhull/src/Changes.txt#43 $$Date: 2019/06/28 $
++$Id: //main/2019/qhull/src/Changes.txt#45 $$Date: 2019/06/30 $
+ 
+ .............This file lists all changes to qhull and rbox.....................
+ Qhull 2019.1
+@@ -18,6 +18,10 @@ Qhull 2.0 (1994) to 2012.1
+ == Qhull 2019.1
+ =============
+ 
++------------
++Qhull 2019.1 github
++- Review and fix Qhull html and option links
++
+ ------------
+ Qhull 2019.1 2019/06/21 (7.3.2)
+ 
+diff --git a/src/libqhull/qh-set.htm b/src/libqhull/qh-set.htm
+index b439ae4..2f01b1e 100644
+--- a/src/libqhull/qh-set.htm
++++ b/src/libqhull/qh-set.htm
+@@ -168,8 +168,7 @@ free a set only if it is in long memory </li>
+ set </li>
+ </ul>
+ 
+-<h3><a href="qh-set.htm#TOC">&#187;</a><a name="spred">Access and
+-predicate functions </a></h3>
++<h3><a href="qh-set.htm#TOC">&#187;</a><a name="spred">Access and predicate functions</a></h3>
+ <ul>
+ <li><a href="qset.c#setendpointer">qh_setendpointer</a> return
+ pointer to NULL terminator of a set</li>
+diff --git a/src/libqhull_r/qh-set_r.htm b/src/libqhull_r/qh-set_r.htm
+index d689a44..2fbb14b 100644
+--- a/src/libqhull_r/qh-set_r.htm
++++ b/src/libqhull_r/qh-set_r.htm
+@@ -168,8 +168,7 @@ free a set only if it is in long memory </li>
+ set </li>
+ </ul>
+ 
+-<h3><a href="qh-set_r.htm#TOC">&#187;</a><a name="spred">Access and
+-predicate functions </a></h3>
++<h3><a href="qh-set_r.htm#TOC">&#187;</a><a name="spred">Access and predicate functions</a></h3>
+ <ul>
+ <li><a href="qset_r.c#setendpointer">qh_setendpointer</a> return
+ pointer to NULL terminator of a set</li>

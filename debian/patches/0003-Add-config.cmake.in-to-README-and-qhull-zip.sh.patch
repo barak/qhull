@@ -1,0 +1,99 @@
+From: Brad Barber <bradb@shore.net>
+Date: Fri, 28 Jun 2019 21:22:10 -0400
+Subject: Add config.cmake.in to README and qhull-zip.sh
+
+Uploaded a new tarball to www.qhull.org
+---
+ CMakeLists.txt  |  4 ++--
+ README.txt      |  1 +
+ eg/qhull-zip.sh |  8 +++++---
+ html/qh-get.htm | 10 +++++-----
+ 4 files changed, 13 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 57fc9f1..ea64933 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -61,8 +61,8 @@
+ #   Remove CMAKE_INTDIR from PreprocessorDefinitions
+ #   Adjust target names and destinations (e.g., lib/libqhullstatic_rd.a)
+ #  
+-# $Id: //main/2019/qhull/CMakeLists.txt#5 $$Change: 2711 $
+-# $DateTime: 2019/06/27 22:34:56 $$Author: bbarber $
++# $Id: //main/2019/qhull/CMakeLists.txt#6 $$Change: 2720 $
++# $DateTime: 2019/06/28 20:49:47 $$Author: bbarber $
+ 
+ project(qhull)
+ cmake_minimum_required(VERSION 3.0)
+diff --git a/README.txt b/README.txt
+index 3abfeb6..eb18af9 100644
+--- a/README.txt
++++ b/README.txt
+@@ -399,6 +399,7 @@ Distributed files
+   qhull*.md5sum        // md5sum for all files
+ 
+   bin/*                // Qhull executables and dll (.zip only)
++  build/config.cmake.in // extract target variables
+   build/qhull*.pc.in   // pkg-config templates for qhull_r, qhull, and qhull_p
+   build/qhull-32.sln   // 32-bit DevStudio solution and project files (2010 and later)
+   build/*-32.vcxproj
+diff --git a/eg/qhull-zip.sh b/eg/qhull-zip.sh
+index 40cd709..2f434b4 100644
+--- a/eg/qhull-zip.sh
++++ b/eg/qhull-zip.sh
+@@ -9,8 +9,8 @@
+ #   can not use path with $zip_file 
+ #   odd error messages if can't locate directory
+ #
+-# $Id: //main/2019/qhull/eg/qhull-zip.sh#11 $$Change: 2715 $
+-# $DateTime: 2019/06/28 18:10:49 $$Author: bbarber $
++# $Id: //main/2019/qhull/eg/qhull-zip.sh#12 $$Change: 2722 $
++# $DateTime: 2019/06/28 21:07:44 $$Author: bbarber $
+ 
+ if [[ $# -ne 3 ]]; then
+         echo 'Missing date stamp -- eg/qhull-zip.sh 2019 2019.1 7.3.2' 
+@@ -151,7 +151,7 @@ md5_tgz_file=qhull-$versionyear-src-$versionunix-tgz.md5sum
+ # recursive 
+ qhull_dirs="qhull/CMakeModules qhull/eg qhull/html qhull/src"
+ qhull_files="qhull/build/*.sln qhull/build/*.vcproj qhull/build/qhulltest/*.vcproj \
+-    qhull/build/*.vcxproj qhull/build/qhulltest/*.vcxproj \
++    qhull/build/*.vcxproj qhull/build/config.cmake.in qhull/build/qhulltest/*.vcxproj \
+     qhull/Announce.txt qhull/CMakeLists.txt qhull/COPYING.txt \
+     qhull/File_id.diz qhull/QHULL-GO.lnk qhull/README.txt \
+     qhull/REGISTER.txt qhull/index.htm qhull/Makefile  \
+@@ -161,10 +161,12 @@ qhull_files="qhull/build/*.sln qhull/build/*.vcproj qhull/build/qhulltest/*.vcpr
+     qhull/bin/testqset_r.exe \
+     qhull/bin/user_eg3.exe qhull/bin/testqset.exe qhull/bin/msvcr80.dll"
+ qhull_ufiles="$qhull_dirs qhull/build/*.sln qhull/build/*.vcproj \
++    qhull/build/config.cmake.in \
+     qhull/Announce.txt qhull/CMakeLists.txt qhull/COPYING.txt \
+     qhull/File_id.diz qhull/QHULL-GO.lnk qhull/README.txt \
+     qhull/REGISTER.txt qhull/index.htm qhull/Makefile"
+ qhull_d2ufiles="Makefile src/libqhull/Makefile src/libqhull_r/Makefile \
++    qhull/build/config.cmake.in \
+     src/*/DEPRECATED.txt src/*/*.pro src/*/*.htm html/*.htm html/*.txt \
+     src/libqhull/MBorland eg/q_eg eg/q_egtest eg/q_test "
+     
+diff --git a/html/qh-get.htm b/html/qh-get.htm
+index 2a093bc..778a238 100644
+--- a/html/qh-get.htm
++++ b/html/qh-get.htm
+@@ -92,13 +92,13 @@ width="100" height="100"></a> Qhull Downloads</h1>
+         options for qhull are the same. [D. Zwick] </p>
+     </li>
+ 
+-    <li>June 28, 2019 19:49 EDT md5sum for Qhull 2019.1 downloads
++    <li>June 28, 2019 21:07 EDT md5sum for Qhull 2019.1 downloads
+ 
+ <pre>
+-a4ac19a7860058ac43cc57e848246f5c *qhull-2019.1/qhull-2019.1-zip.md5sum
+-26ae24abd7ee372aafd55ec595c01a5f *qhull-2019.1/qhull-2019-src-7.3.2-tgz.md5sum
+-670e2aac97015fae2b7de52089a45735 *qhull-2019.1.zip
+-ae917198325d4309d7c46f09593ac1e3 *qhull-2019-src-7.3.2.tgz
++737586d2f913c49afae15d596c21e242 *qhull-2019.1/qhull-2019.1-zip.md5sum
++b1edd3c7d5fbe7b2296395c0bad0fbbc *qhull-2019.1/qhull-2019-src-7.3.2-tgz.md5sum
++288a901f09f753695a6b8fe376bb2921 *qhull-2019.1.zip
++53c04f9c89b491b17b10c7ea1eaa4cc8 *qhull-2019-src-7.3.2.tgz
+ </pre>
+ </li>
+ 

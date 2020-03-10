@@ -1,2 +1,4 @@
 0001-debianize-test-failure-msg.patch
 0004-qhullcpp-shared.patch
+0003-Add-config.cmake.in-to-README-and-qhull-zip.sh.patch
+0004-Review-and-fix-Qhull-html-and-option-links.patch
