@@ -5,6 +5,8 @@
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
+include /usr/share/dpkg/architecture.mk
+
 %:
 	dh $@ --buildsystem=cmake
 
@@ -26,7 +28,9 @@ override_dh_auto_build:
 	  done
 
 override_dh_auto_test:
-	env PATH=$(CURDIR)/src:$${PATH} eg/q_test
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	env PATH=$(CURDIR)/obj-$(DEB_HOST_MULTIARCH):$${PATH} eg/q_test
+endif
 
 override_dh_auto_install:
 	dh_auto_install
