@@ -1,12 +1,23 @@
-qhull (2019.1-1) unstable; urgency=medium
+qhull (2019.1-1) UNRELEASED; urgency=medium
 
+  [ Barak A. Pearlmutter ]
   * Strip unusual field spacing from debian/control.
   * Bump debhelper from old 11 to 12.
   * New upstream version
   * Track minor upstream fix commits
   * Bump standards version
+  [ Timo Röhling ]
+  * Turn post-release upstream fixes into proper patches
+  * Ship liqhullcpp as static library (Closes: #925540)
+  * Add R-R-R to debian/control
+  * Fix unit tests and honor DEB_BUILD_OPTIONS
+  * Fix reproducibility issue with assert() macros
+  * Install all documentation to the recommended place
+  * Fix privacy breach
+  * Bump SONAME because of ABI breakage
+  * Make copyright DEP5 conforming
 
- -- Barak A. Pearlmutter <bap@debian.org>  Fri, 04 Oct 2019 19:03:45 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 17 Mar 2020 16:14:29 +0100
 
 qhull (2015.2-4) unstable; urgency=medium
 
