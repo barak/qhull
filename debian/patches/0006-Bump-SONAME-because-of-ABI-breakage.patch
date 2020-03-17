@@ -1,0 +1,21 @@
+From: =?utf-8?q?Timo_R=C3=B6hling?= <timo.roehling@fkie.fraunhofer.de>
+Date: Tue, 17 Mar 2020 16:09:37 +0100
+Subject: Bump SONAME because of ABI breakage
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ea64933..3951b4e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -73,7 +73,7 @@ set(qhull_VERSION2 "2019.1 2019/06/21")  # not used, See global.c, global_r.c, r
+ set(qhull_VERSION     "7.3.2")  # Advance every release
+ 
+ # SOVERSION -- qhull 2003 = empty, 2009 = 5, 2010-2012 = 6, 2015-date (reentrant) = 7
+-set(qhull_SOVERSION 7) # For SOVERSION 
++set(qhull_SOVERSION 7deb1) # For SOVERSION 
+ 
+ include(CMakeModules/CheckLFS.cmake)
+ option(WITH_LFS "Enable Large File Support" ON)
