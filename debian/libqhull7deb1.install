@@ -1,2 +1,1 @@
-#! /usr/bin/dh-exec
-usr/lib/libqhull.so.* /usr/lib/${DEB_HOST_MULTIARCH}/
+usr/lib/*/libqhull.so.*

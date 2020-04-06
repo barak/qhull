@@ -1,7 +1,7 @@
-#! /usr/bin/dh-exec
-usr/lib/libqhull.a /usr/lib/${DEB_HOST_MULTIARCH}/
-usr/lib/libqhull.so /usr/lib/${DEB_HOST_MULTIARCH}/
-usr/lib/libqhullstatic_r.a /usr/lib/${DEB_HOST_MULTIARCH}/
-usr/lib/libqhull_r.so /usr/lib/${DEB_HOST_MULTIARCH}/
-usr/lib/libqhullcpp.so /usr/lib/${DEB_HOST_MULTIARCH}/
+usr/lib/*/libqhullstatic.a
+usr/lib/*/libqhull.so
+usr/lib/*/libqhullstatic_r.a
+usr/lib/*/libqhull_r.so
+usr/lib/*/libqhullcpp.so
+usr/lib/*/cmake
 usr/include
