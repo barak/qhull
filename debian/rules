@@ -47,13 +47,6 @@ override_dh_auto_install:
 	find debian/tmp/usr/lib -type f -name '*.so*' \
 	 -exec chrpath --list '{}' ';' \
 	 -exec chrpath --delete '{}' ';'
-	@echo 'Convenience links for #include <qhull/...> and #include <qhull/qhull.h>'
-	mkdir -p debian/tmp/usr/include/qhull
-	(cd debian/tmp/usr/include/qhull \
-	 && ln --verbose -s ../libqhull/* ../libqhullcpp/* ./ \
-	 && ln --verbose -s libqhull.h qhull.h)
-	echo Convenience links for backwards compatibility \
-	 > debian/tmp/usr/include/qhull/README
 
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
@@ -65,7 +58,6 @@ override_dh_link:
 	done
 	rm --verbose debian/libqhull-dev/usr/include/libqhull/*.htm
 	rm --verbose debian/libqhull-dev/usr/include/libqhull_r/*.htm
-	rm --verbose debian/libqhull-dev/usr/include/qhull/*.htm
 	dh_link
 
 override_dh_compress:
