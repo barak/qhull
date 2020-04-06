@@ -11,7 +11,7 @@ Uploaded a new tarball to www.qhull.org
  4 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 57fc9f1..ea64933 100644
+index 1c336ef..080d764 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -61,8 +61,8 @@

@@ -1,0 +1,32 @@
+From: D Haley <mycae@gmx.com>
+Date: Tue, 26 Mar 2019 14:59:11 +0000
+Subject: Build shared qhullcpp
+
+---
+ CMakeLists.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 07d3da2..1c336ef 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -460,13 +460,15 @@ if(UNIX)
+ endif(UNIX)
+ 
+ # ---------------------------------------
+-# Define C++ static library qhullcpp
+-#     Do not create libqhullcpp as a shared library.  Qhull C++ classes may change layout and size. 
++# Define C++ shared library qhullcpp
+ # ---------------------------------------
+ 
+-add_library(${qhull_CPP} STATIC ${libqhullcpp_SOURCES})
++add_library(${qhull_CPP} SHARED ${libqhullcpp_SOURCES})
+ set_target_properties(${qhull_CPP} PROPERTIES
+-    VERSION ${qhull_VERSION})
++    VERSION ${qhull_VERSION}
++    SOVERSION ${qhull_SOVERSION}
++)
++target_link_libraries(${qhull_CPP} ${qhull_SHAREDR})
+ 
+ # ---------------------------------------
+ # Define qhull executables linked to qhullstatic library
