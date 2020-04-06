@@ -12,9 +12,10 @@ Copyright: 1993-2019, C.B. Barber <brad@qhull.org>
 License: Qhull
 
 Files: debian/*
-Copyright: 2006, Rafael Laboissiere <rafael@debian.org>
-           2019, Barak A. Pearlmutter <bap@debian.org>
-License: GPL-3
+Copyright: 2003-2009, Rafael Laboissiere <rafael@debian.org>
+           2003-2019, Barak A. Pearlmutter <bap@debian.org>
+           2020, Timo Röhling <timo.roehling@fkie.fraunhofer.de>
+License: GPL-3+
 
 License: Qhull
  Qhull is free software and may be obtained via http from www.qhull.org. It
@@ -36,7 +37,7 @@ License: Qhull
     qhull_bug@qhull.org; the authors may or may not act on them as
     they desire.
 
-License: GPL-3
+License: GPL-3+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
