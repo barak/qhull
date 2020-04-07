@@ -1,4 +1,4 @@
-qhull (2019.1-1) UNRELEASED; urgency=medium
+qhull (2019.1-1) unstable; urgency=medium
 
   [ Barak A. Pearlmutter ]
   * Strip unusual field spacing from debian/control.
@@ -6,6 +6,9 @@ qhull (2019.1-1) UNRELEASED; urgency=medium
   * New upstream version
   * Track minor upstream fix commits
   * Bump standards version
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+
   [ Timo Röhling ]
   * Turn post-release upstream fixes into proper patches
   * Ship qhullcpp as shared library (Closes: #925540)
@@ -19,7 +22,7 @@ qhull (2019.1-1) UNRELEASED; urgency=medium
   * Add .symbols files for all shared libraries
   * Properly export CMake targets
 
- -- Barak A. Pearlmutter <bap@debian.org>  Tue, 17 Mar 2020 16:14:29 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 07 Apr 2020 23:02:09 +0100
 
 qhull (2015.2-4) unstable; urgency=medium
 
