@@ -1,4 +1,4 @@
-qhull (2019.1-1) unstable; urgency=medium
+qhull (2019.1-1) experimental; urgency=medium
 
   [ Barak A. Pearlmutter ]
   * Strip unusual field spacing from debian/control.
