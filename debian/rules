@@ -17,7 +17,7 @@ override_dh_auto_configure:
 		-DBIN_INSTALL_DIR=bin                                   \
 		-DMAN_INSTALL_DIR=share/man/man1                        \
 		-DDOC_INSTALL_DIR=share/doc/libqhull-dev/qhull
-		
+
 override_dh_auto_build:
 	dh_auto_build
 	@echo Building man pages
