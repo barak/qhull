@@ -1,3 +1,12 @@
+qhull (2019.1-2) experimental; urgency=medium
+
+  * Team upload.
+  * Use correct CMake build path for tests
+  * Mark exported C++ STL symbols as optional
+  * Build with LFS support
+
+ -- Timo Röhling <timo.roehling@fkie.fraunhofer.de>  Fri, 10 Apr 2020 13:50:23 +0200
+
 qhull (2019.1-1) experimental; urgency=medium
 
   [ Barak A. Pearlmutter ]
