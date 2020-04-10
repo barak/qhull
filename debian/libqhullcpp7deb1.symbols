@@ -242,16 +242,16 @@ libqhullcpp.so.7deb1 libqhullcpp7deb1 #MINVER#
  (c++)"orgQhull::QhullQh::hasQhullMessage() const@Base" 2019.1
  (c++)"orgQhull::RoadError::logErrorLastResort() const@Base" 2019.1
  (c++)"orgQhull::RoadError::what() const@Base" 2019.1
- (c++)"std::ctype<char>::do_widen(char) const@Base" 2019.1
- (c++)"void std::vector<orgQhull::QhullFacet, std::allocator<orgQhull::QhullFacet> >::_M_realloc_insert<orgQhull::QhullFacet const&>(__gnu_cxx::__normal_iterator<orgQhull::QhullFacet*, std::vector<orgQhull::QhullFacet, std::allocator<orgQhull::QhullFacet> > >, orgQhull::QhullFacet const&)@Base" 2019.1
- (c++)"void std::vector<orgQhull::QhullPoint, std::allocator<orgQhull::QhullPoint> >::_M_realloc_insert<orgQhull::QhullPoint>(__gnu_cxx::__normal_iterator<orgQhull::QhullPoint*, std::vector<orgQhull::QhullPoint, std::allocator<orgQhull::QhullPoint> > >, orgQhull::QhullPoint&&)@Base" 2019.1
- (c++)"void std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> >::_M_realloc_insert<orgQhull::QhullVertex const&>(__gnu_cxx::__normal_iterator<orgQhull::QhullVertex*, std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> > >, orgQhull::QhullVertex const&)@Base" 2019.1
- (c++)"void std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> >::_M_realloc_insert<orgQhull::QhullVertex>(__gnu_cxx::__normal_iterator<orgQhull::QhullVertex*, std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> > >, orgQhull::QhullVertex&&)@Base" 2019.1
- (c++)"void std::vector<double, std::allocator<double> >::_M_realloc_insert<double const&>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&)@Base" 2019.1
- (c++)"std::vector<double, std::allocator<double> >::_M_erase(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)@Base" 2019.1
- (c++)"std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&)@Base" 2019.1
- (c++)"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)@Base" 2019.1
- (c++)"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag)@Base" 2019.1
+ (c++|optional)"std::ctype<char>::do_widen(char) const@Base" 2019.1
+ (c++|optional)"void std::vector<orgQhull::QhullFacet, std::allocator<orgQhull::QhullFacet> >::_M_realloc_insert<orgQhull::QhullFacet const&>(__gnu_cxx::__normal_iterator<orgQhull::QhullFacet*, std::vector<orgQhull::QhullFacet, std::allocator<orgQhull::QhullFacet> > >, orgQhull::QhullFacet const&)@Base" 2019.1
+ (c++|optional)"void std::vector<orgQhull::QhullPoint, std::allocator<orgQhull::QhullPoint> >::_M_realloc_insert<orgQhull::QhullPoint>(__gnu_cxx::__normal_iterator<orgQhull::QhullPoint*, std::vector<orgQhull::QhullPoint, std::allocator<orgQhull::QhullPoint> > >, orgQhull::QhullPoint&&)@Base" 2019.1
+ (c++|optional)"void std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> >::_M_realloc_insert<orgQhull::QhullVertex const&>(__gnu_cxx::__normal_iterator<orgQhull::QhullVertex*, std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> > >, orgQhull::QhullVertex const&)@Base" 2019.1
+ (c++|optional)"void std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> >::_M_realloc_insert<orgQhull::QhullVertex>(__gnu_cxx::__normal_iterator<orgQhull::QhullVertex*, std::vector<orgQhull::QhullVertex, std::allocator<orgQhull::QhullVertex> > >, orgQhull::QhullVertex&&)@Base" 2019.1
+ (c++|optional)"void std::vector<double, std::allocator<double> >::_M_realloc_insert<double const&>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double const&)@Base" 2019.1
+ (c++|optional)"std::vector<double, std::allocator<double> >::_M_erase(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >)@Base" 2019.1
+ (c++|optional)"std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&)@Base" 2019.1
+ (c++|optional)"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)@Base" 2019.1
+ (c++|optional)"void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag)@Base" 2019.1
  (c++)"typeinfo for orgQhull::QhullError@Base" 2019.1
  (c++)"typeinfo for orgQhull::RoadError@Base" 2019.1
  (c++)"typeinfo name for orgQhull::QhullError@Base" 2019.1
