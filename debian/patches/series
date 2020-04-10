@@ -5,3 +5,4 @@
 0005-Fix-privacy-breach.patch
 0006-Bump-SONAME-because-of-ABI-breakage.patch
 0007-Fix-CMake-target-export.patch
+0008-Build-with-LFS-support.patch

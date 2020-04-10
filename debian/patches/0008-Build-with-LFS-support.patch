@@ -1,0 +1,20 @@
+From: =?utf-8?q?Timo_R=C3=B6hling?= <timo.roehling@fkie.fraunhofer.de>
+Date: Fri, 10 Apr 2020 13:36:57 +0200
+Subject: Build with LFS support
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 41a5e15..03ed9bd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -124,6 +124,7 @@ message(STATUS "To build and install qhull, enter \"make\" and \"make install\""
+ message(STATUS "To smoketest qhull, enter \"ctest\"")
+ message(STATUS)
+ 
++add_definitions(-D_FILE_OFFSET_BITS=64)
+ 
+ # ---------------------------------------
+ # Define library source files and variables
