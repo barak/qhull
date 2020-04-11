@@ -54,10 +54,6 @@ override_dh_auto_install:
 	mkdir -p debian/tmp/usr/share/doc/libqhull-dev/include
 	mv --verbose debian/tmp/usr/include/libqhull/*.htm debian/tmp/usr/share/doc/libqhull-dev/include
 	rm --verbose debian/tmp/usr/include/libqhull_r/*.htm
-	# Remove RPATH
-	find debian/tmp/usr/lib -type f -name '*.so*' \
-	 -exec chrpath --list '{}' ';' \
-	 -exec chrpath --delete '{}' ';'
 
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt

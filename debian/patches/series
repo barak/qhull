@@ -6,3 +6,4 @@
 0006-Bump-SONAME-because-of-ABI-breakage.patch
 0007-Fix-CMake-target-export.patch
 0008-Build-with-LFS-support.patch
+0009-Do-not-set-RPATH.patch

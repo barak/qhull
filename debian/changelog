@@ -2,6 +2,7 @@ qhull (2019.1-3) experimental; urgency=medium
 
   * Team upload.
   * Fix arch-indep build
+  * Disable RPATH at build time
 
  -- Timo Röhling <timo.roehling@fkie.fraunhofer.de>  Fri, 10 Apr 2020 19:03:03 +0200
 
