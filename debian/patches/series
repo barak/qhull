@@ -2,8 +2,9 @@
 0002-Build-shared-qhullcpp.patch
 0003-Add-config.cmake.in-to-README-and-qhull-zip.sh.patch
 0004-Review-and-fix-Qhull-html-and-option-links.patch
-0005-Fix-privacy-breach.patch
-0006-Bump-SONAME-because-of-ABI-breakage.patch
-0007-Fix-CMake-target-export.patch
-0008-Build-with-LFS-support.patch
-0009-Do-not-set-RPATH.patch
+0005-Add-pkg-config-support.patch
+0006-Fix-privacy-breach.patch
+0007-Bump-SONAME-because-of-ABI-breakage.patch
+0008-Fix-CMake-target-export.patch
+0009-Build-with-LFS-support.patch
+0010-Do-not-set-RPATH.patch

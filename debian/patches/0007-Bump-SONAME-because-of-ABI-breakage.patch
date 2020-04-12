@@ -7,7 +7,7 @@ Subject: Bump SONAME because of ABI breakage
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 080d764..7ca2df6 100644
+index cfc2269..c1007ce 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -73,7 +73,7 @@ set(qhull_VERSION2 "2019.1 2019/06/21")  # not used, See global.c, global_r.c, r

@@ -7,7 +7,7 @@ Subject: Build with LFS support
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 41a5e15..03ed9bd 100644
+index 86b7ed1..e1c4bfd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -124,6 +124,7 @@ message(STATUS "To build and install qhull, enter \"make\" and \"make install\""

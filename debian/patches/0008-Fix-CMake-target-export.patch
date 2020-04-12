@@ -3,11 +3,11 @@ Date: Mon, 6 Apr 2020 18:58:53 +0200
 Subject: Fix CMake target export
 
 ---
- CMakeLists.txt | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ CMakeLists.txt | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7ca2df6..41a5e15 100644
+index c1007ce..86b7ed1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -352,10 +352,13 @@ else()
@@ -49,3 +49,12 @@ index 7ca2df6..41a5e15 100644
  install(EXPORT QhullTargets
    FILE
      QhullTargets.cmake
+@@ -662,7 +670,7 @@ install(
+     Devel
+ )
+ 
+-set(PkgConfigLocation lib/pkgconfig)
++set(PkgConfigLocation ${LIB_INSTALL_DIR}/pkgconfig)
+ foreach(pkgconfig IN ITEMS "${qhull_SHARED};Qhull shared library"
+                            "${qhull_SHAREDR};Qhull reentrant shared library"
+                            "${qhull_STATIC};Qhull static library"
