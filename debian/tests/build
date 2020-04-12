@@ -1,0 +1,70 @@
+#!/bin/bash
+set -e
+
+tmpdir="$(mktemp -d)"
+trap "rm -rf $tmpdir" EXIT
+
+cd "$tmpdir"
+
+run()
+{
+	echo '$' "$@"
+	"$@"
+}
+
+cat >CMakeLists.txt << EOF
+cmake_minimum_required(VERSION 3.0)
+project(test_qhull_build LANGUAGES C CXX)
+
+find_package(Qhull REQUIRED)
+
+add_executable(test_qhull test_qhull.c)
+target_link_libraries(test_qhull Qhull::libqhull)
+
+add_executable(test_qhull_r test_qhull_r.c)
+target_link_libraries(test_qhull_r Qhull::qhull_r)
+
+add_executable(test_qhullcpp test_qhullcpp.cpp)
+target_link_libraries(test_qhullcpp Qhull::qhullcpp)
+EOF
+
+cat >test_qhull.c << EOF
+#include <libqhull/qhull_a.h>
+
+int main(int argc, char** argv)
+{
+	QHULL_LIB_CHECK
+	return 0;
+}
+EOF
+
+cat >test_qhull_r.c << EOF
+#include <libqhull_r/qhull_ra.h>
+
+int main(int argc, char** argv)
+{
+	QHULL_LIB_CHECK
+	return 0;
+}
+EOF
+
+cat >test_qhullcpp.cpp << EOF
+#include <libqhullcpp/Qhull.h>
+
+int main(int argc, char** argv)
+{
+	QHULL_LIB_CHECK
+	return 0;
+}
+EOF
+
+run cmake .
+run make VERBOSE=ON
+run ./test_qhull
+run ./test_qhull_r
+run ./test_qhullcpp
+
+run gcc -o test_qhull_pkgconfig test_qhull.c `pkg-config --cflags --libs qhull`
+run gcc -o test_qhull_r_pkgconfig test_qhull_r.c `pkg-config --cflags --libs qhull_r`
+run g++ -o test_qhullcpp_pkgconfig test_qhullcpp.cpp `pkg-config --cflags --libs qhullcpp qhull_r`
+
