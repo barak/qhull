@@ -46,22 +46,22 @@ override_dh_auto_install:
 	rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/COPYING.txt
 	# No need for doc/ copies of man pages in ../../man/man1/ or for other formats.
 	@for f in qhull rbox; do \
-	  for ext in man txt htm; do \
-	    rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/$$f.$$ext || true; \
+	  for ext in man txt; do \
+	    rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/html/$$f.$$ext || true; \
 	  done \
 	done
 	# Move documentation out of include dir
-	mkdir -p debian/tmp/usr/share/doc/libqhull-dev/include
-	mv --verbose debian/tmp/usr/include/libqhull/*.htm debian/tmp/usr/share/doc/libqhull-dev/include
-	rm --verbose debian/tmp/usr/include/libqhull_r/*.htm
+	mkdir -p debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
+	mv --verbose debian/tmp/usr/include/libqhull_r/*.htm debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
+	rm --verbose debian/tmp/usr/include/libqhull/*.htm
 
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
 
 override_dh_link:
-	mkdir -p debian/libqhull-doc/usr/share/doc/libqhull-dev/include
-	@for f in $$(cd debian/tmp && echo usr/include/libqhull/*.h); do \
-	  ln --verbose -s /$$f debian/libqhull-doc/usr/share/doc/libqhull-dev/include/; \
+	mkdir -p debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
+	@for f in $$(cd debian/tmp && echo usr/include/libqhull_r/*.h); do \
+	  ln --verbose -s /$$f debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r/; \
 	done
 	dh_link
 

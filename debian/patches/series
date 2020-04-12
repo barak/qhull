@@ -8,3 +8,5 @@
 0008-Fix-CMake-target-export.patch
 0009-Build-with-LFS-support.patch
 0010-Do-not-set-RPATH.patch
+0011-Fix-install-location-for-HTML-manual.patch
+0012-Use-local-version-of-function-index.patch

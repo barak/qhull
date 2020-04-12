@@ -5,5 +5,5 @@ Abstract: Detailed Description of Qhull Internals and APIs.
 Section: Science/Mathematics
 
 Format: HTML
-Index: /usr/share/doc/libqhull-dev/include/index.htm
-Files: /usr/share/doc/libqhull-dev/include/*
+Index: /usr/share/doc/libqhull-dev/qhull/src/libqhull_r/index.htm
+Files: /usr/share/doc/libqhull-dev/qhull/src/libqhull_r/*
