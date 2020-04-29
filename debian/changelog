@@ -1,3 +1,10 @@
+qhull (2019.1-5) unstable; urgency=medium
+
+  * Team upload.
+  * Transition to unstable.
+
+ -- Timo Röhling <timo.roehling@fkie.fraunhofer.de>  Wed, 29 Apr 2020 10:15:52 +0200
+
 qhull (2019.1-4) experimental; urgency=medium
 
   * Team upload.
