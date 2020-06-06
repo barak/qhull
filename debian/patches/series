@@ -1,12 +1,7 @@
 0001-debianize-test-failure-msg.patch
 0002-Build-shared-qhullcpp.patch
-0003-Add-config.cmake.in-to-README-and-qhull-zip.sh.patch
-0004-Review-and-fix-Qhull-html-and-option-links.patch
-0005-Add-pkg-config-support.patch
-0006-Fix-privacy-breach.patch
-0007-Bump-SONAME-because-of-ABI-breakage.patch
-0008-Fix-CMake-target-export.patch
-0009-Build-with-LFS-support.patch
-0010-Do-not-set-RPATH.patch
-0011-Fix-install-location-for-HTML-manual.patch
-0012-Use-local-version-of-function-index.patch
+0003-Fix-privacy-breach.patch
+0004-Fix-CMake-target-export.patch
+0005-Do-not-set-RPATH.patch
+0006-Fix-install-location-for-HTML-manual.patch
+0007-Use-local-version-of-function-index.patch

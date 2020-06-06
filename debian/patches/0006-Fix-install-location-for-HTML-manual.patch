@@ -7,10 +7,10 @@ Subject: Fix install location for HTML manual
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 68b537f..f58f857 100644
+index 710312a..83abb14 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -679,4 +679,4 @@ install(FILES ${libqhullcpp_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/libqhull
+@@ -691,4 +691,4 @@ install(FILES ${libqhullcpp_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/libqhull
  install(FILES html/qhull.man         DESTINATION ${MAN_INSTALL_DIR} RENAME qhull.1)
  install(FILES html/rbox.man          DESTINATION ${MAN_INSTALL_DIR} RENAME rbox.1)
  install(FILES ${doc_FILES}           DESTINATION ${DOC_INSTALL_DIR})

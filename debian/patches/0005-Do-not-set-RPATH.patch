@@ -7,10 +7,10 @@ Subject: Do not set RPATH
  1 file changed, 15 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e1c4bfd..68b537f 100644
+index ff12517..710312a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -382,11 +382,6 @@ if(UNIX)
+@@ -387,11 +387,6 @@ if(UNIX)
      if(APPLE)
          set_target_properties(${qhull_SHAREDR} PROPERTIES 
              INSTALL_NAME_DIR "${LIB_INSTALL_DIR}")
@@ -22,7 +22,7 @@ index e1c4bfd..68b537f 100644
      endif()
  endif(UNIX)
  
-@@ -413,11 +408,6 @@ if(UNIX)
+@@ -418,11 +413,6 @@ if(UNIX)
      if(APPLE)
          set_target_properties(${qhull_SHARED} PROPERTIES 
              INSTALL_NAME_DIR "${LIB_INSTALL_DIR}")
@@ -34,7 +34,7 @@ index e1c4bfd..68b537f 100644
      endif()
  endif(UNIX)
  
-@@ -438,11 +428,6 @@ if(UNIX)
+@@ -443,11 +433,6 @@ if(UNIX)
      if(APPLE)
          set_target_properties(${qhull_SHAREDP} PROPERTIES 
              INSTALL_NAME_DIR "${LIB_INSTALL_DIR}")

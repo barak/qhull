@@ -7,15 +7,15 @@ Subject: Use local version of function index
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/index.htm b/index.htm
-index 40b105e..d8af32b 100644
+index 9b5e998..f6f8311 100644
 --- a/index.htm
 +++ b/index.htm
-@@ -143,7 +143,7 @@ If you use Qhull 2003.1, please upgrade or apply <a href="http://www.qhull.org/d
-             instructions<br>
+@@ -144,7 +144,7 @@ If you use Qhull 2003.1, please upgrade or apply <a href="http://www.qhull.org/d
              <li><a href="src/Changes.txt">Changes.txt</a> - change history <br>
              <li><a href="html/qh-code.htm">Qhull code</a>
--            <li><a href="http://www.qhull.org/src/libqhull_r/index.htm">Function</a> index to Qhull
-+            <li><a href="src/libqhull_r/index.htm">Function</a> index to Qhull
+             <li><a href="html/qh-code.htm#performance">Performance</a> of Qhull
+-            <li><a href="http://www.qhull.org/src/libqhull_r/index.htm">Index</a> to Qhull Functions
++            <li><a href="src/libqhull_r/index.htm">Index</a> to Qhull Functions
              </ul>
          </td></tr></table>
      <li>Send e-mail to <a href=mailto:qhull@qhull.org>qhull@qhull.org</a> </li>

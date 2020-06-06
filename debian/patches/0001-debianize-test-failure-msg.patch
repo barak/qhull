@@ -8,10 +8,10 @@ Redirect users to the Debian BTS in the error message of rbox.
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/src/libqhull/io.c b/src/libqhull/io.c
-index 81e1424..cfacb9e 100644
+index beed156..037cfd5 100644
 --- a/src/libqhull/io.c
 +++ b/src/libqhull/io.c
-@@ -3978,10 +3978,7 @@ coordT *qh_readpoints(int *numpoints, int *dimension, boolT *ismalloc) {
+@@ -4002,10 +4002,7 @@ coordT *qh_readpoints(int *numpoints, int *dimension, boolT *ismalloc) {
    if (!strcmp(qh rbox_command, "./rbox D4"))
      qh_fprintf(qh ferr, 8055, "\n\
  This is the qhull test case.  If any errors or core dumps occur,\n\
