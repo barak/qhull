@@ -3,6 +3,7 @@ usr/lib/*/libqhull.so
 usr/lib/*/libqhullstatic_r.a
 usr/lib/*/libqhull_r.so
 usr/lib/*/libqhullcpp.so
+usr/lib/*/libqhullcpp.a
 usr/lib/*/cmake
 usr/lib/*/pkgconfig
 usr/include

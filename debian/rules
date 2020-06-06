@@ -3,12 +3,12 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all reproducible=+fixfilepath
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all reproducible=+fixfilepath future=+lfs
 
 include /usr/share/dpkg/architecture.mk
 
 %:
-	dh $@ --buildsystem=cmake
+	dh $@ --buildsystem=cmake --with pkgkde_symbolshelper
 
 override_dh_auto_configure:
 	dh_auto_configure --buildsystem=cmake --                        \
