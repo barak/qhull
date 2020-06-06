@@ -9,8 +9,8 @@
 #   can not use path with $zip_file 
 #   odd error messages if can't locate directory
 #
-# $Id: //main/2019/qhull/eg/qhull-zip.sh#28 $$Change: 2972 $
-# $DateTime: 2020/06/05 17:59:50 $$Author: bbarber $
+# $Id: //main/2019/qhull/eg/qhull-zip.sh#27 $$Change: 2971 $
+# $DateTime: 2020/06/05 17:33:20 $$Author: bbarber $
 
 if [[ $# -ne 3 ]]; then
         echo 'Missing date stamp -- eg/qhull-zip.sh 2020 2020.1 8.0.0' 
@@ -436,9 +436,9 @@ log_step $LINENO "Extract zip to download/ and compare directories"
 log_step $LINENO "Check for 32-bit release executables from DevStudio (<500K and 'Ts' 32-bit allocations)"
 log_step $LINENO "Check for virus with Windows Defender"
 log_step $LINENO "Copy tarballs to qhull.org"
-log_step $LINENO " cd .. && ls -l qhull-2020.1* qhull*8.0.0*"
-log_step $LINENO " scp -p qhull-2020.1* qhull*8.0.0* qhull@qhull.org:web/download/"
-log_step $LINENO "Add md5sums to end of qh-get.htm"
+log_step $LINENO " ls -l qhull-2020.1* qhull*8.0.0*"
+log_step $LINENO " scp  qhull-2020.1*x qhull*8.0.0*x qhull@qhull.org:web/download/"
+log_step $LINENO "Add md5sum to qh-get.htm -- June 28, 2019 21:07 EDT md5sum for Qhull 2019.1 downloads"
 log_step $LINENO "Add release labels to git"
 log_step $LINENO "Finished successfully"
 #############################
