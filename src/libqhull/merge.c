@@ -20,9 +20,9 @@
    merges occur in qh_mergefacet and in qh_mergecycle
    vertex->neighbors not set until the first merge occurs
 
-   Copyright (c) 1993-2019 C.B. Barber.
-   $Id: //main/2019/qhull/src/libqhull/merge.c#9 $$Change: 2712 $
-   $DateTime: 2019/06/28 12:57:00 $$Author: bbarber $
+   Copyright (c) 1993-2020 C.B. Barber.
+   $Id: //main/2019/qhull/src/libqhull/merge.c#12 $$Change: 2958 $
+   $DateTime: 2020/05/26 16:17:49 $$Author: bbarber $
 */
 
 #include "qhull_a.h"
@@ -452,7 +452,7 @@ void qh_appendmergeset(facetT *facet, facetT *neighbor, mergeType mergetype, coo
   merge->ridge1= NULL;
   merge->ridge2= NULL;
   merge->mergetype= mergetype;
-  if(mergetype > 0 && mergetype <= sizeof(mergetypes))
+  if(mergetype > 0 && mergetype < sizeof(mergetypes)/sizeof(char *))
     mergename= mergetypes[mergetype];
   else
     mergename= mergetypes[MRGnone];
@@ -528,7 +528,7 @@ void qh_appendvertexmerge(vertexT *vertex, vertexT *destination, mergeType merge
   merge->ridge1= ridge1;
   merge->ridge2= ridge2;
   merge->mergetype= mergetype;
-  if(mergetype > 0 && mergetype <= sizeof(mergetypes))
+  if(mergetype > 0 && mergetype < sizeof(mergetypes)/sizeof(char *))
     mergename= mergetypes[mergetype];
   else
     mergename= mergetypes[MRGnone];
@@ -3367,7 +3367,7 @@ void qh_mergefacet(facetT *facet1, facetT *facet2, mergeType mergetype, realT *m
   int tracerestore=0, nummerge;
   const char *mergename;
 
-  if(mergetype > 0 && mergetype <= sizeof(mergetypes))
+  if(mergetype > 0 && mergetype < sizeof(mergetypes)/sizeof(char *))
     mergename= mergetypes[mergetype];
   else
     mergename= mergetypes[MRGnone];
@@ -5298,7 +5298,7 @@ void qh_tracemerge(facetT *facet1, facetT *facet2, mergeType mergetype) {
   const char *mergename;
 
 #ifndef qh_NOtrace
-  if(mergetype > 0 && mergetype <= sizeof(mergetypes))
+  if(mergetype > 0 && mergetype < sizeof(mergetypes)/sizeof(char *))
     mergename= mergetypes[mergetype];
   else
     mergename= mergetypes[MRGnone];

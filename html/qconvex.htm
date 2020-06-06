@@ -61,7 +61,7 @@ href="qh-eg.htm#how">How Qhull adds a point</a>.</p>
                 points on its surface.</dd>
             <dt>&nbsp;</dt>
             <dt><b>Example:</b> rbox x W1e-12 1000 | qconvex
-            <a href="qh-optq.htm#QR">QR0</a></dt>
+            <a href="qh-optq.htm#QRn">QR0</a></dt>
         <dd>Compute the convex hull of 1000 points near the
                     surface of a randomly rotated simplex.  Report
                         the maximum thickness of a facet.</dd>
@@ -110,7 +110,7 @@ all facets will be simplicial (e.g., triangles in 2-d).  For the cube
 example, it will have 12 facets.  Some facets may be
 degenerate and have zero area.
 
-<p>If you use '<a href="qh-optq.htm#QJn">QJ</a>' (joggled input),
+<p>If you use '<a href="qh-optq.htm#QJ">QJ</a>' (joggled input),
 all facets will be simplicial.  The corresponding vertices will be
 slightly perturbed and identical points will be joggled apart.
 Joggled input is less accurate that triangulated
@@ -129,7 +129,7 @@ are there extra points in a 4-d or higher convex hull?</a><br>
 <a href=qh-quick.htm#options>options</a>: <i>d v H Qbb Qf Qg Qm
 Qr Qu Qv Qx Qz TR E V Fp Gt Q0,etc</i>.
 
-<p><b>Copyright &copy; 1995-2019 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2020 C.B. Barber</b></p>
 
 <hr>
 
@@ -183,7 +183,7 @@ input</a></h3>
 </ul>
 
 <p>Use I/O redirection (e.g., qconvex &lt; data.txt), a pipe (e.g., rbox 10 | qconvex),
-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qconvex TI data.txt).
+or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qconvex TI data.txt).
 
 <p>Comments start with a non-numeric character.  Error reporting is
 simpler if there is one point per line.  Dimension
@@ -249,15 +249,15 @@ individually or together.</p>
     <dt><a href="qh-optf.htm#Fx">Fx</a></dt>
     <dd>list extreme points (i.e., vertices).  The first line is the number of
         extreme points.  Each point is listed, one per line.  The cube example
-        has eight vertices.</dd>
+        has eight vertices.  In 2-d, extreme points are in counter-clockwise order.</dd>
     <dt><a href="qh-optf.htm#Fv">Fv</a></dt>
     <dd>list vertices for each facet.  The first line is the number of facets.
         Each remaining line starts with the number of vertices.  For the cube example,
         each facet has four vertices.</dd>
     <dt><a href="qh-opto.htm#i">i</a></dt>
     <dd>list vertices for each facet.  The first line is the number of facets.  The
-        remaining lines list the vertices for each facet.  In 4-d and
-        higher, triangulate non-simplicial facets by adding an extra point.</dd>
+        remaining lines list the vertices for each facet.  The facets are oriented.
+        In 4-d and higher, triangulate non-simplicial facets by adding an extra point.</dd>
     <dt>&nbsp;</dt>
     <dt>&nbsp;</dt>
     <dd><b>Coordinates</b></dd>
@@ -266,7 +266,8 @@ individually or together.</p>
            first line is the dimension.  The second line is the number of
            vertices, facets, and ridges.  The vertex
            coordinates are next, followed by the facets.  Each facet starts with
-           the number of vertices.  The cube example has four vertices per facet.</dd>
+           the number of vertices.  Simplicial and 3-d facets are oriented.  The cube
+           example has four vertices per facet.</dd>
     <dt><a href="qh-optf.htm#Ft">Ft</a></dt>
     <dd>print a triangulation of the convex hull in OFF format.  The first line
         is the dimension.  The second line is the number of vertices and added points,
@@ -389,14 +390,14 @@ individually or together.</p>
     <dt><a href="qh-optq.htm#Qt">Qt</a></dt>
     <dd>triangulated output.  Qhull triangulates non-simplicial facets.  It may produce
      degenerate facets of zero area.</dd>
-    <dt><a href="qh-optq.htm#QJn">QJ</a></dt>
+    <dt><a href="qh-optq.htm#QJ">QJ</a></dt>
     <dd>joggle the input instead of merging facets.  This guarantees simplicial facets
         (e.g., triangles in 3-d).  It is less accurate than triangulated output ('Qt').</dd>
     <dt><a href="qh-optq.htm#Qc">Qc</a></dt>
     <dd>keep coplanar points</dd>
     <dt><a href="qh-optq.htm#Qi">Qi</a></dt>
     <dd>keep interior points</dd>
-    <dt><a href="qh-opto.htm#f">f </a></dt>
+    <dt><a href="qh-opto.htm#f">f</a></dt>
     <dd>facet dump.  Print the data structure for each facet.</dd>
     <dt><a href="qh-optq.htm#QVn">QVn</a></dt>
     <dd>select facets containing point <em>n</em> as a vertex,</dd>
@@ -409,7 +410,7 @@ individually or together.</p>
     <dd>report progress after constructing <em>n</em> facets</dd>
     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
     <dd>verify result</dd>
-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
+    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
     <dd>output results to file.  Use single quotes if the filename

@@ -61,19 +61,21 @@
 #   Remove CMAKE_INTDIR from PreprocessorDefinitions
 #   Adjust target names and destinations (e.g., lib/libqhullstatic_rd.a)
 #  
-# $Id: //main/2019/qhull/CMakeLists.txt#5 $$Change: 2711 $
-# $DateTime: 2019/06/27 22:34:56 $$Author: bbarber $
+# $Id: //main/2019/qhull/CMakeLists.txt#12 $$Change: 2961 $
+# $DateTime: 2020/06/01 22:17:03 $$Author: bbarber $
 
 project(qhull)
 cmake_minimum_required(VERSION 3.0)
 
-# Define qhull_VERSION in README.txt, Announce.txt, qh-get.htm, CMakeLists.txt, 
-#   Makefile, qhull-exports.def, qhull_p-exports.def, qhull_r-exports.def, qhull-warn.pri
-set(qhull_VERSION2 "2019.1 2019/06/21")  # not used, See global.c, global_r.c, rbox.c, rbox_r.c
-set(qhull_VERSION     "7.3.2")  # Advance every release
+# Define qhull_VERSION in README.txt, Announce.txt, qh-get.htm, CMakeLists.txt
+#   qhull-zip.sh (twice), qhull-wiki.md, qhull-news.htm, File_id.diz, index.htm
+#   Makefile (SO), qhull-warn.pri (VERSION), qhull-exports.def (VERSION 8.0), qhull_p-exports.def, qhull_r-exports.def
+set(qhull_VERSION2 "2020.1 2020/05/29")  # not used, See global.c, global_r.c, rbox.c, rbox_r.c
+set(qhull_VERSION  "8.0.0")  # Advance every release
 
-# SOVERSION -- qhull 2003 = empty, 2009 = 5, 2010-2012 = 6, 2015-date (reentrant) = 7
-set(qhull_SOVERSION 7) # For SOVERSION 
+# SOVERSION -- qhull 2003 = empty, 2009 = 5, 2010-2012 = 6, 2015-2019 = 7, 2020 = 8.0
+# Increase SOVERSION if ABI breaks (abi-compliance-checker)
+set(qhull_SOVERSION 8.0) # For SOVERSION 
 
 include(CMakeModules/CheckLFS.cmake)
 option(WITH_LFS "Enable Large File Support" ON)
@@ -81,30 +83,30 @@ check_lfs(WITH_LFS)
 
 if(INCLUDE_INSTALL_DIR)
 else()
-set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include)
+set(INCLUDE_INSTALL_DIR include)
 endif()
 if(LIB_INSTALL_DIR)
 else()
-set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+set(LIB_INSTALL_DIR lib)
 endif()
 if(BIN_INSTALL_DIR)
 else()
-set(BIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin)
+set(BIN_INSTALL_DIR bin)
 endif()
 if(MAN_INSTALL_DIR)
 else()
     if(WIN32)
-        set(MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/man/man1)
+        set(MAN_INSTALL_DIR man/man1)
     else()
-        set(MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/man/man1)
+        set(MAN_INSTALL_DIR share/man/man1)
     endif()
 endif()
 if(DOC_INSTALL_DIR)
 else()
     if(WIN32)
-        set(DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/doc)
+        set(DOC_INSTALL_DIR doc)
     else()
-        set(DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/doc/qhull)
+        set(DOC_INSTALL_DIR share/doc/qhull)
     endif()
 endif()
 message(STATUS)
@@ -290,6 +292,7 @@ set(
         src/libqhullcpp/QhullSet.h
         src/libqhullcpp/QhullSets.h
         src/libqhullcpp/QhullStat.h
+        src/libqhullcpp/QhullUser.h
         src/libqhullcpp/QhullVertex.h
         src/libqhullcpp/QhullVertexSet.h
         src/libqhullcpp/RboxPoints.h
@@ -314,6 +317,7 @@ set(
         src/libqhullcpp/QhullRidge.cpp
         src/libqhullcpp/QhullSet.cpp
         src/libqhullcpp/QhullStat.cpp
+        src/libqhullcpp/QhullUser.cpp
         src/libqhullcpp/QhullVertex.cpp
         src/libqhullcpp/QhullVertexSet.cpp
         src/libqhullcpp/RboxPoints.cpp
@@ -333,7 +337,7 @@ set(
         index.htm
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if(CMAKE_BUILD_TYPE MATCHES "[dD]ebug")
     set(qhull_CPP qhullcpp_d)
@@ -466,7 +470,8 @@ endif(UNIX)
 
 add_library(${qhull_CPP} STATIC ${libqhullcpp_SOURCES})
 set_target_properties(${qhull_CPP} PROPERTIES
-    VERSION ${qhull_VERSION})
+    VERSION ${qhull_VERSION}
+    POSITION_INDEPENDENT_CODE "TRUE")
 
 # ---------------------------------------
 # Define qhull executables linked to qhullstatic library
@@ -626,18 +631,18 @@ install(TARGETS ${qhull_TARGETS_INSTALL} EXPORT QhullTargets
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/Qhull/QhullConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/QhullExport/QhullConfigVersion.cmake"
     VERSION ${qhull_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 
 export(EXPORT QhullTargets
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/Qhull/QhullTargets.cmake"
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/QhullExport/QhullTargets.cmake"
   NAMESPACE Qhull::
 )
 
 configure_file(${PROJECT_SOURCE_DIR}/build/config.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/Qhull/QhullConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/QhullExport/QhullConfig.cmake"
   @ONLY
 )
 
@@ -652,13 +657,28 @@ install(EXPORT QhullTargets
 )
 install(
   FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/Qhull/QhullConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/Qhull/QhullConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/QhullExport/QhullConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/QhullExport/QhullConfigVersion.cmake"
   DESTINATION
     ${ConfigPackageLocation}
   COMPONENT
     Devel
 )
+
+set(PkgConfigLocation lib/pkgconfig)
+foreach(pkgconfig IN ITEMS "${qhull_SHARED};Qhull shared library"
+                           "${qhull_SHAREDR};Qhull reentrant shared library"
+                           "${qhull_STATIC};Qhull static library"
+                           "${qhull_STATICR};Qhull reentrant static library"
+                           "${qhull_CPP};Qhull C++ library")
+    list(GET pkgconfig 0 LIBRARY_NAME)
+    if(LIBRARY_NAME STREQUAL "libqhull")
+        set(LIBRARY_NAME "qhull")
+    endif()
+    list(GET pkgconfig 1 LIBRARY_DESCRIPTION)
+    configure_file(qhull.pc.in ${LIBRARY_NAME}.pc @ONLY)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}.pc DESTINATION ${PkgConfigLocation} COMPONENT Devel)
+endforeach()
 
 install(FILES ${libqhull_HEADERS}    DESTINATION ${INCLUDE_INSTALL_DIR}/libqhull)
 install(FILES ${libqhull_DOC}        DESTINATION ${INCLUDE_INSTALL_DIR}/libqhull)
