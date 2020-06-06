@@ -1,3 +1,11 @@
+qhull (2020.1-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * New upstream SOVERSION 8.0
+
+ -- Timo Röhling <timo.roehling@fkie.fraunhofer.de>  Sat, 06 Jun 2020 15:58:21 +0200
+
 qhull (2019.1-5) unstable; urgency=medium
 
   * Team upload.
