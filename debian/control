@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 4.5.0
-Build-Depends: debhelper-compat (= 12),
+Build-Depends: debhelper-compat (= 13),
 	       cmake, pkg-kde-tools,
 	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
 Homepage: https://www.qhull.org
