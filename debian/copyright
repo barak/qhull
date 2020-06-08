@@ -4,8 +4,8 @@ Upstream-Contact: qhull@qhull.org
 Source: https://github.com/qhull/qhull
 
 Files: *
-Copyright: 1993-2019, C.B. Barber <brad@qhull.org>
-           1993-2019, The National Science and Technology Research Center for
+Copyright: 1993-2020, C.B. Barber <brad@qhull.org>
+           1993-2020, The National Science and Technology Research Center for
                       Computation and Visualization of Geometric Structures
                       (The Geometry Center)
                       University of Minnesota
