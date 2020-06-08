@@ -2,6 +2,5 @@
 0002-Build-shared-qhullcpp.patch
 0003-Fix-privacy-breach.patch
 0004-Fix-CMake-target-export.patch
-0005-Do-not-set-RPATH.patch
-0006-Fix-install-location-for-HTML-manual.patch
-0007-Use-local-version-of-function-index.patch
+0005-Fix-install-location-for-HTML-manual.patch
+0006-Use-local-version-of-function-index.patch
