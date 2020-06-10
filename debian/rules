@@ -19,9 +19,8 @@ override_dh_auto_configure:
 		-DMAN_INSTALL_DIR=share/man/man1                        \
 		-DDOC_INSTALL_DIR=share/doc/libqhull-dev/qhull
 
-override_dh_auto_build:
-	dh_auto_build
-	@echo Building man pages
+execute_after_dh_auto_build:
+	@echo "Building man pages"
 	cd debian &&							\
 	  for info in "qconvex:compute the convex hull"			\
 	              "qdelaunay:compute the Delaunay triangulation"	\
@@ -43,15 +42,17 @@ endif
 
 override_dh_auto_install:
 	dh_auto_install --buildsystem=cmake
-	# No need for extra copy of license
+
+execute_after_dh_auto_install:
+	@echo "No need for extra copy of license"
 	rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/COPYING.txt
-	# No need for doc/ copies of man pages in ../../man/man1/ or for other formats.
+	@echo "No need for doc/ copies of man pages in ../../man/man1/ or for other formats."
 	@for f in qhull rbox; do \
 	  for ext in man txt; do \
 	    rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/html/$$f.$$ext || true; \
 	  done \
 	done
-	# Move documentation out of include dir
+	@echo "Move documentation out of include dir"
 	mkdir -p debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
 	mv --verbose debian/tmp/usr/include/libqhull_r/*.htm debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
 	rm --verbose debian/tmp/usr/include/libqhull/*.htm
@@ -59,12 +60,11 @@ override_dh_auto_install:
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
 
-override_dh_link:
+execute_before_dh_link:
 	mkdir -p debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
 	@for f in $$(cd debian/tmp && echo usr/include/libqhull_r/*.h); do \
 	  ln --verbose -s /$$f debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r/; \
 	done
-	dh_link
 
 override_dh_compress:
 	dh_compress -X.c -X.h -X.txt
