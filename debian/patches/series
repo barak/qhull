@@ -4,3 +4,4 @@
 0004-Fix-CMake-target-export.patch
 0005-Fix-install-location-for-HTML-manual.patch
 0006-Use-local-version-of-function-index.patch
+0007-Link-qhull-binaries-against-shared-library.patch
