@@ -1,3 +1,20 @@
+qhull (2020.1-2) unstable; urgency=medium
+
+  * Team upload.
+  * Transition to unstable.
+
+  [ Timo Röhling ]
+  * Bump to debhelper compat 13.
+  * Debianize test failure message for libqhull_r
+  * Disable RPATH completely to make build reproducible
+  * Link qhull binaries against shared library
+
+  [ Barak A. Pearlmutter ]
+  * update maintainer email
+  * use some dh13 facilities
+
+ -- Timo Röhling <timo.roehling@fkie.fraunhofer.de>  Fri, 19 Jun 2020 10:10:14 +0200
+
 qhull (2020.1-1) experimental; urgency=medium
 
   * Team upload.
