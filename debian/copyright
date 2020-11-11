@@ -14,7 +14,7 @@ License: Qhull
 Files: debian/*
 Copyright: 2003-2009, Rafael Laboissiere <rafael@debian.org>
            2003-2019, Barak A. Pearlmutter <bap@debian.org>
-           2020, Timo Röhling <timo.roehling@fkie.fraunhofer.de>
+           2020, Timo Röhling <timo@gaussglocke.de>
 License: GPL-3+
 
 License: Qhull
