@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 2020.1 amd64 i386 ppc64el
+# SymbolsHelper-Confirmed: 2020.2 amd64
 libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
 * Build-Depends-Package: libqhull-dev
  _ZN8orgQhull10QhullErrorD0Ev@Base 2020.1
@@ -12,10 +12,12 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZN8orgQhull10QhullFacetC1ERKNS_5QhullEP6facetT@Base 2020.1
  _ZN8orgQhull10QhullFacetC2ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullFacetC2ERKNS_5QhullEP6facetT@Base 2020.1
+ _ZN8orgQhull10QhullPointC1EPNS_7QhullQhEPd@Base 2020.2
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullEPd@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullERNS_11CoordinatesE@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullEiPd@Base 2020.1
+ _ZN8orgQhull10QhullPointC2EPNS_7QhullQhEPd@Base 2020.2
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullEPd@Base 2020.1
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullERNS_11CoordinatesE@Base 2020.1
@@ -52,8 +54,10 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZN8orgQhull11QhullVertex14s_empty_vertexE@Base 2020.1
  _ZN8orgQhull11QhullVertexC1ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull11QhullVertexC1ERKNS_5QhullEP7vertexT@Base 2020.1
+ _ZN8orgQhull11QhullVertexC1ERKS0_@Base 2020.2
  _ZN8orgQhull11QhullVertexC2ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull11QhullVertexC2ERKNS_5QhullEP7vertexT@Base 2020.1
+ _ZN8orgQhull11QhullVertexC2ERKS0_@Base 2020.2
  _ZN8orgQhull12QhullSetBase11s_empty_setE@Base 2020.1
  _ZN8orgQhull12QhullSetBase5countEPK4setT@Base 2020.1
  _ZN8orgQhull12QhullSetBaseC1ERKNS_5QhullEP4setT@Base 2020.1
@@ -253,6 +257,10 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZNK8orgQhull9RoadError18logErrorLastResortEv@Base 2020.1
  _ZNK8orgQhull9RoadError4whatEv@Base 2020.1
  (optional=templinst)_ZNKSt5ctypeIcE8do_widenEc@Base 2020.1
+ (optional=templinst)_ZNSt12_Vector_baseIdSaIdEED1Ev@Base 2020.2
+ (optional=templinst)_ZNSt12_Vector_baseIdSaIdEED2Ev@Base 2020.2
+ (optional=templinst)_ZNSt12_Vector_baseIiSaIiEED1Ev@Base 2020.2
+ (optional=templinst)_ZNSt12_Vector_baseIiSaIiEED2Ev@Base 2020.2
  (optional=templinst)_ZNSt6vectorIN8orgQhull10QhullFacetESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
  (optional=templinst)_ZNSt6vectorIN8orgQhull10QhullPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
  (optional=templinst)_ZNSt6vectorIN8orgQhull11QhullVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
@@ -260,11 +268,7 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  (optional=templinst)_ZNSt6vectorIS_IdSaIdEESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
  (optional=templinst)_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
  (optional=templinst)_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_@Base 2020.1
- (optional=templinst|arch=!i386)_ZNSt6vectorIdSaIdEE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPdS1_EE@Base 2020.1
- (optional=templinst)_ZNSt6vectorIdSaIdEEaSERKS1_@Base 2020.1
  (optional=templinst)_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag@Base 2020.1
- (optional=templinst)_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag@Base 2020.1
  _ZTIN8orgQhull10QhullErrorE@Base 2020.1
  _ZTIN8orgQhull9RoadErrorE@Base 2020.1
  _ZTSN8orgQhull10QhullErrorE@Base 2020.1
