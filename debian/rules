@@ -22,17 +22,21 @@ override_dh_auto_configure:
 execute_after_dh_auto_build:
 	@echo "Building man pages"
 	cd debian &&							\
-	  for info in "qconvex:compute the convex hull"			\
-	              "qdelaunay:compute the Delaunay triangulation"	\
-	              "qhalf:halfspace intersection about a point"	\
-	              "qvoronoi:compute the Voronoi diagram" ; do	\
+	for info in 							\
+	    "qconvex:compute the convex hull:qconvex"			\
+	    "qdelaunay:compute the Delaunay triangulation:qdelaun"	\
+	    "qhalf:halfspace intersection about a point:qhalf"		\
+	    "qvoronoi:compute the Voronoi diagram:qvoronoi";		\
+	do								\
 	      comm=$$(echo  $$info | cut -d: -f1) &&			\
 	      purp=$$(echo  $$info | cut -d: -f2) &&			\
+	      doc=$$(echo   $$info | cut -d: -f3) &&			\
+	      COMM=$$(echo  $$comm | tr [:lower:] [:upper:]) &&		\
 	      echo -n Building man page for $$comm... &&		\
-	      sed "s/#command#/$$comm/;s/#purpose#/$$purp/"		\
-	          manpage.in > $$comm.xml &&				\
-	      docbook2x-man $$comm.xml &&				\
-	      echo " done" ;						\
+	      sed -e "s/#command#/$$comm/g" -e "s/#purpose#/$$purp/g"	\
+	          -e "s/#COMMAND#/$$COMM/g" -e "s/#doc#/$$doc/g"	\
+	          manpage.in > $$comm.1 &&				\
+	      echo " done";						\
 	  done
 
 override_dh_auto_test:

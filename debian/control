@@ -5,8 +5,7 @@ Maintainer: Debian Science Maintainers <debian-science-maintainers@alioth-lists.
 Uploaders: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 4.5.0
 Build-Depends: debhelper-compat (= 13),
-	       cmake, pkg-kde-tools,
-	       docbook2x (>= 0.8.8-3), xsltproc, docbook-xml
+	       cmake, pkg-kde-tools
 Homepage: https://www.qhull.org
 Rules-Requires-Root: no
 Vcs-Git: https://salsa.debian.org/science-team/qhull.git
