@@ -59,10 +59,7 @@ execute_after_dh_auto_install:
 	    rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/html/$$f.$$ext || true; \
 	  done \
 	done
-	@echo "Move documentation out of include dir"
-	mkdir -p debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
-	mv --verbose debian/tmp/usr/include/libqhull_r/*.htm debian/tmp/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
-	rm --verbose debian/tmp/usr/include/libqhull/*.htm
+	rm --verbose debian/tmp/usr/share/doc/libqhull-dev/qhull/src/Changes.txt
 
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
