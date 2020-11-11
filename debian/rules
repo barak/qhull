@@ -45,7 +45,6 @@ execute_after_dh_auto_build:
 
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	ldconfig -n -v $(CURDIR)/obj-$(DEB_HOST_GNU_TYPE)
 	env LD_LIBRARY_PATH=$(CURDIR)/obj-$(DEB_HOST_GNU_TYPE) \
 	    PATH=$(CURDIR)/obj-$(DEB_HOST_GNU_TYPE):$$PATH \
 	    eg/q_test
