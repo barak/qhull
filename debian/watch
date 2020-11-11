@@ -1,5 +1,6 @@
-version=3
-http://www.qhull.org/download/qhull-(\d[\d\.]*)-src.*\.tgz
+version=4
 
-# Need to manually rename, e.g., this is version 2015.2
+http://www.qhull.org/download/@PACKAGE@-?@ANY_VERSION@(-src.*)?@ARCHIVE_EXT@
+
+# May need to manually rename, e.g., this is version 2015.2
 # http://www.qhull.org/download/qhull-2015-src-7.2.0.tgz
