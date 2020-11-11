@@ -45,7 +45,10 @@ execute_after_dh_auto_build:
 
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	env PATH=$(CURDIR)/obj-$(DEB_HOST_GNU_TYPE):$${PATH} eg/q_test
+	ldconfig -n -v $(CURDIR)/obj-$(DEB_HOST_GNU_TYPE)
+	env LD_LIBRARY_PATH=$(CURDIR)/obj-$(DEB_HOST_GNU_TYPE) \
+	    PATH=$(CURDIR)/obj-$(DEB_HOST_GNU_TYPE):$$PATH \
+	    eg/q_test
 endif
 
 override_dh_auto_install:
@@ -65,7 +68,7 @@ execute_after_dh_auto_install:
 override_dh_installchangelogs:
 	dh_installchangelogs src/Changes.txt
 
-execute_before_dh_link:
+execute_before_dh_link-indep:
 	mkdir -p debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r
 	@for f in $$(cd debian/tmp && echo usr/include/libqhull_r/*.h); do \
 	  ln --verbose -s /$$f debian/libqhull-doc/usr/share/doc/libqhull-dev/qhull/src/libqhull_r/; \
