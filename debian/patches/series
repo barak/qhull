@@ -1,7 +1,6 @@
 0001-debianize-test-failure-msg.patch
-0002-Build-shared-qhullcpp.patch
-0003-Fix-privacy-breach.patch
-0004-Fix-CMake-target-export.patch
-0005-Fix-install-location-for-HTML-manual.patch
-0006-Use-local-version-of-function-index.patch
-0007-Link-qhull-binaries-against-shared-library.patch
+0002-Fix-privacy-breach.patch
+0003-Use-local-version-of-function-index.patch
+0004-Build-qhullcpp-as-shared-library.patch
+0005-Fix-CMake-target-export.patch
+0006-Build-deprecated-libqhull-for-now.patch

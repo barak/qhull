@@ -7,7 +7,7 @@ Subject: Fix privacy breach
  1 file changed, 4 deletions(-)
 
 diff --git a/html/qh-get.htm b/html/qh-get.htm
-index f2e88f2..aeb3898 100644
+index f26e733..9e46619 100644
 --- a/html/qh-get.htm
 +++ b/html/qh-get.htm
 @@ -72,10 +72,6 @@ width="100" height="100"></a> Qhull Downloads</h1>
