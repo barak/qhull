@@ -1,2 +1,3 @@
 Tests: build
 Depends: libqhull-dev, cmake, pkg-config, gcc | c-compiler, g++ | c++-compiler
+Restrictions: superficial
