@@ -1,3 +1,19 @@
+qhull (2020.2-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Barak A. Pearlmutter ]
+  * uscan version 4
+
+  [ Timo Röhling ]
+  * Rewrite manual pages in groff and update links
+  * Mark autopkgtest as superficial
+  * New upstream version 2020.2
+  * Add warning to README.Debian that the non-reentrant libqhull
+    is likely to be discontinued after the 8.0.x releases.
+
+ -- Timo Röhling <timo@gaussglocke.de>  Wed, 11 Nov 2020 15:10:39 +0100
+
 qhull (2020.1-2) unstable; urgency=medium
 
   * Team upload.
