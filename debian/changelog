@@ -1,3 +1,16 @@
+qhull (2020.2-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Jochen Sprickerhof ]
+  * Drop ldconfig (not needed)
+
+  [ Timo Röhling ]
+  * Fix d/watch
+  * Add new autopkgtest that verifies functionality
+
+ -- Timo Röhling <timo@gaussglocke.de>  Thu, 12 Nov 2020 19:01:23 +0100
+
 qhull (2020.2-1) unstable; urgency=medium
 
   * Team upload.
