@@ -1,0 +1,53 @@
+#!/bin/bash
+set -e
+tmpfile=$(mktemp)
+trap "rm $tmpfile" EXIT
+
+# 2D square with 100 random points inside
+rbox 100 c D2 | qconvex p | tee "$tmpfile"
+diff -uZ "$tmpfile" - << EOF
+2
+4
+  -0.5   -0.5
+  -0.5    0.5
+   0.5   -0.5
+   0.5    0.5
+EOF
+# 2D square with 100 random points on the border
+rbox 100 c W0 D2 | qconvex p | tee "$tmpfile"
+diff -uZ "$tmpfile" - << EOF
+2
+4
+  -0.5   -0.5
+  -0.5    0.5
+   0.5   -0.5
+   0.5    0.5
+EOF
+# 3D cube with 100 random points inside
+rbox 100 c D3 | qconvex p |tee "$tmpfile"
+diff -uZ "$tmpfile" - << EOF
+3
+8
+  -0.5   -0.5   -0.5
+  -0.5   -0.5    0.5
+  -0.5    0.5   -0.5
+  -0.5    0.5    0.5
+   0.5   -0.5   -0.5
+   0.5   -0.5    0.5
+   0.5    0.5   -0.5
+   0.5    0.5    0.5
+EOF
+# 3D cube with 100 random points on the surfaces
+rbox 100 c W0 D3 | qconvex p |tee "$tmpfile"
+diff -uZ "$tmpfile" - << EOF
+3
+8
+  -0.5   -0.5   -0.5
+  -0.5   -0.5    0.5
+  -0.5    0.5   -0.5
+  -0.5    0.5    0.5
+   0.5   -0.5   -0.5
+   0.5   -0.5    0.5
+   0.5    0.5   -0.5
+   0.5    0.5    0.5
+EOF
