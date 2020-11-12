@@ -1,6 +1,4 @@
 version=4
-
-http://www.qhull.org/download/@PACKAGE@-?@ANY_VERSION@(-src.*)?@ARCHIVE_EXT@
-
-# May need to manually rename, e.g., this is version 2015.2
-# http://www.qhull.org/download/qhull-2015-src-7.2.0.tgz
+opts=pagemangle=s/(?i)">\s*download:?\s+qhull\s+(\d\S+)\s+for\s+unix/?version=$1">/g,\
+     downloadurlmangle=s/\?version=\d\S+$// \
+http://www.qhull.org/download/ .+\?version=(\d\S+)
