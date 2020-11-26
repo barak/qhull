@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 2020.2 amd64
+# SymbolsHelper-Confirmed: 2020.2 amd64 arm64 armel armhf i386 mips64el mipsel ppc64el s390x alpha hppa hurd-i386 ia64 m68k powerpc ppc64 riscv64 sh4 sparc64 x32
 libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
 * Build-Depends-Package: libqhull-dev
  _ZN8orgQhull10QhullErrorD0Ev@Base 2020.1
@@ -12,12 +12,12 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZN8orgQhull10QhullFacetC1ERKNS_5QhullEP6facetT@Base 2020.1
  _ZN8orgQhull10QhullFacetC2ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullFacetC2ERKNS_5QhullEP6facetT@Base 2020.1
- _ZN8orgQhull10QhullPointC1EPNS_7QhullQhEPd@Base 2020.2
+ (optional=inline-ctor)_ZN8orgQhull10QhullPointC1EPNS_7QhullQhEPd@Base 2020.2
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullEPd@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullERNS_11CoordinatesE@Base 2020.1
  _ZN8orgQhull10QhullPointC1ERKNS_5QhullEiPd@Base 2020.1
- _ZN8orgQhull10QhullPointC2EPNS_7QhullQhEPd@Base 2020.2
+ (optional=inline-ctor)_ZN8orgQhull10QhullPointC2EPNS_7QhullQhEPd@Base 2020.2
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullE@Base 2020.1
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullEPd@Base 2020.1
  _ZN8orgQhull10QhullPointC2ERKNS_5QhullERNS_11CoordinatesE@Base 2020.1
@@ -256,19 +256,7 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZNK8orgQhull7QhullQh15hasQhullMessageEv@Base 2020.1
  _ZNK8orgQhull9RoadError18logErrorLastResortEv@Base 2020.1
  _ZNK8orgQhull9RoadError4whatEv@Base 2020.1
- (optional=templinst)_ZNKSt5ctypeIcE8do_widenEc@Base 2020.1
- (optional=templinst)_ZNSt12_Vector_baseIdSaIdEED1Ev@Base 2020.2
- (optional=templinst)_ZNSt12_Vector_baseIdSaIdEED2Ev@Base 2020.2
- (optional=templinst)_ZNSt12_Vector_baseIiSaIiEED1Ev@Base 2020.2
- (optional=templinst)_ZNSt12_Vector_baseIiSaIiEED2Ev@Base 2020.2
- (optional=templinst)_ZNSt6vectorIN8orgQhull10QhullFacetESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIN8orgQhull10QhullPointESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIN8orgQhull11QhullVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIN8orgQhull11QhullVertexESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIS_IdSaIdEESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_@Base 2020.1
- (optional=templinst)_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_@Base 2020.1
+ (optional=libstdc++|regex)"^_ZNr?V?K?[RO]?St" 0
  _ZTIN8orgQhull10QhullErrorE@Base 2020.1
  _ZTIN8orgQhull9RoadErrorE@Base 2020.1
  _ZTSN8orgQhull10QhullErrorE@Base 2020.1
