@@ -1,3 +1,10 @@
+qhull (2020.2-3) unstable; urgency=medium
+
+  * Team upload.
+  * New approach to filter libstdc++ symbols
+
+ -- Timo Röhling <timo@gaussglocke.de>  Thu, 26 Nov 2020 23:59:26 +0100
+
 qhull (2020.2-2) unstable; urgency=medium
 
   * Team upload.
