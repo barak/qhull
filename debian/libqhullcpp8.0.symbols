@@ -1,6 +1,7 @@
 # SymbolsHelper-Confirmed: 2020.2 amd64 arm64 armel armhf i386 mips64el mipsel ppc64el s390x alpha hppa hurd-i386 ia64 m68k powerpc ppc64 riscv64 sh4 sparc64 x32
 libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
 * Build-Depends-Package: libqhull-dev
+ (optional=libstdc++|regex)"^_Z(Z|GTt|GV|TI|TS|TT|TV|Thn?\d+_|Tvn?\d+_n?\d+_)?N?r?V?K?[RO]?S[abdiost]" 0~unused
  _ZN8orgQhull10QhullErrorD0Ev@Base 2020.1
  _ZN8orgQhull10QhullErrorD1Ev@Base 2020.1
  _ZN8orgQhull10QhullErrorD2Ev@Base 2020.1
@@ -256,7 +257,6 @@ libqhullcpp.so.8.0 libqhullcpp8.0 #MINVER#
  _ZNK8orgQhull7QhullQh15hasQhullMessageEv@Base 2020.1
  _ZNK8orgQhull9RoadError18logErrorLastResortEv@Base 2020.1
  _ZNK8orgQhull9RoadError4whatEv@Base 2020.1
- (optional=libstdc++|regex)"^_ZNr?V?K?[RO]?St" 0
  _ZTIN8orgQhull10QhullErrorE@Base 2020.1
  _ZTIN8orgQhull9RoadErrorE@Base 2020.1
  _ZTSN8orgQhull10QhullErrorE@Base 2020.1
