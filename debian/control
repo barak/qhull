@@ -2,7 +2,7 @@ Source: qhull
 Section: math
 Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@alioth-lists.debian.net>
-Uploaders: Barak A. Pearlmutter <bap@debian.org>
+Uploaders: Barak A. Pearlmutter <bap@debian.org>, Timo Röhling <timo@gaussglocke.de>
 Standards-Version: 4.5.0
 Build-Depends: debhelper-compat (= 13),
 	       cmake, pkg-kde-tools
